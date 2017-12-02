@@ -2,8 +2,10 @@
 
 namespace Data.Persistence
 {
-    class DatabaseService:DbContext
-
+    public class DatabaseService : DbContext
     {
+        public DatabaseService(DbContextOptions<DatabaseService> options) : base(options)
+        {
+        }
     }
 }
