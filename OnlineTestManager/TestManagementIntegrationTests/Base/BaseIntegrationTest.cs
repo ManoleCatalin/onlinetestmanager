@@ -6,11 +6,11 @@ namespace TestManagementIntegrationTests.Base
 {
     public abstract class BaseIntegrationTest : IDisposable
     {
-        public virtual bool UseSqlServer => false;
+        public virtual bool UseSqlServer => true;
 
         public BaseIntegrationTest()
         {
-            DestroyDatabase();
+           DestroyDatabase();
             CreateDatabase();
         }
 
@@ -64,7 +64,7 @@ namespace TestManagementIntegrationTests.Base
 
         public void Dispose()
         {
-            DestroyDatabase();
+         // DestroyDatabase();
         }
     }
 }
