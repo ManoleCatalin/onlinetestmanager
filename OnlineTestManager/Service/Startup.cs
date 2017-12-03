@@ -21,7 +21,7 @@ namespace Service
         {
             var connection =
                 @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true;";
-            services.AddDbContext<DatabaseService>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
 
         }

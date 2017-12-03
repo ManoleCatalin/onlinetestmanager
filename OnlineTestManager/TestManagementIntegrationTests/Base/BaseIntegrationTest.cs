@@ -14,7 +14,7 @@ namespace TestManagementIntegrationTests.Base
             CreateDatabase();
         }
 
-        protected void RunOnDatabase(Action<DatabaseService> databaseAction)
+        protected void RunOnDatabase(Action<DatabaseContext> databaseAction)
         {
             if (UseSqlServer)
             {
@@ -26,27 +26,27 @@ namespace TestManagementIntegrationTests.Base
             }
         }
 
-        private void RunOnMemory(Action<DatabaseService> databaseAction)
+        private void RunOnMemory(Action<DatabaseContext> databaseAction)
         {
-            var options = new DbContextOptionsBuilder<DatabaseService>()
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase("TodosList")
                 .Options;
 
-            using (var context = new DatabaseService(options))
+            using (var context = new DatabaseContext(options))
             {
                 databaseAction(context);
             }
         }
 
-        private void RunOnSqlServer(Action<DatabaseService> databaseAction)
+        private void RunOnSqlServer(Action<DatabaseContext> databaseAction)
         {
             var connection = @"Server = .\SQLEXPRESS; Database = TestManagement.Development.Tests; Trusted_Connection = true;";
 
-            var options = new DbContextOptionsBuilder<DatabaseService>()
+            var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseSqlServer(connection)
                 .Options;
 
-            using (var context = new DatabaseService(options))
+            using (var context = new DatabaseContext(options))
             {
                 databaseAction(context);
             }
