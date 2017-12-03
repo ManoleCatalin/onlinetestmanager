@@ -15,6 +15,8 @@ namespace Data.Persistence
         public DbSet<TestInstance> TestInstances { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {            
