@@ -7,11 +7,27 @@ namespace Data.Core.Domain
     public class Group
     {
         public Guid Id { get; set; }
-        [MaxLength(255)]
-        public String Name { get; set; }
-        [MaxLength(255)]
-        public String Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        public IEnumerable<User> Users { get; set; }
+        [MaxLength(255)]
+        public string Name { get; set; }
+        [MaxLength(255)]
+        public string Description { get; set; }
+        public ICollection<UserGroup> UserGroups { get; set; }
+        public Guid UserId { get; set; }
+        public virtual User User { get; set; }
+
+        public static Group Create(string name, string description, Guid userId)
+        {
+            var instance = new Group { Id = Guid.NewGuid(), CreatedAt = DateTime.Now};
+            instance.Update(name, description, userId);
+            return instance;
+        }
+
+        public void Update(string name, string description, Guid userId)
+        {
+            Name = name;
+            Description = description;
+            UserId = userId;
+        }
     }
 }

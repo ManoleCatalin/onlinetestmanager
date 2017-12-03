@@ -1,4 +1,5 @@
-﻿using Data.Core.Domain;
+﻿using System.Linq;
+using Data.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Persistence
@@ -6,27 +7,33 @@ namespace Data.Persistence
     public class DatabaseContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-        {
-            Database.EnsureCreated();
-            
+        {            
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserGroup>()
-                .HasKey(bc => new { bc.BookId, bc.CategoryId });
+                .HasKey(ug => new { ug.UserId, ug.GroupId });
 
-            modelBuilder.Entity<BookCategory>()
-                .HasOne(bc => bc.Book)
-                .WithMany(b => b.BookCategories)
-                .HasForeignKey(bc => bc.BookId);
+            modelBuilder.Entity<UserGroup>()
+                .HasOne(userGroup => userGroup.User)
+                .WithMany(user => user.UserGroups)
+                .HasForeignKey(userGroup => userGroup.UserId);
 
-            modelBuilder.Entity<BookCategory>()
-                .HasOne(bc => bc.Category)
-                .WithMany(c => c.BookCategories)
-                .HasForeignKey(bc => bc.CategoryId);
+            modelBuilder.Entity<UserGroup>()
+                .HasOne(userGroup => userGroup.Group)
+                .WithMany(group => group.UserGroups)
+                .HasForeignKey(userGroup => userGroup.GroupId);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
         }
     }
