@@ -19,6 +19,7 @@ namespace Data.Core.Domain
         public Guid UserTypeId { get; set; }
         public virtual UserType UserType { get; set; }
         public ICollection<UserGroup> UserGroups { get; set; }
+        public ICollection<Grade> Grades { get; set; }
 
         public static User Create(string firstName, string lastName, string email, string password, Guid userTypeId)
         {

@@ -12,6 +12,9 @@ namespace Data.Persistence
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
         public DbSet<Test> Tests { get; set; }
+        public DbSet<TestInstance> TestInstances { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Grade> Grades { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {            
@@ -31,6 +34,19 @@ namespace Data.Persistence
                 .HasOne(userGroup => userGroup.Group)
                 .WithMany(group => group.UserGroups)
                 .HasForeignKey(userGroup => userGroup.GroupId);
+
+            modelBuilder.Entity<Grade>()
+                .HasKey(grade => new {grade.UserId, grade.TestInstanceId});
+
+            modelBuilder.Entity<Grade>()
+                .HasOne(grades => grades.User)
+                .WithMany(user => user.Grades)
+                .HasForeignKey(grades => grades.UserId);
+
+            modelBuilder.Entity<Grade>()
+                .HasOne(grades => grades.TestInstance)
+                .WithMany(testInstace => testInstace.Grades)
+                .HasForeignKey(grades => grades.TestInstanceId);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
