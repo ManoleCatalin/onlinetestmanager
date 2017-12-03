@@ -54,7 +54,7 @@ namespace Data.Persistence
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
