@@ -10,6 +10,8 @@ namespace Data.Persistence
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<TestType> TestTypes { get; set; }
+        public DbSet<Test> Tests { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {            
