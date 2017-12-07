@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Data.Core.Configuration;
 using Data.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,31 +25,17 @@ namespace Data.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserGroup>()
-                .HasKey(ug => new { ug.UserId, ug.GroupId });
-
-            modelBuilder.Entity<UserGroup>()
-                .HasOne(userGroup => userGroup.User)
-                .WithMany(user => user.UserGroups)
-                .HasForeignKey(userGroup => userGroup.UserId);
-
-            modelBuilder.Entity<UserGroup>()
-                .HasOne(userGroup => userGroup.Group)
-                .WithMany(group => group.UserGroups)
-                .HasForeignKey(userGroup => userGroup.GroupId);
-
-            modelBuilder.Entity<Grade>()
-                .HasKey(grade => new {grade.UserId, grade.TestInstanceId});
-
-            modelBuilder.Entity<Grade>()
-                .HasOne(grades => grades.User)
-                .WithMany(user => user.Grades)
-                .HasForeignKey(grades => grades.UserId);
-
-            modelBuilder.Entity<Grade>()
-                .HasOne(grades => grades.TestInstance)
-                .WithMany(testInstace => testInstace.Grades)
-                .HasForeignKey(grades => grades.TestInstanceId);
+            modelBuilder.AddConfiguration(new AnswerConfiguration());
+            modelBuilder.AddConfiguration(new ExerciseConfiguration());
+            modelBuilder.AddConfiguration(new FileConfiguration());
+            modelBuilder.AddConfiguration(new GradeConfiguration());
+            modelBuilder.AddConfiguration(new GroupConfiguration());
+            modelBuilder.AddConfiguration(new TestConfiguration());
+            modelBuilder.AddConfiguration(new TestInstanceConfiguration());
+            modelBuilder.AddConfiguration(new TestTypeConfiguration());
+            modelBuilder.AddConfiguration(new UserConfiguration());
+            modelBuilder.AddConfiguration(new UserGroupConfiguration());
+            modelBuilder.AddConfiguration(new UserTypeConfiguration());
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

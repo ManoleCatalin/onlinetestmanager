@@ -1,23 +1,15 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Data.Core.Domain
 {
     public class Test
     {
         public Guid Id { get; set; }
-
-        [MaxLength(255)]
         public string Name { get; set; }
-
-        [MaxLength(255)]
         public string Description { get; set; }
-
         public DateTime CreatedAt { get; set; }
-
         public Guid UserId { get; set; }
         public virtual User User { get; set; }
-
         public Guid TestTypeId { get; set; }
         public virtual TestType TestType { get; set; }
 
