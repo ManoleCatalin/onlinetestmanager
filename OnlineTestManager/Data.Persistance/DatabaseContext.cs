@@ -25,17 +25,17 @@ namespace Data.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddConfiguration(new AnswerConfiguration());
-            modelBuilder.AddConfiguration(new ExerciseConfiguration());
-            modelBuilder.AddConfiguration(new FileConfiguration());
-            modelBuilder.AddConfiguration(new GradeConfiguration());
-            modelBuilder.AddConfiguration(new GroupConfiguration());
-            modelBuilder.AddConfiguration(new TestConfiguration());
-            modelBuilder.AddConfiguration(new TestInstanceConfiguration());
-            modelBuilder.AddConfiguration(new TestTypeConfiguration());
-            modelBuilder.AddConfiguration(new UserConfiguration());
-            modelBuilder.AddConfiguration(new UserGroupConfiguration());
-            modelBuilder.AddConfiguration(new UserTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AnswerConfiguration());
+            modelBuilder.ApplyConfiguration(new ExerciseConfiguration());
+            modelBuilder.ApplyConfiguration(new FileConfiguration());
+            modelBuilder.ApplyConfiguration(new GradeConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupConfiguration());
+            modelBuilder.ApplyConfiguration(new TestConfiguration());
+            modelBuilder.ApplyConfiguration(new TestInstanceConfiguration());
+            modelBuilder.ApplyConfiguration(new TestTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

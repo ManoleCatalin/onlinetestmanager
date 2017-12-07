@@ -1,11 +1,12 @@
 ﻿using Data.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class GroupConfiguration : DbEntityConfiguration<Group>
+    public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
-        public override void Configure(EntityTypeBuilder<Group> entity)
+        public void Configure(EntityTypeBuilder<Group> entity)
         {
             entity.HasKey(group => group.Id);
             entity.Property(group => group.CreatedAt).IsRequired();

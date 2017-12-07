@@ -1,11 +1,12 @@
 ﻿using Data.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class ExerciseConfiguration : DbEntityConfiguration<Exercise>
+    public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
     {
-        public override void Configure(EntityTypeBuilder<Exercise> entity)
+        public void Configure(EntityTypeBuilder<Exercise> entity)
         {
             entity.HasKey(exercise => exercise.Id);
             entity.Property(exercise => exercise.Description).HasMaxLength(255).IsRequired();

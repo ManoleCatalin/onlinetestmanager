@@ -1,11 +1,12 @@
 ﻿using Data.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class UserGroupConfiguration : DbEntityConfiguration<UserGroup>
+    public class UserGroupConfiguration : IEntityTypeConfiguration<UserGroup>
     {
-        public override void Configure(EntityTypeBuilder<UserGroup> entity)
+        public void Configure(EntityTypeBuilder<UserGroup> entity)
         {
             entity.HasKey(ug => new { ug.UserId, ug.GroupId });
             

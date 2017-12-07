@@ -1,11 +1,12 @@
 ﻿using Data.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class TestConfiguration : DbEntityConfiguration<Test>
+    public class TestConfiguration : IEntityTypeConfiguration<Test>
     {
-        public override void Configure(EntityTypeBuilder<Test> entity)
+        public void Configure(EntityTypeBuilder<Test> entity)
         {
             entity.HasKey(test => test.Id);
             entity.Property(test => test.CreatedAt).IsRequired();

@@ -1,11 +1,12 @@
 ﻿using Data.Core.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class GradeConfiguration : DbEntityConfiguration<Grade>
+    public class GradeConfiguration : IEntityTypeConfiguration<Grade>
     {
-        public override void Configure(EntityTypeBuilder<Grade> entity)
+        public void Configure(EntityTypeBuilder<Grade> entity)
         {
             entity.HasKey(grade => new { grade.UserId, grade.TestInstanceId });
             entity.Property(grade => grade.MarkedAt).IsRequired();
