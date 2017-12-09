@@ -1,4 +1,5 @@
 ﻿using Data.Persistence;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +23,7 @@ namespace Service
             var connection =
                 @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true;";
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
-            services.AddMvc();
-
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
