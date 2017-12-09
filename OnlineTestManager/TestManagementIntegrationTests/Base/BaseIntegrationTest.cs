@@ -1,7 +1,9 @@
 ﻿using System;
 using Data.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace TestManagementIntegrationTests.Base
 {
     public abstract class BaseIntegrationTest : IDisposable
@@ -10,7 +12,7 @@ namespace TestManagementIntegrationTests.Base
 
         public BaseIntegrationTest()
         {
-           DestroyDatabase();
+            DestroyDatabase();
             CreateDatabase();
         }
 
@@ -40,8 +42,8 @@ namespace TestManagementIntegrationTests.Base
 
         private void RunOnSqlServer(Action<DatabaseContext> databaseAction)
         {
-            var connection = @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true;";
-
+            var connection = @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true; MultipleActiveResultSets=true";
+            
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseSqlServer(connection)
                 .Options;
@@ -64,7 +66,7 @@ namespace TestManagementIntegrationTests.Base
 
         public void Dispose()
         {
-         // DestroyDatabase();
+          DestroyDatabase();
         }
     }
 }
