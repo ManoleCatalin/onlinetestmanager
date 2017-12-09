@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Data.Core.Domain
 {
@@ -8,9 +7,7 @@ namespace Data.Core.Domain
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
-        [MaxLength(255)]
         public string Name { get; set; }
-        [MaxLength(255)]
         public string Description { get; set; }
         public ICollection<UserGroup> UserGroups { get; set; }
         public Guid UserId { get; set; }
