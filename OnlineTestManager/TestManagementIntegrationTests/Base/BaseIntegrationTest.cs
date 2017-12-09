@@ -40,7 +40,7 @@ namespace TestManagementIntegrationTests.Base
 
         private void RunOnSqlServer(Action<DatabaseContext> databaseAction)
         {
-            var connection = @"Server = .\SQLEXPRESS; Database = TestManagement.Development.Tests; Trusted_Connection = true;";
+            var connection = @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true;";
 
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseSqlServer(connection)

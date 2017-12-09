@@ -8,10 +8,8 @@ namespace Data.Core.Domain
         public string Path { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Url { get; set; }
-
         public Guid TestInstanceId { get; set; }
         public virtual TestInstance TestInstance { get; set; }
-
 
         public static File Create(string path, string url, Guid testInstanceId)
         {

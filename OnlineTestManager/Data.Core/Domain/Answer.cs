@@ -1,13 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Data.Core.Domain
 {
     public class Answer
     {
         public Guid Id { get; set; }
-
-        [MaxLength(255)]
         public string Description { get; set; }
         public bool Correct { get; set; }
         public Guid ExerciseId { get; set; }
