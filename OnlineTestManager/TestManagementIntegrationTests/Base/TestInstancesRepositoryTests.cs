@@ -61,7 +61,7 @@ namespace TestManagementIntegrationTests.Base
                         userId.Id
 
                     );
-                    context.Groups.Add(@group);
+                    context.Groups.Add(group);
                 }
                 context.SaveChanges();
 
@@ -139,7 +139,7 @@ namespace TestManagementIntegrationTests.Base
                         userId.Id
 
                     );
-                    context.Groups.Add(@group);
+                    context.Groups.Add(group);
                 }
                 context.SaveChanges();
 
@@ -221,7 +221,7 @@ namespace TestManagementIntegrationTests.Base
                         userId.Id
 
                     );
-                    context.Groups.Add(@group);
+                    context.Groups.Add(group);
                 }
                 context.SaveChanges();
 
