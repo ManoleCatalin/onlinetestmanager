@@ -5,7 +5,7 @@ using Data.Core.Domain;
 
 namespace Data.Core.Interfaces
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task<bool> DeleteUserAsync(Guid id);
         Task<User> GetUserByIdAsync(Guid id);

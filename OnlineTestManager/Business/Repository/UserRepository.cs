@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUsersRepository
     {
         private readonly DatabaseContext _context;
 
