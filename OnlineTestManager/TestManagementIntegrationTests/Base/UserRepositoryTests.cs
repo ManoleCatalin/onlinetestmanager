@@ -16,7 +16,7 @@ namespace TestManagementIntegrationTests.Base
         {
             RunOnDatabase(context => {
                 // ARRANGE 
-                var userRepository = new UserRepository(context);
+                var userRepository = new UsersRepository(context);
 
                 // ACT
                 var users = userRepository.GetUsersAsync();
@@ -37,7 +37,7 @@ namespace TestManagementIntegrationTests.Base
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var userRepository = new UserRepository(context);
+                var userRepository = new UsersRepository(context);
                 var user = User.Create(
                 
                   
@@ -67,7 +67,7 @@ namespace TestManagementIntegrationTests.Base
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var userRepository = new UserRepository(context);
+                var userRepository = new UsersRepository(context);
                 var user = User.Create(
 
 
@@ -102,7 +102,7 @@ namespace TestManagementIntegrationTests.Base
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var userRepository = new UserRepository(context);
+                var userRepository = new UsersRepository(context);
                 var user = User.Create(
 
 

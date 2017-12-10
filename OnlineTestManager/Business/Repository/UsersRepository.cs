@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Repository
 {
-    public class UserRepository : IUsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly DatabaseContext _context;
 
-        public  UserRepository(DatabaseContext context)
+        public  UsersRepository(DatabaseContext context)
         {
             _context = context;
         }
