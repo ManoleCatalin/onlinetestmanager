@@ -10,9 +10,8 @@ namespace Data.Core.Interfaces
         Task<List<File>> GetFilesAsync();
         Task<File> GetFileByIdAsync(Guid id);
 
-        Task<File> InsertFileAsync(File renameMeWithLowerCaseFile);
-        Task<bool> UpdateFileAsync(File renameMeWithLowerCaseFile);
+        Task<File> InsertFileAsync(File file);
+        Task<bool> UpdateFileAsync(File file);
         Task<bool> DeleteFileAsync(Guid id);
     }
-    
 }

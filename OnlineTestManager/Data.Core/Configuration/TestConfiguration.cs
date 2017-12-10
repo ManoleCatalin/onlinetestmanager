@@ -6,12 +6,12 @@ namespace Data.Core.Configuration
 {
     public class TestConfiguration : IEntityTypeConfiguration<Test>
     {
-        public void Configure(EntityTypeBuilder<Test> entity)
+        public void Configure(EntityTypeBuilder<Test> builder)
         {
-            entity.HasKey(test => test.Id);
-            entity.Property(test => test.CreatedAt).IsRequired();
-            entity.Property(test => test.Description).HasMaxLength(255).IsRequired();
-            entity.Property(test => test.Name).HasMaxLength(255).IsRequired();
+            builder.HasKey(test => test.Id);
+            builder.Property(test => test.CreatedAt).IsRequired();
+            builder.Property(test => test.Description).HasMaxLength(255).IsRequired();
+            builder.Property(test => test.Name).HasMaxLength(255).IsRequired();
         }
     }
 }

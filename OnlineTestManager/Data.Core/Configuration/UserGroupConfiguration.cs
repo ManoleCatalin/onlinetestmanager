@@ -6,16 +6,16 @@ namespace Data.Core.Configuration
 {
     public class UserGroupConfiguration : IEntityTypeConfiguration<UserGroup>
     {
-        public void Configure(EntityTypeBuilder<UserGroup> entity)
+        public void Configure(EntityTypeBuilder<UserGroup> builder)
         {
-            entity.HasKey(ug => new { ug.UserId, ug.GroupId });
+            builder.HasKey(ug => new { ug.UserId, ug.GroupId });
             
-            entity
+            builder
                 .HasOne(userGroup => userGroup.User)
                 .WithMany(user => user.UserGroups)
                 .HasForeignKey(userGroup => userGroup.UserId);
 
-            entity
+            builder
                 .HasOne(userGroup => userGroup.Group)
                 .WithMany(group => group.UserGroups)
                 .HasForeignKey(userGroup => userGroup.GroupId);

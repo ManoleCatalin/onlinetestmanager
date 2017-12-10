@@ -6,12 +6,12 @@ namespace Data.Core.Configuration
 {
     public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
-        public void Configure(EntityTypeBuilder<Group> entity)
+        public void Configure(EntityTypeBuilder<Group> builder)
         {
-            entity.HasKey(group => group.Id);
-            entity.Property(group => group.CreatedAt).IsRequired();
-            entity.Property(group => group.Description).HasMaxLength(255).IsRequired();
-            entity.Property(group => group.Name).HasMaxLength(255).IsRequired();
+            builder.HasKey(group => group.Id);
+            builder.Property(group => group.CreatedAt).IsRequired();
+            builder.Property(group => group.Description).HasMaxLength(255).IsRequired();
+            builder.Property(group => group.Name).HasMaxLength(255).IsRequired();
         }
     }
 }

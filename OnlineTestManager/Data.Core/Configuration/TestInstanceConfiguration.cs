@@ -6,11 +6,11 @@ namespace Data.Core.Configuration
 {
     public class TestInstanceConfiguration : IEntityTypeConfiguration<TestInstance>
     {
-        public void Configure(EntityTypeBuilder<TestInstance> entity)
+        public void Configure(EntityTypeBuilder<TestInstance> builder)
         {
-            entity.HasKey(testInstance => testInstance.Id);
-            entity.Property(testInstance => testInstance.ConnectionToken).HasMaxLength(255);
-            entity.Property(testInstance => testInstance.Duration).IsRequired();
+            builder.HasKey(testInstance => testInstance.Id);
+            builder.Property(testInstance => testInstance.ConnectionToken).HasMaxLength(255);
+            builder.Property(testInstance => testInstance.Duration).IsRequired();
         }
     }
 }

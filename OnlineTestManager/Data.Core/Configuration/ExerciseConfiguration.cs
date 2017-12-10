@@ -6,10 +6,10 @@ namespace Data.Core.Configuration
 {
     public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
     {
-        public void Configure(EntityTypeBuilder<Exercise> entity)
+        public void Configure(EntityTypeBuilder<Exercise> builder)
         {
-            entity.HasKey(exercise => exercise.Id);
-            entity.Property(exercise => exercise.Description).HasMaxLength(255).IsRequired();
+            builder.HasKey(exercise => exercise.Id);
+            builder.Property(exercise => exercise.Description).HasMaxLength(255).IsRequired();
         }
     }
 }

@@ -6,12 +6,12 @@ namespace Data.Core.Configuration
 {
     public class FileConfiguration : IEntityTypeConfiguration<File>
     {
-        public void Configure(EntityTypeBuilder<File> entity)
+        public void Configure(EntityTypeBuilder<File> builder)
         {
-            entity.HasKey(file => file.Id);
-            entity.Property(file => file.CreatedAt).IsRequired();
-            entity.Property(file => file.Path).HasMaxLength(255).IsRequired();
-            entity.Property(file => file.Url).HasMaxLength(255).IsRequired();   
+            builder.HasKey(file => file.Id);
+            builder.Property(file => file.CreatedAt).IsRequired();
+            builder.Property(file => file.Path).HasMaxLength(255).IsRequired();
+            builder.Property(file => file.Url).HasMaxLength(255).IsRequired();   
         }
     }
 }

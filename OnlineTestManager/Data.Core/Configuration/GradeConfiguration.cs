@@ -6,18 +6,18 @@ namespace Data.Core.Configuration
 {
     public class GradeConfiguration : IEntityTypeConfiguration<Grade>
     {
-        public void Configure(EntityTypeBuilder<Grade> entity)
+        public void Configure(EntityTypeBuilder<Grade> builder)
         {
-            entity.HasKey(grade => new { grade.UserId, grade.TestInstanceId });
-            entity.Property(grade => grade.MarkedAt).IsRequired();
-            entity.Property(grade => grade.Value).IsRequired();
+            builder.HasKey(grade => new { grade.UserId, grade.TestInstanceId });
+            builder.Property(grade => grade.MarkedAt).IsRequired();
+            builder.Property(grade => grade.Value).IsRequired();
             
-            entity
+            builder
                 .HasOne(grades => grades.User)
                 .WithMany(user => user.Grades)
                 .HasForeignKey(grades => grades.UserId);
 
-            entity
+            builder
                 .HasOne(grades => grades.TestInstance)
                 .WithMany(testInstace => testInstace.Grades)
                 .HasForeignKey(grades => grades.TestInstanceId);

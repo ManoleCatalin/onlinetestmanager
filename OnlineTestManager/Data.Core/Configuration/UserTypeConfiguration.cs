@@ -6,10 +6,10 @@ namespace Data.Core.Configuration
 {
     public class UserTypeConfiguration : IEntityTypeConfiguration<UserType>
     {
-        public void Configure(EntityTypeBuilder<UserType> entity)
+        public void Configure(EntityTypeBuilder<UserType> builder)
         {
-            entity.HasKey(userType => userType.Id);
-            entity.Property(userType => userType.Type).HasMaxLength(255).IsRequired();
+            builder.HasKey(userType => userType.Id);
+            builder.Property(userType => userType.Type).HasMaxLength(255).IsRequired();
         }
     }
 }
