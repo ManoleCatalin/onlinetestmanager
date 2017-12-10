@@ -67,7 +67,6 @@ namespace TestManagementIntegrationTests.Base
                 context.TestTypes.Add(testType);
                 context.SaveChanges();
                 // ACT
-                testType.Update("normal");
                 var result = testTypeRepository.DeleteTestTypeAsync(testType.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
