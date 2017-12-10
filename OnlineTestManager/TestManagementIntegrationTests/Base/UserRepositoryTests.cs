@@ -48,9 +48,9 @@ namespace TestManagementIntegrationTests.Base
                     userType.Id
 
                 );
-                userRepository.InsertUserAsync(user).ConfigureAwait(true);
+                var userInserted = userRepository.InsertUserAsync(user).Result;
                 // ACT
-                var result =userRepository.GetUserByIdAsync(user.Id);
+                var result =userRepository.GetUserByIdAsync(userInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
