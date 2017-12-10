@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
-using Data.Persistence;
 using FluentAssertions;
+using TestManagementIntegrationTests.Base;
 using Xunit;
 
-namespace TestManagementIntegrationTests.Base
+namespace TestManagementIntegrationTests
 {
-    public class UserRepositoryTests:BaseIntegrationTest
+    public class UsersRepositoryTests : BaseIntegrationTest
     {
         [Fact]
         public void Given_Users_When_GetUsersAsyncsIsCalled_Then_ShouldReturnZeroUsers()

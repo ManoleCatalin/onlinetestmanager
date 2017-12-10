@@ -8,7 +8,7 @@ namespace TestManagementIntegrationTests.Base
 {
     public abstract class BaseIntegrationTest : IDisposable
     {
-        public virtual bool UseSqlServer => true;
+        public virtual bool UseSqlServer => false;
 
         public BaseIntegrationTest()
         {
@@ -31,7 +31,7 @@ namespace TestManagementIntegrationTests.Base
         private void RunOnMemory(Action<DatabaseContext> databaseAction)
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
-                .UseInMemoryDatabase("TodosList")
+                .UseInMemoryDatabase("TestManagement.InMemory")
                 .Options;
 
             using (var context = new DatabaseContext(options))

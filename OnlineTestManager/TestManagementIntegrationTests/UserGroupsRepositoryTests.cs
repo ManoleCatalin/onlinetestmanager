@@ -2,9 +2,10 @@
 using Business.Repository;
 using Data.Core.Domain;
 using FluentAssertions;
+using TestManagementIntegrationTests.Base;
 using Xunit;
 
-namespace TestManagementIntegrationTests.Base
+namespace TestManagementIntegrationTests
 {
     public class UserGroupsRepositoryTests : BaseIntegrationTest
     {

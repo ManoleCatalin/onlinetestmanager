@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
 using Data.Persistence;
 using FluentAssertions;
+using TestManagementIntegrationTests.Base;
 using Xunit;
 
-namespace TestManagementIntegrationTests.Base
+namespace TestManagementIntegrationTests
 {
     public class FilesRepositoryTests : BaseIntegrationTest
     {

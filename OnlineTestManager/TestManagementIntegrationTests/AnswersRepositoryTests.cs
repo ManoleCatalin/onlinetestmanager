@@ -3,9 +3,10 @@ using Business.Repository;
 using Data.Core.Domain;
 using Data.Persistence;
 using FluentAssertions;
+using TestManagementIntegrationTests.Base;
 using Xunit;
 
-namespace TestManagementIntegrationTests.Base
+namespace TestManagementIntegrationTests
 {
     public class AnswersRepositoryTests : BaseIntegrationTest
     {
