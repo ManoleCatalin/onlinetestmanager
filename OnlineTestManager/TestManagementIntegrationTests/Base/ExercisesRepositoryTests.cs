@@ -1,0 +1,164 @@
+﻿using System.Linq;
+using Business.Repository;
+using Data.Core.Domain;
+using Data.Persistence;
+using FluentAssertions;
+using Xunit;
+
+namespace TestManagementIntegrationTests.Base
+{
+    public class ExercisesRepositoryTests : BaseIntegrationTest
+    {
+        [Fact]
+        public void Given_Exercise_When_GetExercisesAsyncsIsCalled_Then_ShouldReturnZeroExercises()
+        {
+            RunOnDatabase(context =>
+            {
+                // ARRANGE 
+                var exercisesRepository = new ExercisesRepository(context);
+
+                // ACT
+                var exercise = exercisesRepository.GetExerciseAsync();
+                var counter = exercise.Result.Count;
+
+                // ASSERT
+                counter.Should().Be(0);
+            });
+        }
+
+        [Fact]
+        public void Given_Exercise_When_NewExerciseIsAdded_Then_ShouldHaveOneExerciseInDatabase()
+        {
+            RunOnDatabase(context => {
+                // ARRANGE 
+                DatabaseContext databaseContext = context;
+
+                var exercisesRepository = new ExercisesRepository(context);
+
+                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.SaveChanges();
+                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+
+                databaseContext.TestTypes.Add(TestType.Create("Grila"));
+                databaseContext.SaveChanges();
+                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+
+                if (userType != null)
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                        userType.Id));
+                databaseContext.SaveChanges();
+                var user = databaseContext.Users.ToList().FirstOrDefault();
+
+                if (user != null)
+                    if (testType != null)
+                        databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
+                            testType.Id));
+                databaseContext.SaveChanges();
+                var test = databaseContext.Tests.ToList().FirstOrDefault();
+
+
+                if (test != null)
+                {
+                    var exercise = Exercise.Create("Problema1",test.Id);
+
+                    var exerciseInserted = exercisesRepository.InsertExerciseAsync(exercise).Result;
+                    // ACT
+                    var result = exercisesRepository.GetExerciseByIdAsync(exerciseInserted.Id);
+                    // ASSERT
+                    result.Should().NotBe(null);
+                }
+            });
+        }
+
+        [Fact]
+        public void Given_Exercise_When_UpdateExerciseAsync_Then_ShouldBeTrue()
+        {
+            RunOnDatabase(context => {
+                // ARRANGE 
+                DatabaseContext databaseContext = context;
+
+                var exercisesRepository = new ExercisesRepository(context);
+
+                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.SaveChanges();
+                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+
+                databaseContext.TestTypes.Add(TestType.Create("Grila"));
+                databaseContext.SaveChanges();
+                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+
+                if (userType != null)
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                        userType.Id));
+                databaseContext.SaveChanges();
+                var user = databaseContext.Users.ToList().FirstOrDefault();
+
+                if (user != null)
+                    if (testType != null)
+                        databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
+                            testType.Id));
+                databaseContext.SaveChanges();
+                var test = databaseContext.Tests.ToList().FirstOrDefault();
+
+
+                if (test != null)
+                {
+                    var exercise = Exercise.Create("Problema1", test.Id);
+                    databaseContext.Add(exercise);
+                    databaseContext.SaveChanges();
+                    exercise.Update("Problema2",test.Id);
+                
+                    // ACT
+                    var result = exercisesRepository.UpdateExerciseAsync(exercise);
+                    // ASSERT
+                    result.Result.Should().Be(true);
+                }
+            });
+        }
+
+        [Fact]
+        public void Given_Exercise_When_DeleteExerciseAsync_Then_ShouldBeTrue()
+        {
+            RunOnDatabase(context => {
+                // ARRANGE 
+                DatabaseContext databaseContext = context;
+
+                var exercisesRepository = new ExercisesRepository(context);
+
+                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.SaveChanges();
+                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+
+                databaseContext.TestTypes.Add(TestType.Create("Grila"));
+                databaseContext.SaveChanges();
+                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+
+                if (userType != null)
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                        userType.Id));
+                databaseContext.SaveChanges();
+                var user = databaseContext.Users.ToList().FirstOrDefault();
+
+                if (user != null)
+                    if (testType != null)
+                        databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
+                            testType.Id));
+                databaseContext.SaveChanges();
+                var test = databaseContext.Tests.ToList().FirstOrDefault();
+
+
+                if (test != null)
+                {
+                    var exercise = Exercise.Create("Problema1", test.Id);
+                    databaseContext.Add(exercise);
+                    databaseContext.SaveChanges();
+
+                    // ACT
+                    var result = exercisesRepository.DeleteExerciseAsync(exercise.Id);
+                    // ASSERT
+                    result.Result.Should().Be(true);
+                }
+            });
+        }
+    }
+}
