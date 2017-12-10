@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
-using Data.Persistence;
 using FluentAssertions;
 using Xunit;
 
@@ -48,9 +45,9 @@ namespace TestManagementIntegrationTests.Base
 
                 var userGroupRepository = new UserGroupsRepository(context);
                 var userGroup = UserGroup.Create(user.Id, group.Id);
-                userGroupRepository.InsertUserGroupAsync(userGroup).ConfigureAwait(true);
+                var insertedUserGroup = userGroupRepository.InsertUserGroupAsync(userGroup).Result;
                 // ACT
-                var result = userGroupRepository.GetUserGroupAsync(user.Id, group.Id);
+                var result = userGroupRepository.GetUserGroupAsync(insertedUserGroup.UserId, insertedUserGroup.GroupId);
                 // ASSERT
                 result.Should().NotBe(null);
             });

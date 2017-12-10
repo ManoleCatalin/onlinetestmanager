@@ -58,9 +58,9 @@ namespace TestManagementIntegrationTests.Base
                 var grade = Grade.Create(7, user.Id, testInstance.Id);
 
 
-                gradesRepository.InsertGradeAsync(grade).ConfigureAwait(true);
+                var insertedGrade = gradesRepository.InsertGradeAsync(grade).Result;
                 // ACT
-                var result = gradesRepository.GetGradeAsync(user.Id, testInstance.Id);
+                var result = gradesRepository.GetGradeAsync(insertedGrade.UserId, insertedGrade.TestInstanceId);
                 // ASSERT
                 result.Should().NotBe(null);
             });
