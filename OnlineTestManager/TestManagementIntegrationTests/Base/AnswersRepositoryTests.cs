@@ -162,7 +162,6 @@ namespace TestManagementIntegrationTests.Base
                     var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
                     databaseContext.Add(answer);
                     databaseContext.SaveChanges();
-                    answer.Update("Raspuns Problema 2", false, exercise.Id);
 
                     // ACT
                     var result = answersRepository.DeleteAnswerAsync(answer.Id);
