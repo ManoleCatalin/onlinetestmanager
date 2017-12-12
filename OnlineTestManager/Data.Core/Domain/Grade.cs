@@ -4,11 +4,11 @@ namespace Data.Core.Domain
 {
     public class Grade
     {
-        public int Value { get; set; }
-        public DateTime MarkedAt { get; set; }
-        public Guid UserId { get; set; }
+        public int Value { get; private set; }
+        public DateTime MarkedAt { get; private set; }
+        public Guid UserId { get; private set; }
         public virtual User User { get; set; }
-        public Guid TestInstanceId { get; set; }
+        public Guid TestInstanceId { get; private set; }
         public virtual TestInstance TestInstance { get; set; }
 
         public static Grade Create(int value,Guid userId, Guid testInstanceId)

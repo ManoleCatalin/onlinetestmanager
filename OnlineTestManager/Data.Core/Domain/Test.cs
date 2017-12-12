@@ -4,13 +4,13 @@ namespace Data.Core.Domain
 {
     public class Test
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public Guid UserId { get; set; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public Guid UserId { get; private set; }
         public virtual User User { get; set; }
-        public Guid TestTypeId { get; set; }
+        public Guid TestTypeId { get; private set; }
         public virtual TestType TestType { get; set; }
 
         public static Test Create(string name, string description, Guid userId, Guid testTypeId)

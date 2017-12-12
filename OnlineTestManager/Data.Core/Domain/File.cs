@@ -4,11 +4,11 @@ namespace Data.Core.Domain
 {
     public class File
     {
-        public Guid Id { get; set; }
-        public string Path { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string Url { get; set; }
-        public Guid TestInstanceId { get; set; }
+        public Guid Id { get; private set; }
+        public string Path { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public string Url { get; private set; }
+        public Guid TestInstanceId { get; private set; }
         public virtual TestInstance TestInstance { get; set; }
 
         public static File Create(string path, string url, Guid testInstanceId)

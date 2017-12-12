@@ -5,9 +5,9 @@ namespace Data.Core.Domain
 {
     public class Exercise
     {
-        public Guid Id { get; set; }
-        public string Description { get; set; }
-        public Guid TestId { get; set; }
+        public Guid Id { get; private set; }
+        public string Description { get; private set; }
+        public Guid TestId { get; private set; }
         public virtual Test Test { get; set; }
         public ICollection<Answer> Answers { get; set; }
 

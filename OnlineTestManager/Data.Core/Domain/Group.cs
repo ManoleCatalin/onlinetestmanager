@@ -5,12 +5,12 @@ namespace Data.Core.Domain
 {
     public class Group
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public Guid Id { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
         public ICollection<UserGroup> UserGroups { get; set; }
-        public Guid UserId { get; set; }
+        public Guid UserId { get; private set; }
         public virtual User User { get; set; }
 
         public static Group Create(string name, string description, Guid userId)

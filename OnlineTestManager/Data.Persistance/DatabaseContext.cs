@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Persistence
 {
-    public class DatabaseContext : DbContext
+    public sealed class DatabaseContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UserType> UserTypes { get; set; }

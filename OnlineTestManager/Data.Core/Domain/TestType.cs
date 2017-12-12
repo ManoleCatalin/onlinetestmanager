@@ -4,8 +4,8 @@ namespace Data.Core.Domain
 {
     public class TestType
     {
-        public Guid Id { get; set; }
-        public string Type { get; set; }
+        public Guid Id { get; private set; }
+        public string Type { get; private set; }
 
 
         public static TestType Create(string type)
