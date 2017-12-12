@@ -14,3 +14,4 @@ namespace Data.Core.Interfaces
         Task<bool> DeleteGradeAsync(Guid userId, Guid testInstanceId);
     }
 }
+

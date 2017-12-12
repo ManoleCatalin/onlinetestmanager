@@ -2,9 +2,9 @@
 
 namespace Data.Core.Domain
 {
-    public class TestType
+    public class TestType : BaseEntity
     {
-        public Guid Id { get; private set; }
+        
         public string Type { get; private set; }
 
 

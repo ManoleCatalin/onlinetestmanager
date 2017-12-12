@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Data.Core.Domain
 {
-    public class User
+    public class User : BaseEntity
     {
-        public  Guid Id { get; private set; }
+        
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }

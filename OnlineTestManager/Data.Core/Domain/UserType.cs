@@ -2,9 +2,9 @@
 
 namespace Data.Core.Domain
 {
-    public class UserType
+    public class UserType : BaseEntity
     {
-        public Guid Id { get; private set; }
+     
         public string Type { get; private set; }
 
         public static UserType Create(string type)

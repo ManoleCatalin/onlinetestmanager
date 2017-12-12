@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var testInstancesRepository = new TestInstancesRepository(context);
 
                 // ACT
-                var testInstances = testInstancesRepository.GetTestInstancesAsync();
+                var testInstances = testInstancesRepository.GetAllAsync();
                 var counter = testInstances.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -91,9 +91,9 @@ namespace TestManagementIntegrationTests
                             testId.Id
                         );
 
-                        var testInstanceInserted = testInstancesRepository.InsertTestInstanceAsync(testInstance).Result;
+                        var testInstanceInserted = testInstancesRepository.InsertAsync(testInstance).Result;
                         // ACT
-                        var result = testInstancesRepository.GetTestInstanceByIdAsync(testInstanceInserted.Id);
+                        var result = testInstancesRepository.GetByIdAsync(testInstanceInserted.Id);
                         // ASSERT
                         result.Should().NotBe(null);
                     }
@@ -157,29 +157,25 @@ namespace TestManagementIntegrationTests
                 var testId = context.Tests.ToList().FirstOrDefault();
 
                 var testInstancesRepository = new TestInstancesRepository(context);
-                if (groupId != null)
-                {
-                    if (testId != null)
-                    {
-                        var testInstance = TestInstance.Create(
-                            "abc123",
-                            100,
-                            groupId.Id,
-                            testId.Id
-                        );
+                if (groupId == null) return;
+                if (testId == null) return;
+                var testInstance = TestInstance.Create(
+                    "abc123",
+                    100,
+                    groupId.Id,
+                    testId.Id
+                );
 
-                        context.Add(testInstance);
-                        context.SaveChanges();
+                context.Add(testInstance);
+                context.SaveChanges();
 
-                        testInstance.Update("def456", 200, groupId.Id, testId.Id);
+                testInstance.Update("def456", 200, groupId.Id, testId.Id);
 
 
-                        // ACT
-                        var result = testInstancesRepository.UpdateTestInstanceAsync(testInstance);
-                        // ASSERT
-                        result.Result.Should().Be(true);
-                    }
-                }
+                // ACT
+                var result = testInstancesRepository.UpdateAsync(testInstance);
+                // ASSERT
+                result.Result.Should().Be(true);
             });
 
         }
@@ -254,7 +250,7 @@ namespace TestManagementIntegrationTests
                         context.SaveChanges();
 
                         // ACT
-                        var result = testInstancesRepository.DeleteTestInstanceAsync(testInstance.Id);
+                        var result = testInstancesRepository.DeleteAsync(testInstance.Id);
                         // ASSERT
                         result.Result.Should().Be(true);
                     }

@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var userRepository = new UsersRepository(context);
 
                 // ACT
-                var users = userRepository.GetUsersAsync();
+                var users = userRepository.GetAllAsync();
                 var counter = users.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -36,6 +36,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
+                if (userType == null) return;
                 var user = User.Create(
                 
                   
@@ -46,9 +47,9 @@ namespace TestManagementIntegrationTests
                     userType.Id
 
                 );
-                var userInserted = userRepository.InsertUserAsync(user).Result;
+                var userInserted = userRepository.InsertAsync(user).Result;
                 // ACT
-                var result =userRepository.GetUserByIdAsync(userInserted.Id);
+                var result =userRepository.GetByIdAsync(userInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -66,6 +67,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
+                if (userType == null) return;
                 var user = User.Create(
 
 
@@ -78,11 +80,11 @@ namespace TestManagementIntegrationTests
                 );
                 context.Add(user);
                 context.SaveChanges();
-                 user.Update("Ion", "User last name", "test@test.ro", "parola",userType.Id);
+                user.Update("Ion", "User last name", "test@test.ro", "parola",userType.Id);
               
 
                 // ACT
-                var result = userRepository.UpdateUserAsync(user); 
+                var result = userRepository.UpdateAsync(user); 
                 // ASSERT
                 result.Result.Should().Be(true);
             });
@@ -101,6 +103,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
+                if (userType == null) return;
                 var user = User.Create(
 
 
@@ -117,7 +120,7 @@ namespace TestManagementIntegrationTests
 
 
                 // ACT
-                var result = userRepository.DeleteUserAsync(user.Id);
+                var result = userRepository.DeleteAsync(user.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

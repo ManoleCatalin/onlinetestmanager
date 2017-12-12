@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var groupRepository = new GroupsRepository(context);
 
                 // ACT
-                var groups = groupRepository.GetGroupsAsync();
+                var groups = groupRepository.GetAllAsync();
                 var counter = groups.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -35,32 +35,36 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var user = User.Create(
+                if (userType != null)
+                {
+                    var user = User.Create(
 
 
-                    "User1",
-                    "User last name",
-                    "test@test.ro",
-                    "parola",
-                    userType.Id
+                        "User1",
+                        "User last name",
+                        "test@test.ro",
+                        "parola",
+                        userType.Id
 
-                );
-                context.Users.Add(user);
+                    );
+                    context.Users.Add(user);
+                }
                 context.SaveChanges();
 
                 var userId = context.Users.ToList().FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
+                if (userId == null) return;
                 var group = Group.Create(
                     
                     "A2",
                     "grupa din anul III",
                     userId.Id
                 
-                    );
-                var groupInserted = groupRepository.InsertGroupAsync(group).Result;
+                );
+                var groupInserted = groupRepository.InsertAsync(@group).Result;
                 // ACT
-                var result = groupRepository.GetGroupByIdAsync(groupInserted.Id);
+                var result = groupRepository.GetByIdAsync(groupInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -78,22 +82,26 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var user = User.Create(
+                if (userType != null)
+                {
+                    var user = User.Create(
 
 
-                    "User1",
-                    "User last name",
-                    "test@test.ro",
-                    "parola",
-                    userType.Id
+                        "User1",
+                        "User last name",
+                        "test@test.ro",
+                        "parola",
+                        userType.Id
 
-                );
-                context.Users.Add(user);
+                    );
+                    context.Users.Add(user);
+                }
                 context.SaveChanges();
 
                 var userId = context.Users.ToList().FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
+                if (userId == null) return;
                 var group = Group.Create(
 
                     "A2",
@@ -102,14 +110,14 @@ namespace TestManagementIntegrationTests
 
                 );
 
-                context.Add(group);
+                context.Add(@group);
                 context.SaveChanges();
 
-                group.Update("A3", "grupa din anul I", userId.Id);
+                @group.Update("A3", "grupa din anul I", userId.Id);
 
 
                 // ACT
-                var result = groupRepository.UpdateGroupAsync(group);
+                var result = groupRepository.UpdateAsync(@group);
                 // ASSERT
                 result.Result.Should().Be(true);
             });
@@ -128,22 +136,26 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                var user = User.Create(
+                if (userType != null)
+                {
+                    var user = User.Create(
 
 
-                    "User1",
-                    "User last name",
-                    "test@test.ro",
-                    "parola",
-                    userType.Id
+                        "User1",
+                        "User last name",
+                        "test@test.ro",
+                        "parola",
+                        userType.Id
 
-                );
-                context.Users.Add(user);
+                    );
+                    context.Users.Add(user);
+                }
                 context.SaveChanges();
 
                 var userId = context.Users.ToList().FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
+                if (userId == null) return;
                 var group = Group.Create(
 
                     "A2",
@@ -152,11 +164,11 @@ namespace TestManagementIntegrationTests
 
                 );
 
-                context.Add(group);
+                context.Add(@group);
                 context.SaveChanges();
         
                 // ACT
-                var result = groupRepository.DeleteGroupAsync(group.Id);
+                var result = groupRepository.DeleteAsync(@group.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });
