@@ -2,9 +2,9 @@
 
 namespace Data.Core.Domain
 {
-    public class Answer
+    public class Answer:BaseEntity
     {
-        public Guid Id { get; private set; }
+       
         public string Description { get; private set; }
         public bool Correct { get; private set; }
         public Guid ExerciseId { get; private set; }

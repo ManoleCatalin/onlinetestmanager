@@ -2,7 +2,7 @@
 
 namespace Data.Core.Domain
 {
-    public class Grade
+    public class Grade 
     {
         public int Value { get; private set; }
         public DateTime MarkedAt { get; private set; }

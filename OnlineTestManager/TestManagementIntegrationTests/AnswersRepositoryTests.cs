@@ -18,7 +18,7 @@ namespace TestManagementIntegrationTests
                 var answersRepository = new AnswersRepository(context);
 
                 // ACT
-                var answers = answersRepository.GetAnswersAsync();
+                var answers = answersRepository.GetAllAsync();
                 var counter = answers.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -64,9 +64,9 @@ namespace TestManagementIntegrationTests
                 {
                     var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
 
-                    var answerInserted = answersRepository.InsertAnswerAsync(answer).Result;
+                    var answerInserted = answersRepository.InsertAsync(answer).Result;
                     // ACT
-                    var result = answersRepository.GetAnswerByIdAsync(answerInserted.Id);
+                    var result = answersRepository.GetByIdAsync(answerInserted.Id);
                     // ASSERT
                     result.Should().NotBe(null);
                 }
@@ -116,7 +116,7 @@ namespace TestManagementIntegrationTests
 
 
                     // ACT
-                    var result = answersRepository.UpdateAnswerAsync(answer);
+                    var result = answersRepository.UpdateAsync(answer);
                     // ASSERT
                     result.Result.Should().Be(true);
                 }
@@ -165,7 +165,7 @@ namespace TestManagementIntegrationTests
                     databaseContext.SaveChanges();
 
                     // ACT
-                    var result = answersRepository.DeleteAnswerAsync(answer.Id);
+                    var result = answersRepository.DeleteAsync(answer.Id);
                     // ASSERT
                     result.Result.Should().Be(true);
                 }

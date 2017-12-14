@@ -35,10 +35,12 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                if (userType != null)
+                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
+                if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
 
@@ -46,16 +48,19 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var testType = context.TestTypes.ToList().FirstOrDefault();
-                context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
+                if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-                context.TestInstances.Add(TestInstance.Create("Tokenel", 50, group.Id, test.Id));
+                if (@group != null)
+                    if (test != null)
+                        context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
+                if (testInstance == null) return;
                 var grade = Grade.Create(7, user.Id, testInstance.Id);
 
 
@@ -78,10 +83,12 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                if (userType != null)
+                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
+                if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
 
@@ -89,16 +96,18 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var testType = context.TestTypes.ToList().FirstOrDefault();
-                context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
+                if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-                context.TestInstances.Add(TestInstance.Create("Tokenel", 50, group.Id, test.Id));
+                if (@group != null)
+                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
+                if (testInstance == null) return;
                 var grade = Grade.Create(7, user.Id, testInstance.Id);
 
                 context.Add(grade);
@@ -126,10 +135,12 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                if (userType != null)
+                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
+                if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
 
@@ -137,27 +148,30 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var testType = context.TestTypes.ToList().FirstOrDefault();
-                context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
+                if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-                context.TestInstances.Add(TestInstance.Create("Tokenel", 50, group.Id, test.Id));
+                if (@group != null)
+                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
-                var grade = Grade.Create(7, user.Id, testInstance.Id);
+                if (testInstance != null)
+                {
+                    var grade = Grade.Create(7, user.Id, testInstance.Id);
 
-                context.Add(grade);
-                context.SaveChanges();
+                    context.Add(grade);
+                    context.SaveChanges();
 
 
-
-                // ACT
-                var result = gradesRepository.DeleteGradeAsync(grade.UserId, grade.TestInstanceId);
-                // ASSERT
-                result.Result.Should().Be(true);
+                    // ACT
+                    var result = gradesRepository.DeleteGradeAsync(grade.UserId, grade.TestInstanceId);
+                    // ASSERT
+                    result.Result.Should().Be(true);
+                }
             });
 
         }

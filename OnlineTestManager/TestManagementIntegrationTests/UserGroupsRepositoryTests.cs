@@ -36,19 +36,23 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                if (userType != null)
+                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
+                if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
                 var group = context.Groups.ToList().FirstOrDefault();
 
                 var userGroupRepository = new UserGroupsRepository(context);
-                var userGroup = UserGroup.Create(user.Id, group.Id);
+                if (@group == null) return;
+                var userGroup = UserGroup.Create(user.Id, @group.Id);
                 var insertedUserGroup = userGroupRepository.InsertUserGroupAsync(userGroup).Result;
                 // ACT
-                var result = userGroupRepository.GetUserGroupAsync(insertedUserGroup.UserId, insertedUserGroup.GroupId);
+                var result =
+                    userGroupRepository.GetUserGroupAsync(insertedUserGroup.UserId, insertedUserGroup.GroupId);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -65,23 +69,29 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
-                context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                if (userType != null)
+                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
+                if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
                 var group = context.Groups.ToList().FirstOrDefault();
 
                 var userGroupRepository = new UserGroupsRepository(context);
-                var userGroup = UserGroup.Create(user.Id, group.Id);
+                if (@group != null)
+                {
+                    var userGroup = UserGroup.Create(user.Id, @group.Id);
 
-                context.Add(userGroup);
+                    context.Add(userGroup);
+                }
                 context.SaveChanges();
 
 
                 // ACT
-                var result = userGroupRepository.DeleteUserGroupAsync(user.Id, group.Id);
+                if (@group == null) return;
+                var result = userGroupRepository.DeleteUserGroupAsync(user.Id, @group.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

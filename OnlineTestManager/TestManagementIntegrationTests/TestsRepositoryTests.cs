@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var testRepository = new TestsRepository(context);
 
                 // ACT
-                var tests = testRepository.GetTestsAsync();
+                var tests = testRepository.GetAllAsync();
                 var counter = tests.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -33,14 +33,15 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 var userType = context.UserTypes.ToList().FirstOrDefault();
 
-                context.Users.Add(User.Create(
-                    "John", 
-                    "Mark", 
-                    "john.mark@gmail.com", 
-                    "password", 
-                    userType.Id
-                    )
-                );
+                if (userType != null)
+                    context.Users.Add(User.Create(
+                            "John",
+                            "Mark",
+                            "john.mark@gmail.com",
+                            "password",
+                            userType.Id
+                        )
+                    );
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
@@ -51,15 +52,17 @@ namespace TestManagementIntegrationTests
                 var testType = context.TestTypes.ToList().FirstOrDefault();
 
                 var testsRepository = new TestsRepository(context);
+                if (user == null) return;
+                if (testType == null) return;
                 var test = Test.Create(
                     "mytest",
                     "descriere",
                     user.Id,
                     testType.Id
                 );
-                var testInserted = testsRepository.InsertTestAsync(test).Result;
+                var testInserted = testsRepository.InsertAsync(test).Result;
                 // ACT
-                var result = testsRepository.GetTestByIdAsync(testInserted.Id);
+                var result = testsRepository.GetByIdAsync(testInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -75,14 +78,15 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 var userType = context.UserTypes.ToList().FirstOrDefault();
 
-                context.Users.Add(User.Create(
-                        "John",
-                        "Mark",
-                        "john.mark@gmail.com",
-                        "password",
-                        userType.Id
-                    )
-                );
+                if (userType != null)
+                    context.Users.Add(User.Create(
+                            "John",
+                            "Mark",
+                            "john.mark@gmail.com",
+                            "password",
+                            userType.Id
+                        )
+                    );
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
@@ -93,6 +97,8 @@ namespace TestManagementIntegrationTests
                 var testType = context.TestTypes.ToList().FirstOrDefault();
                 var testsRepository = new TestsRepository(context);
 
+                if (user == null) return;
+                if (testType == null) return;
                 var test = Test.Create(
                     "mytest",
                     "descriere",
@@ -106,7 +112,7 @@ namespace TestManagementIntegrationTests
 
 
                 // ACT
-                var result = testsRepository.UpdateTestAsync(test);
+                var result = testsRepository.UpdateAsync(test);
                 // ASSERT
                 result.Result.Should().Be(true);
             });
@@ -122,14 +128,15 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 var userType = context.UserTypes.ToList().FirstOrDefault();
 
-                context.Users.Add(User.Create(
-                        "John",
-                        "Mark",
-                        "john.mark@gmail.com",
-                        "password",
-                        userType.Id
-                    )
-                );
+                if (userType != null)
+                    context.Users.Add(User.Create(
+                            "John",
+                            "Mark",
+                            "john.mark@gmail.com",
+                            "password",
+                            userType.Id
+                        )
+                    );
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
@@ -140,6 +147,8 @@ namespace TestManagementIntegrationTests
                 var testType = context.TestTypes.ToList().FirstOrDefault();
                 var testsRepository = new TestsRepository(context);
 
+                if (testType == null) return;
+                if (user == null) return;
                 var test = Test.Create(
                     "mytest",
                     "descriere",
@@ -151,7 +160,7 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
 
                 // ACT
-                var result = testsRepository.DeleteTestAsync(test.Id);
+                var result = testsRepository.DeleteAsync(test.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

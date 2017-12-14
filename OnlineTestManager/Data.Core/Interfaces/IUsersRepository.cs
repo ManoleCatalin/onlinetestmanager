@@ -7,10 +7,6 @@ namespace Data.Core.Interfaces
 {
     public interface IUsersRepository
     {
-        Task<bool> DeleteUserAsync(Guid id);
-        Task<User> GetUserByIdAsync(Guid id);
-        Task<List<User>> GetUsersAsync();
-        Task<User> InsertUserAsync(User user);
-        Task<bool> UpdateUserAsync(User user);
+        
     }
 }

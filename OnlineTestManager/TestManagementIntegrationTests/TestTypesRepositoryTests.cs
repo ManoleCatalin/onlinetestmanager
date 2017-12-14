@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var testTypesRepository = new TestTypesRepository(context);
 
                 // ACT
-                var testTypes = testTypesRepository.GetTestTypesAsync();
+                var testTypes = testTypesRepository.GetAllAsync();
                 var counter = testTypes.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -32,9 +32,9 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
                 var testTypeRepository = new TestTypesRepository(context);
                 var testType = TestType.Create("grila");
-                var testTypeInserted = testTypeRepository.InsertTestTypeAsync(testType).Result;
+                var testTypeInserted = testTypeRepository.InsertAsync(testType).Result;
                 // ACT
-                var result = testTypeRepository.GetTestTypeByIdAsync(testTypeInserted.Id);
+                var result = testTypeRepository.GetByIdAsync(testTypeInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -51,7 +51,7 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 // ACT
                 testType.Update("normal");
-                var result = testTypeRepository.UpdateTestTypeAsync(testType);
+                var result = testTypeRepository.UpdateAsync(testType);
                 // ASSERT
                 
                 result.Result.Should().Be(true);
@@ -69,7 +69,7 @@ namespace TestManagementIntegrationTests
                 context.TestTypes.Add(testType);
                 context.SaveChanges();
                 // ACT
-                var result = testTypeRepository.DeleteTestTypeAsync(testType.Id);
+                var result = testTypeRepository.DeleteAsync(testType.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

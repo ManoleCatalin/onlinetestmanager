@@ -17,7 +17,7 @@ namespace TestManagementIntegrationTests
                 var userTypesRepository = new UserTypesRepository(context);
 
                 // ACT
-                var userTypes = userTypesRepository.GetUserTypesAsync();
+                var userTypes = userTypesRepository.GetAllAsync();
                 var counter = userTypes.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -32,9 +32,9 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
                 var userTypesRepository = new UserTypesRepository(context);
                 var userType = UserType.Create("student");
-                var userTypeInserted = userTypesRepository.InsertUserTypeAsync(userType).Result;
+                var userTypeInserted = userTypesRepository.InsertAsync(userType).Result;
                 // ACT
-                var result = userTypesRepository.GetUserTypeByIdAsync(userTypeInserted.Id);
+                var result = userTypesRepository.GetByIdAsync(userTypeInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -52,7 +52,7 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 // ACT
                 userType.Update("teacher");
-                var result = userTypeRepository.UpdateUserTypeAsync(userType);
+                var result = userTypeRepository.UpdateAsync(userType);
                 // ASSERT
 
                 result.Result.Should().Be(true);
@@ -71,7 +71,7 @@ namespace TestManagementIntegrationTests
                 context.UserTypes.Add(userType);
                 context.SaveChanges();
                 // ACT
-                var result = userTypesRepository.DeleteUserTypeAsync(userType.Id);
+                var result = userTypesRepository.DeleteAsync(userType.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

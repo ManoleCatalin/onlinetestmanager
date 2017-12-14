@@ -19,7 +19,7 @@ namespace TestManagementIntegrationTests
                 var exercisesRepository = new ExercisesRepository(context);
 
                 // ACT
-                var exercise = exercisesRepository.GetExerciseAsync();
+                var exercise = exercisesRepository.GetAllAsync();
                 var counter = exercise.Result.Count;
 
                 // ASSERT
@@ -62,9 +62,9 @@ namespace TestManagementIntegrationTests
                 {
                     var exercise = Exercise.Create("Problema1",test.Id);
 
-                    var exerciseInserted = exercisesRepository.InsertExerciseAsync(exercise).Result;
+                    var exerciseInserted = exercisesRepository.InsertAsync(exercise).Result;
                     // ACT
-                    var result = exercisesRepository.GetExerciseByIdAsync(exerciseInserted.Id);
+                    var result = exercisesRepository.GetByIdAsync(exerciseInserted.Id);
                     // ASSERT
                     result.Should().NotBe(null);
                 }
@@ -110,7 +110,7 @@ namespace TestManagementIntegrationTests
                     exercise.Update("Problema2",test.Id);
                 
                     // ACT
-                    var result = exercisesRepository.UpdateExerciseAsync(exercise);
+                    var result = exercisesRepository.UpdateAsync(exercise);
                     // ASSERT
                     result.Result.Should().Be(true);
                 }
@@ -155,7 +155,7 @@ namespace TestManagementIntegrationTests
                     databaseContext.SaveChanges();
 
                     // ACT
-                    var result = exercisesRepository.DeleteExerciseAsync(exercise.Id);
+                    var result = exercisesRepository.DeleteAsync(exercise.Id);
                     // ASSERT
                     result.Result.Should().Be(true);
                 }

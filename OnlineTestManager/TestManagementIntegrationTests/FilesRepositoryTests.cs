@@ -18,27 +18,35 @@ namespace TestManagementIntegrationTests
             context.SaveChanges();
             var userType = context.UserTypes.ToList().FirstOrDefault();
 
-            context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo@gmail.com", "2G3GSDGDFG", userType.Id));
+            if (userType != null)
+                context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo@gmail.com", "2G3GSDGDFG", userType.Id));
             context.SaveChanges();
             var user = context.Users.ToList().FirstOrDefault();
 
-            context.Groups.Add(Group.Create("some group", "description", user.Id));
-            context.SaveChanges();
-            var group = context.Groups.ToList().FirstOrDefault();
+            if (user != null)
+            {
+                context.Groups.Add(Group.Create("some group", "description", user.Id));
+                context.SaveChanges();
+                var group = context.Groups.ToList().FirstOrDefault();
 
-            context.TestTypes.Add(TestType.Create("grila"));
-            context.SaveChanges();
-            var testType = context.TestTypes.ToList().FirstOrDefault();
+                context.TestTypes.Add(TestType.Create("grila"));
+                context.SaveChanges();
+                var testType = context.TestTypes.ToList().FirstOrDefault();
 
-            context.Tests.Add(Test.Create("Partial Exam Python", "No description needed", user.Id, testType.Id));
-            context.SaveChanges();
-            var test = context.Tests.ToList().FirstOrDefault();
+                if (testType != null)
+                    context.Tests.Add(Test.Create("Partial Exam Python", "No description needed", user.Id,
+                        testType.Id));
+                context.SaveChanges();
+                var test = context.Tests.ToList().FirstOrDefault();
 
-            context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, group.Id, test.Id));
+                if (@group != null)
+                    if (test != null)
+                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id));
+            }
             context.SaveChanges();
             var testInstance = context.TestInstances.ToList().FirstOrDefault();
 
-            return File.Create(path, url, testInstance.Id);
+            return testInstance != null ? File.Create(path, url, testInstance.Id) : null;
         }
 
         [Fact]
@@ -50,7 +58,7 @@ namespace TestManagementIntegrationTests
                 var filesRepository = new FilesRepository(context);
 
                 // ACT
-                var files = filesRepository.GetFilesAsync();
+                var files = filesRepository.GetAllAsync();
                 var counter = files.Result.Count;
                 // ASSERT
                 counter.Should().Be(0);
@@ -66,9 +74,9 @@ namespace TestManagementIntegrationTests
                 var filesRepository = new FilesRepository(context);
 
                 var file = CreateFile(context, "C:\\folder\\file1.txt", "/download/5jtj5gitj4jrfs");
-                var fileInserted = filesRepository.InsertFileAsync(file).Result;
+                var fileInserted = filesRepository.InsertAsync(file).Result;
                 // ACT
-                var result = filesRepository.GetFileByIdAsync(fileInserted.Id);
+                var result = filesRepository.GetByIdAsync(fileInserted.Id);
                 // ASSERT
                 result.Should().NotBe(null);
             });
@@ -86,7 +94,7 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 // ACT
                 file.Update(file.Path, "/download/xabcxsd", file.TestInstanceId);
-                var result = filesRepository.UpdateFileAsync(file);
+                var result = filesRepository.UpdateAsync(file);
                 // ASSERT
 
                 result.Result.Should().Be(true);
@@ -105,7 +113,7 @@ namespace TestManagementIntegrationTests
                 context.Files.Add(file);
                 context.SaveChanges();
                 // ACT
-                var result = filesRepository.DeleteFileAsync(file.Id);
+                var result = filesRepository.DeleteAsync(file.Id);
                 // ASSERT
                 result.Result.Should().Be(true);
             });

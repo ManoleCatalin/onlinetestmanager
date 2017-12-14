@@ -9,42 +9,15 @@ using System.Linq;
 
 namespace Business.Repository
 {
-    public class UserTypesRepository : IUserTypesRepository
+    public class UserTypesRepository :GenericRepository<UserType>, IUserTypesRepository
     {
         private readonly DatabaseContext _context;
 
-        public UserTypesRepository(DatabaseContext context)
+        public UserTypesRepository(DatabaseContext context):base(context)
         {
             _context = context;
         }
 
-        public async Task<List<UserType>> GetUserTypesAsync()
-        {
-            return await _context.UserTypes.ToListAsync();
-        }
-
-        public async Task<UserType> GetUserTypeByIdAsync(Guid id)
-        {
-            return await _context.UserTypes.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task<UserType> InsertUserTypeAsync(UserType userType)
-        {
-            _context.UserTypes.Add(userType);
-            await _context.SaveChangesAsync();
-            return userType;
-        }
-
-        public async Task<bool> UpdateUserTypeAsync(UserType userType)
-        {
-            _context.UserTypes.Update(userType);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteUserTypeAsync(Guid id)
-        {
-            _context.UserTypes.Remove(_context.UserTypes.FirstOrDefault(t => t.Id == id));
-            return await _context.SaveChangesAsync() > 0;
-        }
+      
     }
 }
