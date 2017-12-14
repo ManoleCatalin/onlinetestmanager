@@ -9,7 +9,7 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<TestInstance> builder)
         {
             builder.HasKey(testInstance => testInstance.Id);
-            builder.Property(testInstance => testInstance.ConnectionToken).HasMaxLength(255);
+            builder.Property(testInstance => testInstance.ConnectionToken).HasMaxLength(Constants.MaxLength);
             builder.Property(testInstance => testInstance.Duration).IsRequired();
         }
     }

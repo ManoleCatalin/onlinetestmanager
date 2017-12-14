@@ -9,7 +9,7 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<Answer> builder)
         {
             builder.HasKey(answer => answer.Id);
-            builder.Property(answer => answer.Description).HasMaxLength(255).IsRequired();
+            builder.Property(answer => answer.Description).HasMaxLength(Constants.MaxLength).IsRequired();
             builder.Property(answer => answer.Correct).IsRequired();
         }
     }

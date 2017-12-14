@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Data.Core.Domain;
+﻿using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace Business.Repository
 {

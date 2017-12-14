@@ -20,9 +20,8 @@ namespace Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection =
-                @"Server = .\SQLEXPRESS; Database = TestManagement.Development; Trusted_Connection = true;";
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+           
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UsersConnectionString")));
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
 

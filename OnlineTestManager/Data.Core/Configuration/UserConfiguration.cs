@@ -9,10 +9,10 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(user => user.Id);
-            builder.Property(user => user.FirstName).HasMaxLength(255).IsRequired();
-            builder.Property(user => user.LastName).HasMaxLength(255).IsRequired();
-            builder.Property(user => user.Email).HasMaxLength(255).IsRequired();
-            builder.Property(user => user.PasswordHash).HasMaxLength(255).IsRequired();  
+            builder.Property(user => user.FirstName).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(user => user.LastName).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(user => user.Email).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(user => user.PasswordHash).HasMaxLength(Constants.MaxLength).IsRequired();  
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Data.Core.Configuration
         {
             builder.HasKey(file => file.Id);
             builder.Property(file => file.CreatedAt).IsRequired();
-            builder.Property(file => file.Path).HasMaxLength(255).IsRequired();
-            builder.Property(file => file.Url).HasMaxLength(255).IsRequired();   
+            builder.Property(file => file.Path).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(file => file.Url).HasMaxLength(Constants.MaxLength).IsRequired();   
         }
     }
 }
