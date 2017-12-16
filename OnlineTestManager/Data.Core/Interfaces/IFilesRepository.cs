@@ -1,6 +1,8 @@
-﻿namespace Data.Core.Interfaces
+﻿using Data.Core.Domain;
+
+namespace Data.Core.Interfaces
 {
-    public interface IFilesRepository
+    public interface IFilesRepository : IGenericRepository<File>
     {
     }
 }

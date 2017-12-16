@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Data.Core.Configuration;
 using Data.Core.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Persistence
 {
-    public sealed class DatabaseContext : DbContext
+    public sealed class DatabaseContext : IdentityDbContext<User, UserType, Guid>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }

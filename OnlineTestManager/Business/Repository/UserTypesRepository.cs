@@ -1,18 +1,19 @@
-﻿using Data.Core.Domain;
+﻿using System;
+using System.Threading.Tasks;
+using Business.Repository.Base;
+using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Repository
 {
-    public class UserTypesRepository :GenericRepository<UserType>, IUserTypesRepository
+    public class UserTypesRepository : GenericRepository<UserType>, IUserTypesRepository
     {
-        private readonly DatabaseContext _context;
-
-        public UserTypesRepository(DatabaseContext context):base(context)
+        public UserTypesRepository(DatabaseContext context): base(context)
         {
-            _context = context;
         }
 
-      
+        public async Task<UserType> GetByNameAsync(string name) => await _entities.FirstOrDefaultAsync(x => x.Name.Equals(name));
     }
 }

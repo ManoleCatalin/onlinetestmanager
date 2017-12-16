@@ -45,7 +45,7 @@ namespace TestManagementIntegrationTests
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
                         userType.Id));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();
@@ -89,7 +89,7 @@ namespace TestManagementIntegrationTests
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
                         userType.Id));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();
@@ -135,7 +135,7 @@ namespace TestManagementIntegrationTests
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo@gmail.com", "#$$RR#$TED",
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
                         userType.Id));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();

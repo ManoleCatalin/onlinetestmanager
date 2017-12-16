@@ -1,17 +1,14 @@
-﻿using Data.Core.Domain;
+﻿using Business.Repository.Base;
+using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
 
 namespace Business.Repository
 {
-    public class UsersRepository :GenericRepository<User>, IUsersRepository
+    public class UsersRepository : GenericRepository<User>, IUsersRepository
     {
-        private readonly DatabaseContext _context;
-
-        public UsersRepository(DatabaseContext context):base(context)
+        public UsersRepository(DatabaseContext context) : base(context)
         {
-            _context = context;
         }
-
     }
 }

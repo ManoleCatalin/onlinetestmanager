@@ -36,7 +36,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 if (userType != null)
-                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                    context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
@@ -84,7 +84,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 if (userType != null)
-                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                    context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();
@@ -136,7 +136,7 @@ namespace TestManagementIntegrationTests
 
                 var userType = context.UserTypes.ToList().FirstOrDefault();
                 if (userType != null)
-                    context.Users.Add(User.Create("User1", "User last name", "test@test.ro", "parola", userType.Id));
+                    context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola", userType.Id));
                 context.SaveChanges();
 
                 var user = context.Users.ToList().FirstOrDefault();

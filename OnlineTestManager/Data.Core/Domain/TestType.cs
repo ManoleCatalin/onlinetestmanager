@@ -2,11 +2,10 @@
 
 namespace Data.Core.Domain
 {
-    public class TestType : BaseEntity
+    public class TestType : IBaseEntity
     {
-        
+        public Guid Id { get; private set; }
         public string Type { get; private set; }
-
 
         public static TestType Create(string type)
         {

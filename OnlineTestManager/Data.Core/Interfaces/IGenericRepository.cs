@@ -5,7 +5,7 @@ using Data.Core.Domain;
 
 namespace Data.Core.Interfaces
 {
-    public interface IGenericRepository<T> where T : BaseEntity
+    public interface IGenericRepository<T> where T : IBaseEntity
     {
         Task<bool> DeleteAsync(Guid id);
         Task<List<T>> GetAllAsync();

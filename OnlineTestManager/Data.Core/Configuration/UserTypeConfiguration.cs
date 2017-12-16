@@ -9,7 +9,7 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<UserType> builder)
         {
             builder.HasKey(userType => userType.Id);
-            builder.Property(userType => userType.Type).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(userType => userType.Name).HasMaxLength(Constants.MaxLength).IsRequired();
         }
     }
 }

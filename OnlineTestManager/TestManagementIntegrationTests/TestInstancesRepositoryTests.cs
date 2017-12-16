@@ -38,10 +38,9 @@ namespace TestManagementIntegrationTests
                 if (userType != null)
                 {
                     var user = User.Create(
-
-
-                        "User1",
+                        "User first name",
                         "User last name",
+                        "User",
                         "test@test.ro",
                         "parola",
                         userType.Id
@@ -116,10 +115,9 @@ namespace TestManagementIntegrationTests
                 if (userType != null)
                 {
                     var user = User.Create(
-
-
-                        "User1",
+                        "User first name",
                         "User last name",
+                        "User",
                         "test@test.ro",
                         "parola",
                         userType.Id
@@ -194,10 +192,9 @@ namespace TestManagementIntegrationTests
                 if (userType != null)
                 {
                     var user = User.Create(
-
-
-                        "User1",
+                        "User first name",
                         "User last name",
+                        "User",
                         "test@test.ro",
                         "parola",
                         userType.Id
