@@ -1,7 +1,8 @@
-﻿namespace Data.Core.Interfaces
+﻿using Data.Core.Domain;
+
+namespace Data.Core.Interfaces
 {
-    public interface IGroupsRepository
+    public interface IGroupsRepository : IGenericRepository<Group>
     {
-       
     }
 }

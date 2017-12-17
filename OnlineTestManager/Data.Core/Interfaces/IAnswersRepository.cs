@@ -2,8 +2,7 @@
 
 namespace Data.Core.Interfaces
 {
-    public interface IAnswersRepository:IGenericRepository<Answer>
-    {
-        
+    public interface IAnswersRepository : IGenericRepository<Answer>
+    {    
     }
 }

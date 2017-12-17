@@ -19,7 +19,7 @@ namespace TestManagementIntegrationTests
             var userType = context.UserTypes.ToList().FirstOrDefault();
 
             if (userType != null)
-                context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo@gmail.com", "2G3GSDGDFG", userType.Id));
+                context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "2G3GSDGDFG", userType.Id));
             context.SaveChanges();
             var user = context.Users.ToList().FirstOrDefault();
 

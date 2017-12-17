@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Data.Core.Domain
 {
-    public class TestInstance : BaseEntity
+    public class TestInstance : IBaseEntity
     {
-       
+        public Guid Id { get; private set; }
         public string ConnectionToken { get; private set; }
         public DateTime StartedAt { get; private set; }
         public int Duration { get; private set; }

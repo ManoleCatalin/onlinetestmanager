@@ -37,6 +37,7 @@ namespace TestManagementIntegrationTests
                     context.Users.Add(User.Create(
                             "John",
                             "Mark",
+                            "john.mar",
                             "john.mark@gmail.com",
                             "password",
                             userType.Id
@@ -82,6 +83,7 @@ namespace TestManagementIntegrationTests
                     context.Users.Add(User.Create(
                             "John",
                             "Mark",
+                            "john.mar",
                             "john.mark@gmail.com",
                             "password",
                             userType.Id
@@ -132,6 +134,7 @@ namespace TestManagementIntegrationTests
                     context.Users.Add(User.Create(
                             "John",
                             "Mark",
+                            "john.mark",
                             "john.mark@gmail.com",
                             "password",
                             userType.Id

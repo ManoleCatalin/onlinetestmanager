@@ -2,9 +2,9 @@
 
 namespace Data.Core.Domain
 {
-    public class File : BaseEntity
+    public class File : IBaseEntity
     {
-        
+        public Guid Id { get; private set; }
         public string Path { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public string Url { get; private set; }

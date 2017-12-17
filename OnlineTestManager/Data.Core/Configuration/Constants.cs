@@ -2,6 +2,6 @@
 {
     public static class Constants
     {
-        public static int MaxLength;
+        public static readonly int MaxLength = 255;
     }
 }
