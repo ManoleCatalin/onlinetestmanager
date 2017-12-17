@@ -235,8 +235,8 @@ namespace OTM.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = Data.Core.Domain.User.Create(//model.FirstName, 
-                    "SomeFirstName",
+                var user = Data.Core.Domain.User.Create( 
+                    model.FirstName,
                     model.LastName, 
                     model.Username, 
                     model.Email, 
