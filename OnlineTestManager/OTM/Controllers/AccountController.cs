@@ -259,6 +259,19 @@ namespace OTM.Controllers
                 AddErrors(result);
             }
 
+            var selectList = new List<SelectListItem>();
+
+            foreach (var element in _userTypesRepository.GetAllAsync().Result)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element.Id.ToString(),
+                    Text = element.Name
+                });
+            }
+
+            ViewData["UserTypes"] = selectList;
+
             // If we got this far, something failed, redisplay form
             return View(model);
         }
