@@ -5,16 +5,17 @@ namespace OTM.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+        [Display(Name = "Account type")]
         public string GuidAsString { get; set; }
 
         [Required]
         [StringLength(256)]
-        [Display(Name = "FirstName")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(256)]
-        [Display(Name = "LastName")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required]

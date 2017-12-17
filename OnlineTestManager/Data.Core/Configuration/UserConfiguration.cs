@@ -8,6 +8,7 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("Users");
             builder.HasKey(user => user.Id);
             builder.Property(user => user.FirstName).HasMaxLength(Constants.MaxLength).IsRequired();
             builder.Property(user => user.LastName).HasMaxLength(Constants.MaxLength).IsRequired();

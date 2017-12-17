@@ -29,6 +29,8 @@ namespace Data.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new AnswerConfiguration());
             modelBuilder.ApplyConfiguration(new ExerciseConfiguration());
             modelBuilder.ApplyConfiguration(new FileConfiguration());
@@ -45,7 +47,6 @@ namespace Data.Persistence
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
