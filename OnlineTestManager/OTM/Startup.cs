@@ -46,8 +46,8 @@ namespace OTM
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbSeeder>();
             services.AddTransient<IUserTypesRepository, UserTypesRepository>();
+            services.AddTransient<IGroupsRepository, GroupsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
