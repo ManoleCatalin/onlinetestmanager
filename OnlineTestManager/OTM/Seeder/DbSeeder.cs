@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Constants;
 using Data.Core.Domain;
 using Data.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -40,24 +40,16 @@ namespace OTM.Seeder
             RoleManager<UserType> roleManager,
             UserManager<User> userManager)
         {
-            var userTypes = GetUserTypes();
-            foreach (var userType in userTypes)
+            var roleNames = RoleConstants.GetRoleNames();
+            foreach (var roleName in roleNames)
             {
-                if (!await roleManager.RoleExistsAsync(userType.Name))
+                if (!await roleManager.RoleExistsAsync(roleName))
                 {
-                    await roleManager.CreateAsync(userType);
+                    await roleManager.CreateAsync(UserType.Create(roleName));
                 }
             }
 
             await db.SaveChangesAsync();
         }
-
-        private static IEnumerable<UserType> GetUserTypes()
-        {
-            var student = UserType.Create("Student");
-            var teacher = UserType.Create("Teacher");
-            return new List<UserType> {student, teacher};
-        }
-
     }
 }

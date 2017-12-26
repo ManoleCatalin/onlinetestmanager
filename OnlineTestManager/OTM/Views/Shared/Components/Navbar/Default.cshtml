@@ -1,4 +1,5 @@
-﻿@model NavbarViewModel
+﻿@using Constants
+@model NavbarViewModel
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -21,7 +22,7 @@
                 }
                 else
                 {
-                    if (Model.UserType.Name.Equals("Teacher"))
+                    if (Model.UserType.Name.Equals(RoleConstants.TeacherRoleName))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Test Templates</a></li>
@@ -29,7 +30,7 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Scheduled tests</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Grading</a></li>
                     }
-                    else if (Model.UserType.Name.Equals("Student"))
+                    else if (Model.UserType.Name.Equals(RoleConstants.StudentRoleName))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Tests</a></li>
