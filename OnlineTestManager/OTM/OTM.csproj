@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\CrosscuttingConcerns\Constants.csproj" />
     <ProjectReference Include="..\Data.Core\Data.Core.csproj" />
     <ProjectReference Include="..\Data.Persistance\Data.Persistence.csproj" />
   </ItemGroup>
