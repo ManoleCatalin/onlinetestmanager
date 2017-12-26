@@ -1,0 +1,43 @@
+﻿@model NavbarViewModel
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">OTM</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (Model.UserType == null)
+                {
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                }
+                else
+                {
+                    if (Model.UserType.Name.Equals("Teacher"))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Test Templates</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Groups</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Scheduled tests</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Grading</a></li>
+                    }
+                    else if (Model.UserType.Name.Equals("Student"))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Tests</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Grades</a></li>
+                    }
+                }
+            </ul>
+            @await Html.PartialAsync("_LoginPartial")
+        </div>
+    </div>
+</nav>

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Data.Core.Domain;
 
 namespace OTM.Models.AccountViewModels
 {
