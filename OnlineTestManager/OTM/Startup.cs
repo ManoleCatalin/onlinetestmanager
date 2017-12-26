@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTM.Seeder;
@@ -45,6 +46,9 @@ namespace OTM
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbSeeder>();
             services.AddTransient<IUserTypesRepository, UserTypesRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

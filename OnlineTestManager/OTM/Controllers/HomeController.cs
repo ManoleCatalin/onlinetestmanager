@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using OTM.Models;
 
@@ -6,6 +7,13 @@ namespace OTM.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUsersRepository _usersRepository;
+
+        public HomeController(IUsersRepository usersRepository)
+        {
+            _usersRepository = usersRepository;
+        }
+
         public IActionResult Index()
         {
             return View();
