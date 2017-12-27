@@ -31,10 +31,10 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
                 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(
@@ -42,10 +42,8 @@ namespace TestManagementIntegrationTests
                     "User last name",
                     "User1",
                     "test@test.ro",
-                    "parola",
-                    userType.Id
+                    "parola");
 
-                );
                 var userInserted = userRepository.InsertAsync(user).Result;
                 // ACT
                 var result =userRepository.GetByIdAsync(userInserted.Id);
@@ -61,10 +59,10 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(
@@ -72,13 +70,11 @@ namespace TestManagementIntegrationTests
                     "User last name",
                     "User1",
                     "test@test.ro",
-                    "parola",
-                    userType.Id
-
+                    "parola"
                 );
                 context.Add(user);
                 context.SaveChanges();
-                user.Update("Ion", "Popescu", "IPopescu", "test@test.ro", "parola",userType.Id);
+                user.Update("Ion", "Popescu", "IPopescu", "test@test.ro", "parola");
              
                 // ACT
                 var result = userRepository.UpdateAsync(user); 
@@ -94,10 +90,10 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context => {
                 // ARRANGE 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(
@@ -105,9 +101,7 @@ namespace TestManagementIntegrationTests
                     "User last name",
                     "User1",
                     "test@test.ro",
-                    "parola",
-                    userType.Id
-
+                    "parola"
                 );
                 context.Add(user);
                 context.SaveChanges();

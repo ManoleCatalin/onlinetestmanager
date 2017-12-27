@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Persistence
 {
-    public sealed class DatabaseContext : IdentityDbContext<User, UserType, Guid>
+    public sealed class DatabaseContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
@@ -19,7 +18,6 @@ namespace Data.Persistence
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Answer> Answers { get; set; }
-        
         
        
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -41,7 +39,8 @@ namespace Data.Persistence
             modelBuilder.ApplyConfiguration(new TestTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserGroupConfiguration());
-            modelBuilder.ApplyConfiguration(new UserTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

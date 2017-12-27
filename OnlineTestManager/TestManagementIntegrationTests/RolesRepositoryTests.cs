@@ -6,7 +6,7 @@ using Xunit;
 
 namespace TestManagementIntegrationTests
 {
-    public class UserTypesRepositoryTests : BaseIntegrationTest
+    public class RolesRepositoryTests : BaseIntegrationTest
     {
         [Fact]
         public void Given_UserTypes_When_GetUserTypesAsyncsIsCalled_Then_ShouldReturnZeroUserTypes()
@@ -14,7 +14,7 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context =>
             {
                 // ARRANGE 
-                var userTypesRepository = new UserTypesRepository(context);
+                var userTypesRepository = new RolesRepository(context);
 
                 // ACT
                 var userTypes = userTypesRepository.GetAllAsync();
@@ -30,8 +30,8 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context =>
             {
                 // ARRANGE 
-                var userTypesRepository = new UserTypesRepository(context);
-                var userType = UserType.Create("student");
+                var userTypesRepository = new RolesRepository(context);
+                var userType = Role.Create("student");
                 var userTypeInserted = userTypesRepository.InsertAsync(userType).Result;
                 // ACT
                 var result = userTypesRepository.GetByIdAsync(userTypeInserted.Id);
@@ -46,9 +46,9 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context =>
             {
                 // ARRANGE 
-                var userTypeRepository = new UserTypesRepository(context);
-                var userType = UserType.Create("student");
-                context.UserTypes.Add(userType);
+                var userTypeRepository = new RolesRepository(context);
+                var userType = Role.Create("student");
+                context.Roles.Add(userType);
                 context.SaveChanges();
                 // ACT
                 userType.Update("teacher");
@@ -66,9 +66,9 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context =>
             {
                 // ARRANGE 
-                var userTypesRepository = new UserTypesRepository(context);
-                var userType = UserType.Create("student");
-                context.UserTypes.Add(userType);
+                var userTypesRepository = new RolesRepository(context);
+                var userType = Role.Create("student");
+                context.Roles.Add(userType);
                 context.SaveChanges();
                 // ACT
                 var result = userTypesRepository.DeleteAsync(userType.Id);

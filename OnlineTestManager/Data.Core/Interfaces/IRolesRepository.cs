@@ -2,7 +2,7 @@
 
 namespace Data.Core.Interfaces
 {
-    public interface IUserTypesRepository : IGenericRepository<UserType>
+    public interface IRolesRepository : IGenericRepository<Role>
     {
     }
 }

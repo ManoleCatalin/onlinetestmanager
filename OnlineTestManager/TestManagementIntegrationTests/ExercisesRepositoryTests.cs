@@ -36,17 +36,16 @@ namespace TestManagementIntegrationTests
 
                 var exercisesRepository = new ExercisesRepository(context);
 
-                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.ToList().FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
-                        userType.Id));
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();
 
@@ -80,17 +79,16 @@ namespace TestManagementIntegrationTests
 
                 var exercisesRepository = new ExercisesRepository(context);
 
-                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.ToList().FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
-                        userType.Id));
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();
 
@@ -126,17 +124,16 @@ namespace TestManagementIntegrationTests
 
                 var exercisesRepository = new ExercisesRepository(context);
 
-                databaseContext.UserTypes.Add(UserType.Create("student"));
+                databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.UserTypes.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.ToList().FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
                 var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
 
                 if (userType != null)
-                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED",
-                        userType.Id));
+                    databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
                 var user = databaseContext.Users.ToList().FirstOrDefault();
 

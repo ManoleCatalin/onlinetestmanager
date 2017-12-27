@@ -5,7 +5,7 @@ namespace OTM.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Display(Name = "Account type")]
-        public string GuidAsString { get; set; }
+        public string Role { get; set; }
 
         [Required]
         [StringLength(256)]

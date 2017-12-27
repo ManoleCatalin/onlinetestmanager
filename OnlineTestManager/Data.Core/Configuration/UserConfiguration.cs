@@ -10,6 +10,12 @@ namespace Data.Core.Configuration
         {
             builder.ToTable("Users");
             builder.HasKey(user => user.Id);
+
+            builder
+                .HasOne(a => a.UserRole)
+                .WithOne(b => b.User)
+                .HasForeignKey<UserRole>(b => b.UserId);
+
             builder.Property(user => user.FirstName).HasMaxLength(Constants.MaxLength).IsRequired();
             builder.Property(user => user.LastName).HasMaxLength(Constants.MaxLength).IsRequired();
             builder.Property(user => user.Email).HasMaxLength(Constants.MaxLength).IsRequired();
