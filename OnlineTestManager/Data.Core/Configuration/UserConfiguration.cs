@@ -1,4 +1,5 @@
-﻿using Data.Core.Domain;
+﻿using Constants;
+using Data.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,10 +17,10 @@ namespace Data.Core.Configuration
                 .WithOne(b => b.User)
                 .HasForeignKey<UserRole>(b => b.UserId);
 
-            builder.Property(user => user.FirstName).HasMaxLength(Constants.MaxLength).IsRequired();
-            builder.Property(user => user.LastName).HasMaxLength(Constants.MaxLength).IsRequired();
-            builder.Property(user => user.Email).HasMaxLength(Constants.MaxLength).IsRequired();
-            builder.Property(user => user.PasswordHash).HasMaxLength(Constants.MaxLength).IsRequired();  
+            builder.Property(user => user.FirstName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
+            builder.Property(user => user.LastName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
+            builder.Property(user => user.Email).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
+            builder.Property(user => user.PasswordHash).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();  
         }
     }
 }
