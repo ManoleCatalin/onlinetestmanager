@@ -25,24 +25,24 @@ namespace Data.Persistence
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.ApplyConfiguration(new AnswerConfiguration());
-            modelBuilder.ApplyConfiguration(new ExerciseConfiguration());
-            modelBuilder.ApplyConfiguration(new FileConfiguration());
-            modelBuilder.ApplyConfiguration(new GradeConfiguration());
-            modelBuilder.ApplyConfiguration(new GroupConfiguration());
-            modelBuilder.ApplyConfiguration(new TestConfiguration());
-            modelBuilder.ApplyConfiguration(new TestInstanceConfiguration());
-            modelBuilder.ApplyConfiguration(new TestTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new UserGroupConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new AnswerConfiguration());
+            builder.ApplyConfiguration(new ExerciseConfiguration());
+            builder.ApplyConfiguration(new FileConfiguration());
+            builder.ApplyConfiguration(new GradeConfiguration());
+            builder.ApplyConfiguration(new GroupConfiguration());
+            builder.ApplyConfiguration(new TestConfiguration());
+            builder.ApplyConfiguration(new TestInstanceConfiguration());
+            builder.ApplyConfiguration(new TestTypeConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserGroupConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
 
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }

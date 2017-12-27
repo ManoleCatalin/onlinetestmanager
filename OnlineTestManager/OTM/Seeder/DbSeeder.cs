@@ -13,11 +13,8 @@ namespace OTM.Seeder
 {
     public class DbSeeder
     {
-        readonly ILogger _logger;
-
-        public DbSeeder(ILoggerFactory loggerFactory)
+        public DbSeeder()
         {
-            _logger = loggerFactory.CreateLogger("CustomersDbSeederLogger");
         }
 
         public async Task SeedAsync(IServiceProvider serviceProvider,
@@ -32,7 +29,6 @@ namespace OTM.Seeder
                 {
                     await InsertCustomersSampleData(service, roleManager, userManager);
                 }
-
             }
         }
 

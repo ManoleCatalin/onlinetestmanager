@@ -2,7 +2,7 @@
 
 namespace Constants
 {
-    public class RoleConstants
+    public static class RoleConstants
     {
         private static readonly string[] RoleNames = { "Teacher", "Student" };
 

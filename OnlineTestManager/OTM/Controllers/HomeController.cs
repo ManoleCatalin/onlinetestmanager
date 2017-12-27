@@ -7,11 +7,8 @@ namespace OTM.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUsersRepository _usersRepository;
-
-        public HomeController(IUsersRepository usersRepository)
+        public HomeController()
         {
-            _usersRepository = usersRepository;
         }
 
         public IActionResult Index()

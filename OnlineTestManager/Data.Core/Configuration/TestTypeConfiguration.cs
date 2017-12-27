@@ -1,4 +1,5 @@
-﻿using Data.Core.Domain;
+﻿using Constants;
+using Data.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,7 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<TestType> builder)
         {
             builder.HasKey(testType => testType.Id);
-            builder.Property(testType => testType.Type).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(testType => testType.Type).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
         }
     }
 }

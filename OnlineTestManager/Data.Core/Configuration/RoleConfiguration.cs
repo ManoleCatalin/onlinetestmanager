@@ -1,4 +1,5 @@
-﻿using Data.Core.Domain;
+﻿using Constants;
+using Data.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +11,7 @@ namespace Data.Core.Configuration
         {
             builder.ToTable("Role");
             builder.HasKey(role => role.Id);
-            builder.Property(role => role.Name).HasMaxLength(Constants.MaxLength).IsRequired();
+            builder.Property(role => role.Name).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
         }
     }
 }
