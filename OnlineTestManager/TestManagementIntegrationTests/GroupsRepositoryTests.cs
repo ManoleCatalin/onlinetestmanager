@@ -31,10 +31,10 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -42,9 +42,7 @@ namespace TestManagementIntegrationTests
                         "User last name",
                         "User",
                         "test@test.ro",
-                        "parola",
-                        userType.Id
-
+                        "parola"
                     );
                     context.Users.Add(user);
                 }
@@ -77,10 +75,10 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -88,9 +86,7 @@ namespace TestManagementIntegrationTests
                         "User last name",
                         "User",
                         "test@test.ro",
-                        "parola",
-                        userType.Id
-
+                        "parola"
                     );
                     context.Users.Add(user);
                 }
@@ -130,10 +126,10 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
 
 
-                context.UserTypes.Add(UserType.Create("student"));
+                context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.UserTypes.ToList().FirstOrDefault();
+                var userType = context.Roles.ToList().FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -141,9 +137,7 @@ namespace TestManagementIntegrationTests
                         "User last name",
                         "User",
                         "test@test.ro",
-                        "parola",
-                        userType.Id
-
+                        "parola"
                     );
                     context.Users.Add(user);
                 }

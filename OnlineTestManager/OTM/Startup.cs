@@ -30,7 +30,7 @@ namespace OTM
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, UserType>(options => {
+            services.AddIdentity<User, Role>(options => {
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 6;
                     options.Password.RequireNonAlphanumeric = false;
@@ -45,7 +45,7 @@ namespace OTM
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbSeeder>();
-            services.AddTransient<IUserTypesRepository, UserTypesRepository>();
+            services.AddTransient<IRolesRepository, RolesRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -80,7 +80,7 @@ namespace OTM
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetService<DatabaseContext>();
-                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<UserType>>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
 
                 dbContext.Database.Migrate();

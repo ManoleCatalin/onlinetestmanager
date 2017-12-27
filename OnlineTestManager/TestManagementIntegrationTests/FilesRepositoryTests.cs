@@ -14,12 +14,12 @@ namespace TestManagementIntegrationTests
 
         public File CreateFile(DatabaseContext context, string path, string url)
         {
-            context.UserTypes.Add(UserType.Create("teacher"));
+            context.Roles.Add(Role.Create("teacher"));
             context.SaveChanges();
-            var userType = context.UserTypes.ToList().FirstOrDefault();
+            var userType = context.Roles.ToList().FirstOrDefault();
 
             if (userType != null)
-                context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "2G3GSDGDFG", userType.Id));
+                context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "2G3GSDGDFG"));
             context.SaveChanges();
             var user = context.Users.ToList().FirstOrDefault();
 

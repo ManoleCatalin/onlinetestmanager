@@ -21,14 +21,14 @@ namespace OTM.Seeder
         }
 
         public async Task SeedAsync(IServiceProvider serviceProvider,
-            RoleManager<UserType> roleManager,
+            RoleManager<Role> roleManager,
             UserManager<User> userManager)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var service = serviceScope.ServiceProvider.GetService<DatabaseContext>();
 
-                if (!await service.UserTypes.AnyAsync())
+                if (!await service.Roles.AnyAsync())
                 {
                     await InsertCustomersSampleData(service, roleManager, userManager);
                 }
@@ -37,7 +37,7 @@ namespace OTM.Seeder
         }
 
         public async Task InsertCustomersSampleData(DatabaseContext db,
-            RoleManager<UserType> roleManager,
+            RoleManager<Role> roleManager,
             UserManager<User> userManager)
         {
             var roleNames = RoleConstants.GetRoleNames();
@@ -45,7 +45,7 @@ namespace OTM.Seeder
             {
                 if (!await roleManager.RoleExistsAsync(roleName))
                 {
-                    await roleManager.CreateAsync(UserType.Create(roleName));
+                    await roleManager.CreateAsync(Role.Create(roleName));
                 }
             }
 

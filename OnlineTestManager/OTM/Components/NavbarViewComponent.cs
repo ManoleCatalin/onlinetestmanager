@@ -33,7 +33,7 @@ namespace OTM.Components
 
             var model = new NavbarViewModel()
             {
-                UserType = user?.UserType
+                Role = user?.UserRole.Role
             };
 
             return View(model);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Data.Core.Domain;
@@ -23,20 +24,20 @@ namespace OTM.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
-        private readonly IUserTypesRepository _userTypesRepository;
+        private readonly IRolesRepository _rolesRepository;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IUserTypesRepository userTypesRepository)
+            IRolesRepository rolesRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
-            _userTypesRepository = userTypesRepository;
+            _rolesRepository = rolesRepository;
         }
 
         [TempData]
@@ -199,6 +200,17 @@ namespace OTM.Controllers
             }
         }
 
+        private List<SelectListItem> GetSelectListWithRoles()
+        {
+            return _rolesRepository.GetAllAsync()
+                .Result.Select(element => new SelectListItem
+                {
+                    Value = element.Name,
+                    Text = element.Name
+                })
+                .ToList();
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -210,18 +222,7 @@ namespace OTM.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-            var selectList = new List<SelectListItem>();
-
-            foreach (var element in _userTypesRepository.GetAllAsync().Result)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = element.Id.ToString(),
-                    Text = element.Name
-                });
-            }
-
-            ViewData["UserTypes"] = selectList;
+            ViewData["Roles"] = GetSelectListWithRoles();
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -240,12 +241,13 @@ namespace OTM.Controllers
                     model.LastName, 
                     model.Username, 
                     model.Email, 
-                    model.Password,
-                    Guid.Parse(model.GuidAsString));
+                    model.Password);
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, model.Role);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -259,18 +261,7 @@ namespace OTM.Controllers
                 AddErrors(result);
             }
 
-            var selectList = new List<SelectListItem>();
-
-            foreach (var element in _userTypesRepository.GetAllAsync().Result)
-            {
-                selectList.Add(new SelectListItem
-                {
-                    Value = element.Id.ToString(),
-                    Text = element.Name
-                });
-            }
-
-            ViewData["UserTypes"] = selectList;
+            ViewData["Roles"] = GetSelectListWithRoles();
 
             // If we got this far, something failed, redisplay form
             return View(model);

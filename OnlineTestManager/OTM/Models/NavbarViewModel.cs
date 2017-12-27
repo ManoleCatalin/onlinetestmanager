@@ -4,6 +4,6 @@ namespace OTM.Models
 {
     public class NavbarViewModel
     {
-        public UserType UserType { get; set; }
+        public Role Role { get; set; }
     }
 }

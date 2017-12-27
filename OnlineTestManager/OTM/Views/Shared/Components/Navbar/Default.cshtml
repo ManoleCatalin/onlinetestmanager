@@ -14,7 +14,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                @if (Model.UserType == null)
+                @if (Model.Role == null)
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
@@ -22,7 +22,7 @@
                 }
                 else
                 {
-                    if (Model.UserType.Name.Equals(RoleConstants.TeacherRoleName))
+                    if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Test Templates</a></li>
@@ -30,7 +30,7 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Scheduled tests</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Grading</a></li>
                     }
-                    else if (Model.UserType.Name.Equals(RoleConstants.StudentRoleName))
+                    else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Tests</a></li>
