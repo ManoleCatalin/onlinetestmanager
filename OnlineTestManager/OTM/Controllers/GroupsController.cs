@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using Constants;
 using Microsoft.AspNetCore.Mvc;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
+using Data.Core.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using OTM.Controllers.Base;
+using OTM.Models.GroupViewModels;
 
 namespace OTM.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = RoleConstants.TeacherRoleName)]
     [Route("[Controller]/[Action]")]
-    public class GroupsController : Controller
+    public class GroupsController : BaseController
     {
         private readonly IGroupsRepository _context;
-        private Guid userId;
+        private readonly Guid _userId;
 
-
-        public GroupsController(IGroupsRepository context, IHttpContextAccessor httpContextAccessor)
+        public GroupsController(IGroupsRepository context, IHttpContextAccessor httpContextAccessor, INotificationHandler<DomainNotification> notifications) : base(notifications)
         {
             _context = context;
-            userId = new Guid(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            _userId = new Guid(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
 
         // GET: Groups
@@ -44,8 +49,6 @@ namespace OTM.Controllers
         // GET: Groups/Create
         public IActionResult Create()
         {
-           
-            
             return View();
         }
 
@@ -54,14 +57,16 @@ namespace OTM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(string name,string description)
+        public async Task<IActionResult> Create(CreateGroupViewModel createGroupViewModel)
         {
-            var createdGroup = Group.Create(name, description, userId);
-            ViewBag.userId = userId;
-            if (ModelState.IsValid) //return View(createdGroup);
-            _context.InsertAsync(createdGroup);
+            if (!ModelState.IsValid) return View(createGroupViewModel);
 
-            return RedirectToAction("Index", "Groups");
+            var createdGroup = Group.Create(createGroupViewModel.Name, createGroupViewModel.Description, _userId);
+            await _context.InsertAsync(createdGroup);
+
+            if (IsValidOperation())
+                ViewBag.Sucesso = "Group Created!";
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Groups/Edit/5
@@ -82,20 +87,18 @@ namespace OTM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, string name, string description)
+        public async Task<IActionResult> Edit(Guid id, string name, string description)
         {
             
             var updatedGroup = _context.GetByIdAsync(id).Result;
-            updatedGroup.Update(name,description,userId) ;
-           
-
+            updatedGroup.Update(name,description,_userId) ;
 
             if (ModelState.IsValid)
             {
-                _context.UpdateAsync(updatedGroup);
+                await _context.UpdateAsync(updatedGroup);
                 
             }
-            return RedirectToAction("Index","Groups");
+            return RedirectToAction(nameof(Index));
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", @group.UserId);
             // return View(updatedGroup);
         }
@@ -115,11 +118,11 @@ namespace OTM.Controllers
         // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             
-            _context.DeleteAsync(id);
-            return RedirectToAction("Index", "Groups");
+            await _context.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

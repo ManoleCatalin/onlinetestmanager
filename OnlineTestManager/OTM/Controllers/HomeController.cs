@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using OTM.Models;
 

@@ -3,6 +3,7 @@ using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,8 @@ namespace OTM
             services.AddTransient<IGroupsRepository, GroupsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddMediatR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

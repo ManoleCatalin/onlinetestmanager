@@ -5,12 +5,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
+using Data.Core.Notifications;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using OTM.Controllers.Base;
 using OTM.Models.AccountViewModels;
 using OTM.Services;
 
@@ -18,7 +21,7 @@ namespace OTM.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -31,7 +34,8 @@ namespace OTM.Controllers
             SignInManager<User> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IRolesRepository rolesRepository)
+            IRolesRepository rolesRepository,
+            INotificationHandler<DomainNotification> notifications) : base(notifications)
         {
             _userManager = userManager;
             _signInManager = signInManager;
