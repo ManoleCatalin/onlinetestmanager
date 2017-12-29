@@ -1,43 +1,54 @@
 ﻿using System;
-using System.Security.Claims;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Constants;
 using Microsoft.AspNetCore.Mvc;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
-using Data.Core.Notifications;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using OTM.Controllers.Base;
+using OTM.DTOs;
 using OTM.Models.GroupViewModels;
+using OTM.UserContext;
 
 namespace OTM.Controllers
 {
-    [Authorize(Roles = RoleConstants.TeacherRoleName)]
+   [Authorize(Roles = RoleConstants.TeacherRoleName)]
     [Route("[Controller]/[Action]")]
-    public class GroupsController : BaseController
+    public class GroupsController : Controller
     {
-        private readonly IGroupsRepository _context;
+        private readonly IMapper _mapper;
+        private readonly IGroupsRepository _groupsRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly Guid _userId;
 
-        public GroupsController(IGroupsRepository context, IHttpContextAccessor httpContextAccessor, INotificationHandler<DomainNotification> notifications) : base(notifications)
+        public GroupsController(
+            IMapper mapper,
+            IGroupsRepository groupsRepository,
+            IUserContext userContext, 
+            IUsersRepository usersRepository) 
         {
-            _context = context;
-            _userId = new Guid(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            _mapper = mapper;
+            _groupsRepository = groupsRepository;
+            _usersRepository = usersRepository;
+
+            var userId = userContext.GetLogedInUserId();
+            if (userId == null)
+            {
+                throw new ApplicationException("userId is null");
+            }
+            _userId = (Guid)userId;
         }
 
-        // GET: Groups
         public IActionResult Index()
         {
-            var groups = _context.GetAllAsync().Result;
+            var groups = _groupsRepository.GetAllGroupsOfTeacherAsync(_userId).Result;
             return View(groups);
         }
 
-        // GET: Groups/Details/5
         public IActionResult Details(Guid id)
         {
-            var group = _context.GetByIdAsync(id).Result;
+            var group = _groupsRepository.GetByIdAsync(id).Result;
             if (group == null)
             {
                 return NotFound();
@@ -46,67 +57,79 @@ namespace OTM.Controllers
             return View(group);
         }
 
-        // GET: Groups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Groups/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateGroupViewModel createGroupViewModel)
         {
-            if (!ModelState.IsValid) return View(createGroupViewModel);
+            if (!ModelState.IsValid)
+                return View(createGroupViewModel);
 
-            var createdGroup = Group.Create(createGroupViewModel.Name, createGroupViewModel.Description, _userId);
-            await _context.InsertAsync(createdGroup);
+            var groupToCreate = Group.Create(createGroupViewModel.Name, 
+                                             createGroupViewModel.Description,
+                                             _userId);
 
-            if (IsValidOperation())
-                ViewBag.Sucesso = "Group Created!";
+            await _groupsRepository.InsertAsync(groupToCreate);
+
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Groups/Edit/5
         public IActionResult Edit(Guid id)
         {
-
-            var group = _context.GetByIdAsync(id).Result;
+            var group = _groupsRepository.GetByIdAsync(id).Result;
             if (group == null)
             {
                 return NotFound();
             }
 
-            return View(group);
+            var editGroupViewModel = _mapper.Map<EditGroupViewModel>(group);
+
+            var userGroupsEnumerator = new List<UserGroup>(group.UserGroups);
+            var userList = new List<User>();
+            foreach (var userGroup in userGroupsEnumerator)
+            {
+                userList.Add(userGroup.User);
+            }
+
+            var studentsList = Mapper.Map<List<EditStudentInGroup>>(userList);
+    
+
+            editGroupViewModel.Students = studentsList;
+
+            return View(editGroupViewModel);
         }
 
-        // POST: Groups/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, string name, string description)
+        public async Task<IActionResult> Edit(EditGroupViewModel editGroupViewModel)
         {
-            
-            var updatedGroup = _context.GetByIdAsync(id).Result;
-            updatedGroup.Update(name,description,_userId) ;
+            var updatedGroup = _groupsRepository.GetByIdAsync(editGroupViewModel.Id).Result;
+
+            updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
 
             if (ModelState.IsValid)
             {
-                await _context.UpdateAsync(updatedGroup);
-                
+                await _groupsRepository.UpdateAsync(updatedGroup);
             }
             return RedirectToAction(nameof(Index));
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", @group.UserId);
-            // return View(updatedGroup);
         }
 
-        // GET: Groups/Delete/5
+        [HttpPost]
+        [HttpGet]
+        public JsonResult StudentNameAutoComplete(string prefix)
+        {
+            var students = Mapper.Map<List<EditStudentInGroup>>(_usersRepository.GetStudentsByNamePrefixAsync(prefix).Result);
+
+            return Json(students);
+        }
+
         public IActionResult Delete(Guid id)
         {
-            var group = _context.GetByIdAsync(id).Result;
+            var group = _groupsRepository.GetByIdAsync(id).Result;
             if (group == null)
             {
                 return NotFound();
@@ -115,14 +138,87 @@ namespace OTM.Controllers
             return View(group);
         }
 
-        // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            
-            await _context.DeleteAsync(id);
+
+            await _groupsRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [ActionName("RemoveStudentFromGroup")]
+        public IActionResult RemoveStudentFromGroup(Guid groupId, Guid studentId)
+        {
+            var user = _usersRepository.GetByIdAsync(studentId).Result;
+            if (user.Id != studentId)
+            {
+                return NotFound();
+            }
+
+            var group = _groupsRepository.GetByIdAsync(groupId).Result;
+
+            var removeStudentFromGroupViewModel = new RemoveStudentFromGroupViewModel{GroupId = groupId,
+                StudentId = studentId,
+                StudentName = user.UserName,
+                GroupName = group.Name
+            };
+
+            return View(removeStudentFromGroupViewModel);
+        }
+
+        [HttpPost]
+        [ActionName("RemoveStudentFromGroup")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveStudentFromGroupConfirmed(RemoveStudentFromGroupViewModel removeStudentFromGroupViewModel)
+        {
+            var deleted = await _groupsRepository
+                .DeleteStudentAsync(removeStudentFromGroupViewModel.GroupId, removeStudentFromGroupViewModel.StudentId);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Edit), new { id = removeStudentFromGroupViewModel.GroupId });
+        }
+
+        public IActionResult AddStudentToGroup(Guid id)
+        {
+            var addStudentToGroup = new AddStudentToGroupViewModel {GroupId = id };
+            return View(addStudentToGroup);
+        }
+
+
+        [HttpPost, ActionName("AddStudentToGroup")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddStudentToGroup(AddStudentToGroupViewModel addStudentToGroupViewModel)
+        {
+            var students =await _usersRepository.GetStudentsByNamePrefixAsync(addStudentToGroupViewModel.StudentName);
+
+            if (students.Count != 1 || !students[0].UserName.Equals(addStudentToGroupViewModel.StudentName))
+            {
+                return NotFound();
+            }
+
+            var group = _groupsRepository.GetByIdAsync(addStudentToGroupViewModel.GroupId).Result;
+            foreach (var userGroup in group.UserGroups)
+            {
+                if (userGroup.User.UserName.Equals(addStudentToGroupViewModel.StudentName))
+                {
+                    ModelState.AddModelError("StudentName", "This user is already in this group");
+                    return View(addStudentToGroupViewModel);
+                }
+            }
+
+            var inserted = await _groupsRepository
+                .InsertStudentAsync(addStudentToGroupViewModel.GroupId, students[0].Id);
+            if (!inserted)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(AddStudentToGroup), new {id = addStudentToGroupViewModel.GroupId});
         }
     }
 }

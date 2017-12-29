@@ -15,7 +15,8 @@ namespace Data.Core.Configuration
             builder
                 .HasOne(a => a.UserRole)
                 .WithOne(b => b.User)
-                .HasForeignKey<UserRole>(b => b.UserId);
+                .HasForeignKey<UserRole>(b => b.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(user => user.FirstName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(user => user.LastName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();

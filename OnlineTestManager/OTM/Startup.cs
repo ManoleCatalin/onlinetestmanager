@@ -1,9 +1,9 @@
-﻿using Business.Repository;
+﻿using AutoMapper;
+using Business.Repository;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTM.Seeder;
 using OTM.Services;
+using OTM.UserContext;
 
 namespace OTM
 {
@@ -40,7 +41,8 @@ namespace OTM
                 })
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
-   
+
+            services.AddAutoMapper();
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             // Add application services.
@@ -49,9 +51,9 @@ namespace OTM
             services.AddTransient<IRolesRepository, RolesRepository>();
             services.AddTransient<IGroupsRepository, GroupsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IUserContext, UserContext.UserContext>();
 
-            services.AddMediatR();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

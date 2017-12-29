@@ -1,5 +1,4 @@
-﻿@model Data.Core.Domain.Group
-
+﻿@model OTM.Models.GroupViewModels.EditGroupViewModel
 
 <!DOCTYPE html>
 
@@ -10,13 +9,12 @@
 </head>
 <body>
 
-<h4>Group</h4>
+<h4>Edit Groups</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -31,15 +29,47 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Students)
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        <a asp-action="RemoveStudentFromGroup" asp-route-groupId="@Model.Id" asp-route-studentId="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+    
+<p>
+    <a asp-action="AddStudentToGroup" asp-route-id="@Model.Id">Add students to this group</a>
+</p>
+
+<div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
 </body>
 </html>

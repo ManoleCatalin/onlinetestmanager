@@ -15,7 +15,8 @@ namespace Data.Core.Configuration
             builder
                 .HasOne(t => t.Role)
                 .WithMany(t => t.UserRoles)
-                .HasForeignKey(t => t.RoleId);
+                .HasForeignKey(t => t.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
