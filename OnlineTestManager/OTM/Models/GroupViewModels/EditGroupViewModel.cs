@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OTM.Models.GroupViewModels
 {
@@ -11,6 +12,7 @@ namespace OTM.Models.GroupViewModels
 
     public class EditGroupViewModel
     {
+        [HiddenInput]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

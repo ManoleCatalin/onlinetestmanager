@@ -5,7 +5,7 @@ using Consts = Constants.CoreConfigurationConstants;
 
 namespace OTM.Validators
 {
-    public class EditGroupValidator : AbstractValidator<CreateGroupViewModel>
+    public class EditGroupValidator : AbstractValidator<EditGroupViewModel>
     {
         public EditGroupValidator()
         {
