@@ -15,12 +15,14 @@ namespace Data.Core.Configuration
             builder
                 .HasOne(grades => grades.User)
                 .WithMany(user => user.Grades)
-                .HasForeignKey(grades => grades.UserId);
+                .HasForeignKey(grades => grades.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(grades => grades.TestInstance)
                 .WithMany(testInstace => testInstace.Grades)
-                .HasForeignKey(grades => grades.TestInstanceId);
+                .HasForeignKey(grades => grades.TestInstanceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

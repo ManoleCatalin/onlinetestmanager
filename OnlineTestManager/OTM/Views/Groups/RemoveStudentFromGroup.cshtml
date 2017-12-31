@@ -1,0 +1,38 @@
+﻿@model OTM.Models.GroupViewModels.RemoveStudentFromGroupViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete student</title>
+</head>
+<body>
+
+    <h3>Are you sure you want to remove the user from the group?</h3>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StudentName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.GroupName)
+            </dd>
+            <dt>
+        </dl>
+
+        <form asp-action="RemoveStudentFromGroup">
+            <input type="hidden" asp-for="StudentId" />
+            <input type="hidden" asp-for="GroupId" />
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Edit" asp-route-id="@Model.GroupId">Back to List</a>
+        </form>
+    </div>
+</body>
+</html>

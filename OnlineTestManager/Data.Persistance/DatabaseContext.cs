@@ -29,6 +29,11 @@ namespace Data.Persistence
         {
             base.OnModelCreating(builder);
 
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
             builder.ApplyConfiguration(new AnswerConfiguration());
             builder.ApplyConfiguration(new ExerciseConfiguration());
             builder.ApplyConfiguration(new FileConfiguration());
@@ -41,11 +46,6 @@ namespace Data.Persistence
             builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
-
-            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
         }
     }
 }

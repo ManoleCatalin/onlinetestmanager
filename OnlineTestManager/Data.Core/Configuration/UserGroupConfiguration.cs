@@ -9,16 +9,18 @@ namespace Data.Core.Configuration
         public void Configure(EntityTypeBuilder<UserGroup> builder)
         {
             builder.HasKey(ug => new { ug.UserId, ug.GroupId });
-            
+
             builder
                 .HasOne(userGroup => userGroup.User)
                 .WithMany(user => user.UserGroups)
-                .HasForeignKey(userGroup => userGroup.UserId);
+                .HasForeignKey(userGroup => userGroup.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(userGroup => userGroup.Group)
                 .WithMany(group => group.UserGroups)
-                .HasForeignKey(userGroup => userGroup.GroupId);
+                .HasForeignKey(userGroup => userGroup.GroupId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

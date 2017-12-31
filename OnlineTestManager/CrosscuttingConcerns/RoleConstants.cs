@@ -4,10 +4,10 @@ namespace Constants
 {
     public static class RoleConstants
     {
-        private static readonly string[] RoleNames = { "Teacher", "Student" };
+        public const string TeacherRoleName = "Teacher";
+        public const string StudentRoleName = "Student";
 
-        public static readonly string TeacherRoleName = RoleNames[0];
-        public static readonly string StudentRoleName = RoleNames[1];
+        private static readonly string[] RoleNames = { TeacherRoleName, StudentRoleName };
 
         public static List<string> GetRoleNames()
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.Repository.Base;
+using Constants;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Data.Persistence;
@@ -34,6 +36,17 @@ namespace Business.Repository
                 .Include(user => user.UserRole)
                     .ThenInclude(userRole => userRole.Role)
                 .FirstOrDefaultAsync(x => x.UserName == userName);
+        }
+
+        public async Task<List<User>> GetStudentsByNamePrefixAsync(string userNamePrefix)
+        {
+            var studentRoleId = _context.Roles.FirstOrDefaultAsync(x => x.Name.Equals(RoleConstants.StudentRoleName)).Result.Id;
+
+            return await _entities
+                .Include(user => user.UserRole)
+                    .ThenInclude(userRole => userRole.Role)
+                .Where(x =>x.UserRole.RoleId == studentRoleId && x.UserName.StartsWith(userNamePrefix))
+                .ToListAsync();
         }
 
         //public async Task<User> InsertAsync(User user, string roleName)
