@@ -1,4 +1,4 @@
-﻿@model Data.Core.Domain.Group
+﻿@model OTM.Models.GroupViewModels.DetailsGroupViewModel
 
 
 <!DOCTYPE html>
@@ -33,6 +33,25 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Students)
+            </th>
+        </tr>
+        </thead>
+            <tbody>
+            @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

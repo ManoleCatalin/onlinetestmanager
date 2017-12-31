@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace OTM.DTOs
+namespace OTM.Models.GroupViewModels
 {
     public class AddStudentToGroupViewModel
     {

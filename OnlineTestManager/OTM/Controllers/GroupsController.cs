@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using OTM.DTOs;
 using OTM.Models.GroupViewModels;
 using OTM.UserContext;
 
@@ -43,7 +42,8 @@ namespace OTM.Controllers
         public IActionResult Index()
         {
             var groups = _groupsRepository.GetAllGroupsOfTeacherAsync(_userId).Result;
-            return View(groups);
+            var groupIndexViewModel = _mapper.Map<IEnumerable<IndexGroupViewModel>>(groups);
+            return View(groupIndexViewModel);
         }
 
         public IActionResult Details(Guid id)
@@ -53,8 +53,17 @@ namespace OTM.Controllers
             {
                 return NotFound();
             }
+            var detailsGroupViewModel = _mapper.Map<DetailsGroupViewModel>(group);
+            var userGroupsEnumerator = new List<UserGroup>(group.UserGroups);
+            var userList = new List<User>();
+            foreach (var userGroup in userGroupsEnumerator)
+            {
+                userList.Add(userGroup.User);
+            }
 
-            return View(group);
+            var studentsList = Mapper.Map<List<DetailsStudentInGroup>>(userList);
+            detailsGroupViewModel.Students = studentsList;
+            return View(detailsGroupViewModel);
         }
 
         public IActionResult Create()
@@ -134,8 +143,8 @@ namespace OTM.Controllers
             {
                 return NotFound();
             }
-
-            return View(group);
+            var deleteGroupViewModel = _mapper.Map<DeleteGroupViewModel>(group);
+            return View(deleteGroupViewModel);
         }
 
         [HttpPost, ActionName("Delete")]

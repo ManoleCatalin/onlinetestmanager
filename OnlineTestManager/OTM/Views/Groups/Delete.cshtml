@@ -1,4 +1,4 @@
-﻿@model Data.Core.Domain.Group
+﻿@model OTM.Models.GroupViewModels.DeleteGroupViewModel
 
 
 <!DOCTYPE html>
@@ -32,12 +32,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
         </dd>
     </dl>
     

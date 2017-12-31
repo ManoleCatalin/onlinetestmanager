@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using OTM.DTOs;
+using OTM.Models.GroupViewModels;
 using Consts = Constants.CoreConfigurationConstants;
 
 namespace OTM.Validators

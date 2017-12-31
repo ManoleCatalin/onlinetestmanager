@@ -12,6 +12,10 @@ namespace OTM
             CreateMap<Group, EditGroupViewModel>().ForMember(dest => dest.Students,
                 opt => opt.Ignore());
             CreateMap<User, EditStudentInGroup>();
+            CreateMap<Group, IndexGroupViewModel>();
+            CreateMap<Group, DeleteGroupViewModel>();
+            CreateMap<Group, DetailsGroupViewModel>();
+            CreateMap<User, DetailsStudentInGroup>();
         }
     }
 }
