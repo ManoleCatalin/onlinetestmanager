@@ -52,6 +52,7 @@ namespace OTM
             services.AddTransient<IGroupsRepository, GroupsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IUserContext, UserContext.UserContext>();
+            services.AddTransient<ITestTypesRepository, TestTypesRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }
@@ -59,7 +60,8 @@ namespace OTM
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
         IHostingEnvironment env,
-        DbSeeder dbSeeder)
+        DbSeeder dbSeeder,
+        ITestTypesRepository testTypesRepository)
         {
             if (env.IsDevelopment())
             {
@@ -91,7 +93,10 @@ namespace OTM
 
                 dbContext.Database.Migrate();
 
-                dbSeeder.SeedAsync(app.ApplicationServices, roleManager, userManager).Wait();
+                dbSeeder.SeedAsync(app.ApplicationServices, 
+                    roleManager, 
+                    userManager,
+                    testTypesRepository).Wait();
             }
 
            

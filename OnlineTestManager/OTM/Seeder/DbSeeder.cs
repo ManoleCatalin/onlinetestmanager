@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Constants;
 using Data.Core.Domain;
+using Data.Core.Interfaces;
 using Data.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ namespace OTM.Seeder
 
         public async Task SeedAsync(IServiceProvider serviceProvider,
             RoleManager<Role> roleManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ITestTypesRepository testTypesRepository)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -28,6 +30,10 @@ namespace OTM.Seeder
                 {
                     await InsertRolesData(service, roleManager);
                     await InsertUsersSampleData(service, userManager);
+                }
+                if (!await service.TestTypes.AnyAsync())
+                {
+                    await InsertTestTypesData(service, testTypesRepository);
                 }
             }
         }
@@ -42,6 +48,18 @@ namespace OTM.Seeder
                 {
                     await roleManager.CreateAsync(Role.Create(roleName));
                 }
+            }
+
+            await db.SaveChangesAsync();
+        }
+
+        public async Task InsertTestTypesData(DatabaseContext db, ITestTypesRepository testTypesRepository)
+        {
+            var testTypeNames = TestTypesConstants.GetTestTypeNames();
+            foreach (var testTypeName in testTypeNames)
+            {
+                var testType = TestType.Create(testTypeName);
+                await testTypesRepository.InsertAsync(testType);
             }
 
             await db.SaveChangesAsync();
