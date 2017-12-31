@@ -6,7 +6,7 @@ namespace Constants
     {
         public const string MultipleChoiceTestType = "MultipleChoice";
 
-        private static readonly string[] s = { MultipleChoiceTestType };
+        private static readonly string[] TestTypeNames = { MultipleChoiceTestType };
 
         public static List<string> GetTestTypeNames()
         {
