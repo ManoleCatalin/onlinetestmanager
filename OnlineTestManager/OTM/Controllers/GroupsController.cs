@@ -12,7 +12,7 @@ using OTM.UserContext;
 
 namespace OTM.Controllers
 {
-   [Authorize(Roles = RoleConstants.TeacherRoleName)]
+    [Authorize(Roles = RoleConstants.TeacherRoleName)]
     [Route("[Controller]/[Action]")]
     public class GroupsController : Controller
     {

@@ -12,7 +12,7 @@ namespace Data.Persistence
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<TestType> TestTypes { get; set; }
-        public DbSet<Test> Tests { get; set; }
+        public DbSet<Data.Core.Domain.Test> Tests { get; set; }
         public DbSet<TestInstance> TestInstances { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Grade> Grades { get; set; }

@@ -53,8 +53,7 @@ namespace OTM
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IUserContext, UserContext.UserContext>();
             services.AddTransient<ITestTypesRepository, TestTypesRepository>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
+			services.AddTransient<ITestsRepository, TestsRepository>();            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
