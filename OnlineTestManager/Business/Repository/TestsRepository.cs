@@ -16,6 +16,11 @@ namespace Business.Repository
         {
         }
 
+        public override async Task<Test> GetByIdAsync(Guid id)
+        {
+          return await _entities.Include(x => x.TestType).FirstOrDefaultAsync(x => x.Id == id);
+        } 
+
         public async Task<List<Test>> GetAllTestsOfTeacherAsync(Guid teacherId)
         {
             return await _context.Tests.Where(x => x.UserId == teacherId).ToListAsync();

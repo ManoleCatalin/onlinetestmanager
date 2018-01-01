@@ -5,7 +5,7 @@ using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OTM.Models;
+using OTM.ViewModels;
 
 namespace OTM.Components
 {

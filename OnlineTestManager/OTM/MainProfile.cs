@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Data.Core.Domain;
-using OTM.Models.GroupViewModels;
-using OTM.Models.TestTemplatesViewModels;
+using OTM.ViewModels.AnswerTemplate;
+using OTM.ViewModels.ExerciseTemplate;
+using OTM.ViewModels.Group;
+using OTM.ViewModels.TestTemplates;
+using Exercise = Data.Core.Domain.Exercise;
 
 namespace OTM
 {
@@ -23,6 +26,22 @@ namespace OTM
             #region TestTemplates
 
             CreateMap<Test, IndexTestTemplatesViewModel>();
+            CreateMap<Test, EditTestTemplatesViewModel>();
+            CreateMap<Test, DeleteTestTemplateViewModel>();
+
+            #endregion
+
+            #region ExeciseTemplates
+
+            CreateMap<Exercise, IndexExercise>();
+            CreateMap<Exercise, EditExercise>();
+            #endregion
+
+            #region AnswerTemplates
+
+            CreateMap<Answer, IndexAnswer>();
+            CreateMap<Answer, EditAnswer>();
+            CreateMap<Answer, EditAnswerTemplatesViewModel>();
 
             #endregion
         }

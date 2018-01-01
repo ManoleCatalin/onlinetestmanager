@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using OTM.Models.AccountViewModels;
+using OTM.ViewModels.Account;
 using OTM.Services;
 
 namespace OTM.Controllers

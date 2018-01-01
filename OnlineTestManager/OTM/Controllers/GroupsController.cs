@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using OTM.Models.GroupViewModels;
 using OTM.UserContext;
+using OTM.ViewModels.Group;
 
 namespace OTM.Controllers
 {

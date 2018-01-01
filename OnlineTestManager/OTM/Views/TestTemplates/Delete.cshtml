@@ -1,8 +1,5 @@
-﻿@model Data.Core.Domain.Test
-
-@{
-    Layout = null;
-}
+﻿@using OTM.ViewModels.TestTemplates
+@model OTM.ViewModels.TestTemplates.DeleteTestTemplateViewModel
 
 <!DOCTYPE html>
 
@@ -41,12 +38,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.TestType.Type)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
         </dd>
     </dl>
     

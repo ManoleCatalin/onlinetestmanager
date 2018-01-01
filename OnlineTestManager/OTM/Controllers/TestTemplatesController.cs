@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using OTM.Models.TestTemplatesViewModels;
 using OTM.UserContext;
+using OTM.ViewModels.TestTemplates;
 
 
 namespace OTM.Controllers
@@ -19,15 +19,20 @@ namespace OTM.Controllers
     public class TestTemplatesController : Controller
     {
         private readonly ITestsRepository _testsRepository;
+        private readonly IExercisesRepository _exercisesRepository;
         private readonly ITestTypesRepository _testTypesRepository;
         private readonly IMapper _mapper;
         private readonly Guid _userId;
 
-        public TestTemplatesController(ITestsRepository testsRepository, IMapper mapper, IUserContext userContext, ITestTypesRepository testTypesRepository)
+        public TestTemplatesController(ITestsRepository testsRepository, IMapper mapper, 
+            IUserContext userContext, 
+            ITestTypesRepository testTypesRepository, 
+            IExercisesRepository exercisesRepository)
         {
             _testsRepository = testsRepository;
             _mapper = mapper;
             _testTypesRepository = testTypesRepository;
+            _exercisesRepository = exercisesRepository;
 
             var userId = userContext.GetLogedInUserId();
             if (userId == null)
@@ -94,100 +99,56 @@ namespace OTM.Controllers
                 createTestTemplatesViewModel.Description
                 , _userId
                 , Guid.Parse(createTestTemplatesViewModel.TestTypeId));
-            await _testsRepository.InsertAsync(testTemplateToCreate);
+            var insertedTest = await _testsRepository.InsertAsync(testTemplateToCreate);
+
+            return RedirectToAction(nameof(Edit), new {Id = insertedTest.Id});
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var test = _testsRepository.GetByIdAsync(id).Result;
+            var editTestTemplatesViewModel = Mapper.Map<EditTestTemplatesViewModel>(test);
+
+            var exercises = _exercisesRepository.GetAllExercisesOfTestAsync(id).Result;
+            var editExercises = _mapper.Map<List<EditExercise>>(exercises);
+            editTestTemplatesViewModel.Exercises = editExercises;
+
+            return View(editTestTemplatesViewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditTestTemplatesViewModel editTestTemplatesViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(editTestTemplatesViewModel);
+
+            var test = await _testsRepository.GetByIdAsync(editTestTemplatesViewModel.Id);
+            test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId);
+            await _testsRepository.UpdateAsync(test);                
 
             return RedirectToAction(nameof(Index));
         }
 
-        //// GET: TestTemplates/Edit/5
-        //public async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var test = await _context.Tests.SingleOrDefaultAsync(m => m.Id == id);
-        //    if (test == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["TestTypeId"] = new SelectList(_context.TestTypes, "Id", "Type", test.TestTypeId);
-        //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", test.UserId);
-        //    return View(test);
-        //}
+        [HttpGet]
+        public IActionResult Delete(Guid id)
+        {
+            var test = _testsRepository.GetByIdAsync(id).Result;
 
-        //// POST: TestTemplates/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,CreatedAt,UserId,TestTypeId")] Test test)
-        //{
-        //    if (id != test.Id)
-        //    {
-        //        return NotFound();
-        //    }
+            var deleteTestTemplateViewModel = Mapper.Map<DeleteTestTemplateViewModel>(test);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(test);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!TestExists(test.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["TestTypeId"] = new SelectList(_context.TestTypes, "Id", "Type", test.TestTypeId);
-        //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", test.UserId);
-        //    return View(test);
-        //}
+            return View(deleteTestTemplateViewModel);
+        }
 
-        //// GET: TestTemplates/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var test = await _context.Tests
-        //        .Include(t => t.TestType)
-        //        .Include(t => t.User)
-        //        .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (test == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(test);
-        //}
-
-        //// POST: TestTemplates/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var test = await _context.Tests.SingleOrDefaultAsync(m => m.Id == id);
-        //    _context.Tests.Remove(test);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool TestExists(Guid id)
-        //{
-        //    return _context.Tests.Any(e => e.Id == id);
-        //}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(DeleteTestTemplateViewModel deteDeleteTestTemplateViewModel)
+        {
+            await _testsRepository.DeleteAsync(deteDeleteTestTemplateViewModel.Id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

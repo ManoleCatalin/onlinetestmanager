@@ -1,9 +1,5 @@
-﻿@model Data.Core.Domain.Test
-
-@{
-    Layout = null;
-}
-
+﻿@using OTM.ViewModels.TestTemplates
+@model OTM.ViewModels.TestTemplates.EditTestTemplatesViewModel
 <!DOCTYPE html>
 
 <html>
@@ -31,29 +27,43 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TestTypeId" class="control-label"></label>
-                <select asp-for="TestTypeId" class="form-control" asp-items="ViewBag.TestTypeId"></select>
-                <span asp-validation-for="TestTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
+    <h4>@Html.DisplayNameFor(model => model.Exercises)</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Exercises[0].Description)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Exercises)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<div>
+    <a asp-controller="ExerciseTemplates" asp-action="Create" asp-route-testTemplateId="@Model.Id">Create new exercise template</a>
+</div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Templates Index</a>
 </div>
 
 @section Scripts {

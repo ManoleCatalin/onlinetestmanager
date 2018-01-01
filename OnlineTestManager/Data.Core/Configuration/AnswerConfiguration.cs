@@ -12,6 +12,11 @@ namespace Data.Core.Configuration
             builder.HasKey(answer => answer.Id);
             builder.Property(answer => answer.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(answer => answer.Correct).IsRequired();
+
+            builder
+                .HasOne(e => e.Exercise)
+                .WithMany(c => c.Answers)
+                .HasForeignKey(x => x.ExerciseId);
         }
     }
 }
