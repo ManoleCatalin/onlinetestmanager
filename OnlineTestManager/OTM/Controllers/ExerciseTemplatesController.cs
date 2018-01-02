@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Constants;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
-using Data.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using OTM.ViewModels.ExerciseTemplate;
 
@@ -69,27 +65,27 @@ namespace OTM.Controllers
         // GET: ExerciseTemplates/Create
         public IActionResult Create(Guid testTemplateId)
         {
-            var createExeciseTemplatesViewModel = new CreateExeciseTemplatesViewModel {TestTemplateId = testTemplateId};
+            var createExeciseTemplatesViewModel = new CreateExerciseTemplatesViewModel {TestTemplateId = testTemplateId};
 
             return View(createExeciseTemplatesViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateExeciseTemplatesViewModel createExeciseTemplatesViewModel)
+        public async Task<IActionResult> Create(CreateExerciseTemplatesViewModel createExerciseTemplatesViewModel)
         {
             if (ModelState.IsValid)
             {
-                var exercise = Exercise.Create(createExeciseTemplatesViewModel.Description,
-                    createExeciseTemplatesViewModel.TestTemplateId);
+                var exercise = Exercise.Create(createExerciseTemplatesViewModel.Description,
+                    createExerciseTemplatesViewModel.TestTemplateId);
 
                 var insertedExercise = await _exercisesRepository.InsertAsync(exercise);
 
                 return RedirectToAction(nameof(Create), "AnswerTemplates",
-                    new {testTemplateId = createExeciseTemplatesViewModel.TestTemplateId, exerciseTemplateId = insertedExercise.Id});
+                    new {testTemplateId = createExerciseTemplatesViewModel.TestTemplateId, exerciseTemplateId = insertedExercise.Id});
             }
             
-            return View(createExeciseTemplatesViewModel);
+            return View(createExerciseTemplatesViewModel);
         }
         
         public async Task<IActionResult> Edit(Guid exerciseTemplateId, Guid testTemplateId)

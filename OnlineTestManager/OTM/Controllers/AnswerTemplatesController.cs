@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Constants;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data.Core.Domain;
 using Data.Core.Interfaces;

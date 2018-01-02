@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Data.Core.Domain;
 
 namespace OTM.ViewModels.AnswerTemplate
 {
