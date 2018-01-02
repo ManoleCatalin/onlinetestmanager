@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OTM.ViewModels.AnswerTemplate
 {
@@ -6,6 +7,7 @@ namespace OTM.ViewModels.AnswerTemplate
     {
         public Guid TestTemplateId { get; set; }
         public Guid ExerciseTemplateId { get; set; }
+        [Display(Name = "Answer")]
         public string Description { get; set; }
         public bool Correct { get; set; }
     }

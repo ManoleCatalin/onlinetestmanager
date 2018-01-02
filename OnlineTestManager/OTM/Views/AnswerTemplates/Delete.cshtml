@@ -24,6 +24,7 @@
         <input asp-for="TestTemplateId" type="hidden" />
         <input asp-for="ExerciseTemplateId" type="hidden" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Edit" asp-controller="ExerciseTemplates" asp-route-testTemplateId="@Model.TestTemplateId"
+           asp-route-exerciseTemplateId="@Model.ExerciseTemplateId">Back to List</a>
     </form>
 </div>

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OTM.ViewModels.TestTemplates
 {
     public class EditExercise
     {
         public Guid Id { get; set; }
+        [Display(Name = "Exercises")]
         public string Description { get; set; }
     }
 
