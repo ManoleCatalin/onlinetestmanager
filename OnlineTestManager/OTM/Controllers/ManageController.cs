@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OTM.Models.ManageViewModels;
 using OTM.Services;
+using OTM.ViewModels.Manage;
 
 namespace OTM.Controllers
 {

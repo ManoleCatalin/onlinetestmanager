@@ -1,0 +1,47 @@
+﻿@using OTM.ViewModels.AnswerTemplate
+@model OTM.ViewModels.AnswerTemplate.CreateAnswerTemplatesViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Answer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="TestTemplateId" type="hidden"/>
+            </div>
+            <div class="form-group">
+                <input asp-for="ExerciseTemplateId" type="hidden"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Correct" /> @Html.DisplayNameFor(model => model.Correct)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.TestTemplateId" asp-route-exerciseTemplateId="@Model.ExerciseTemplateId">Back to Exercise Template</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

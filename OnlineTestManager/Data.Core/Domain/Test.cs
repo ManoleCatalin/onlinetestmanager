@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Data.Core.Domain
 {
@@ -12,6 +13,7 @@ namespace Data.Core.Domain
         public virtual User User { get; set; }
         public Guid TestTypeId { get; private set; }
         public virtual TestType TestType { get; set; }
+        public ICollection<Exercise> Exercises { get; set; }
 
         public static Test Create(string name, string description, Guid userId, Guid testTypeId)
         {
@@ -27,5 +29,7 @@ namespace Data.Core.Domain
             UserId = userId;
             TestTypeId = testTypeId;
         }
+
+
     }
 }

@@ -1,0 +1,76 @@
+﻿@using OTM.ViewModels.ExerciseTemplate
+@model OTM.ViewModels.ExerciseTemplate.EditExerciseTemplatesViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Exercise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="TestTemplateId" />
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h4>@Html.DisplayNameFor(model => model.Answers)</h4>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Answers[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answers[0].Correct)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Answers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correct)
+            </td>
+            <td>
+                <a asp-controller="AnswerTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.TestTemplateId" asp-route-exerciseTemplateId="@Model.Id" asp-route-answerTemplateId="@item.Id" >Edit</a>
+                |
+                <a asp-controller="AnswerTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.TestTemplateId" asp-route-exerciseTemplateId="@Model.Id" asp-route-answerTemplateId="@item.Id">Delete</a>
+                
+            </td>
+           
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a asp-controller="AnswerTemplates" asp-action="Create" asp-route-testTemplateId="@Model.TestTemplateId" asp-route-exerciseTemplateId="@Model.Id">Create new answer template</a>
+</div>
+<div>
+    <a asp-controller="TestTemplates" asp-action="Edit" asp-route-id="@Model.TestTemplateId">Back to test templates</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

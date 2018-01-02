@@ -9,17 +9,16 @@ namespace Data.Persistence
 {
     public sealed class DatabaseContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<UserGroup> UserGroups { get; set; }
-        public DbSet<TestType> TestTypes { get; set; }
-        public DbSet<Test> Tests { get; set; }
-        public DbSet<TestInstance> TestInstances { get; set; }
-        public DbSet<File> Files { get; set; }
-        public DbSet<Grade> Grades { get; set; }
-        public DbSet<Exercise> Exercises { get; set; }
-        public DbSet<Answer> Answers { get; set; }
-        
-       
+        public DbSet<Data.Core.Domain.Group> Groups { get; set; }
+        public DbSet<Data.Core.Domain.UserGroup> UserGroups { get; set; }
+        public DbSet<Data.Core.Domain.TestType> TestTypes { get; set; }
+        public DbSet<Data.Core.Domain.Test> Tests { get; set; }
+        public DbSet<Data.Core.Domain.TestInstance> TestInstances { get; set; }
+        public DbSet<Data.Core.Domain.File> Files { get; set; }
+        public DbSet<Data.Core.Domain.Grade> Grades { get; set; }
+        public DbSet<Data.Core.Domain.Exercise> Exercises { get; set; }
+        public DbSet<Data.Core.Domain.Answer> Answers { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
             Database.EnsureCreated();

@@ -11,6 +11,13 @@ namespace Data.Core.Configuration
         {
             builder.HasKey(exercise => exercise.Id);
             builder.Property(exercise => exercise.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
+
+            builder
+                .HasMany(c => c.Answers)
+                .WithOne(e => e.Exercise)
+                .HasForeignKey(p => p.ExerciseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using OTM.Models;
+using OTM.ViewModels;
 
 namespace OTM.Controllers
 {
