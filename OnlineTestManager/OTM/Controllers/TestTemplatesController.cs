@@ -108,7 +108,7 @@ namespace OTM.Controllers
         public IActionResult Edit(Guid id)
         {
             var test = _testsRepository.GetByIdAsync(id).Result;
-            var editTestTemplatesViewModel = Mapper.Map<EditTestTemplatesViewModel>(test);
+            var editTestTemplatesViewModel = _mapper.Map<EditTestTemplatesViewModel>(test);
 
             var exercises = _exercisesRepository.GetAllExercisesOfTestAsync(id).Result;
             var editExercises = _mapper.Map<List<EditExercise>>(exercises);
@@ -138,7 +138,7 @@ namespace OTM.Controllers
         {
             var test = _testsRepository.GetByIdAsync(id).Result;
 
-            var deleteTestTemplateViewModel = Mapper.Map<DeleteTestTemplateViewModel>(test);
+            var deleteTestTemplateViewModel = _mapper.Map<DeleteTestTemplateViewModel>(test);
 
             return View(deleteTestTemplateViewModel);
         }

@@ -35,6 +35,7 @@ namespace OTM
 
             CreateMap<Exercise, IndexExercise>();
             CreateMap<Exercise, EditExercise>();
+            CreateMap<Exercise, DeleteExerciseTemplateViewModel>();
             #endregion
 
             #region AnswerTemplates
@@ -42,6 +43,7 @@ namespace OTM
             CreateMap<Answer, IndexAnswer>();
             CreateMap<Answer, EditAnswer>();
             CreateMap<Answer, EditAnswerTemplatesViewModel>();
+            CreateMap<Answer, DeleteAnswerTemplatesViewModel>();
 
             #endregion
         }

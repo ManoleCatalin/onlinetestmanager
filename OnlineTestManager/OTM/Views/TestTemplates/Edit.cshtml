@@ -53,6 +53,8 @@
                     </td>
                     <td>
                         <a asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a>
+                        |
+                        <a asp-controller="ExerciseTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

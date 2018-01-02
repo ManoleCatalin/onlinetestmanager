@@ -131,35 +131,24 @@ namespace OTM.Controllers
             return View(editExerciseTemplatesViewModel);
         }
 
-        // GET: ExerciseTemplates/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult Delete(Guid exerciseTemplateId, Guid testTemplateId)
+        {
 
-        //    var exercise = await _context.Exercises
-        //        .Include(e => e.Test)
-        //        .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (exercise == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var exercise = _exercisesRepository.GetByIdAsync(exerciseTemplateId).Result;
 
-        //    return View(exercise);
-        //}
+            var deleteExerciseTemplatesViewModel = _mapper.Map<DeleteExerciseTemplateViewModel>(exercise);
+            deleteExerciseTemplatesViewModel.TestTemplateId = testTemplateId;
 
-        //// POST: ExerciseTemplates/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var exercise = await _context.Exercises.SingleOrDefaultAsync(m => m.Id == id);
-        //    _context.Exercises.Remove(exercise);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return View(deleteExerciseTemplatesViewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(DeleteExerciseTemplateViewModel deleteExerciseTemplatesViewModel)
+        {
+            await _exercisesRepository.DeleteAsync(deleteExerciseTemplatesViewModel.Id);
+            return RedirectToAction(nameof(Edit),"TestTemplates", new {Id = deleteExerciseTemplatesViewModel.TestTemplateId});
+        }
     }
 }
 

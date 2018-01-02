@@ -132,33 +132,24 @@ namespace OTM.Controllers
             return View(editAnswerTemplatesViewModel);
         }
 
-        public async Task<IActionResult> Delete(Guid? id)
+        public IActionResult Delete(Guid answerTemplateId,Guid testTemplateId, Guid exerciseTemplateId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var answer = _answersRepository.GetByIdAsync(answerTemplateId).Result;
 
-            var answer = await _context.Answers
-                .Include(a => a.Exercise)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (answer == null)
-            {
-                return NotFound();
-            }
+            var deleteAnswerTemplatesViewModel = _mapper.Map<DeleteAnswerTemplatesViewModel>(answer);
+            deleteAnswerTemplatesViewModel.TestTemplateId = testTemplateId;
+            deleteAnswerTemplatesViewModel.ExerciseTemplateId = exerciseTemplateId;
 
-            return View(answer);
+            return View(deleteAnswerTemplatesViewModel);
         }
 
         // POST: AnswerTemplates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(DeleteAnswerTemplatesViewModel deleteAnswerTemplatesViewModel)
         {
-            var answer = await _context.Answers.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Answers.Remove(answer);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _answersRepository.DeleteAsync(deleteAnswerTemplatesViewModel.Id);
+            return RedirectToAction(nameof(Edit),"ExerciseTemplates",new {TestTemplateId = deleteAnswerTemplatesViewModel.TestTemplateId, ExerciseTemplateId = deleteAnswerTemplatesViewModel.ExerciseTemplateId } );
         }
 
         private bool AnswerExists(Guid id)

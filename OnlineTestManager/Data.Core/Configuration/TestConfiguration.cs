@@ -13,6 +13,12 @@ namespace Data.Core.Configuration
             builder.Property(test => test.CreatedAt).IsRequired();
             builder.Property(test => test.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(test => test.Name).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
+
+            builder
+                .HasMany(e => e.Exercises)
+                .WithOne(e => e.Test)
+                .HasForeignKey(p => p.TestId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
