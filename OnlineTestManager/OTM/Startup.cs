@@ -56,6 +56,7 @@ namespace OTM
 			services.AddTransient<ITestsRepository, TestsRepository>();
             services.AddTransient<IExercisesRepository, ExercisesRepository>();
             services.AddTransient<IAnswersRepository, AnswersRepository>();
+            services.AddTransient<ITestInstancesRepository, TestInstancesRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }

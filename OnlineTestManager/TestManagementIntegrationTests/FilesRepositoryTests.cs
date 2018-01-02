@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
 using Data.Persistence;
@@ -41,7 +42,7 @@ namespace TestManagementIntegrationTests
 
                 if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id));
+                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id, DateTime.Now));
             }
             context.SaveChanges();
             var testInstance = context.TestInstances.ToList().FirstOrDefault();

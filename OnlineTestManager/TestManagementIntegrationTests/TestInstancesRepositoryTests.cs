@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
 using FluentAssertions;
@@ -86,7 +87,8 @@ namespace TestManagementIntegrationTests
                             "abc123",
                             100,
                             groupId.Id,
-                            testId.Id
+                            testId.Id, 
+                            DateTime.Now
                         );
 
                         var testInstanceInserted = testInstancesRepository.InsertAsync(testInstance).Result;
@@ -159,13 +161,14 @@ namespace TestManagementIntegrationTests
                     "abc123",
                     100,
                     groupId.Id,
-                    testId.Id
+                    testId.Id, 
+                    DateTime.Now
                 );
 
                 context.Add(testInstance);
                 context.SaveChanges();
 
-                testInstance.Update("def456", 200, groupId.Id, testId.Id);
+                testInstance.Update("def456", 200, groupId.Id, testId.Id, DateTime.Now);
 
 
                 // ACT
@@ -236,7 +239,8 @@ namespace TestManagementIntegrationTests
                             "abc123",
                             100,
                             groupId.Id,
-                            testId.Id
+                            testId.Id, 
+                            DateTime.Now
                         );
 
                         context.Add(testInstance);
