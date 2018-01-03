@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using AutoMapper;
 using Constants;
@@ -25,13 +26,19 @@ namespace OTM.Controllers
         private readonly ITestsRepository _testsRepository;
         private readonly Guid _userId;
         private readonly IGroupsRepository _groupsRepository;
+        private readonly IAnswersRepository _answersRepository;
+        private readonly IExercisesRepository _exercisesRepository;
+        private readonly ITestTypesRepository _testTypesRepository;
 
-        public ScheduledTestsController (ITestInstancesRepository testInstancesRepository, IMapper mapper,IUserContext userContext,IGroupsRepository groupsRepository, ITestsRepository testsRepository)
+        public ScheduledTestsController (ITestInstancesRepository testInstancesRepository, IMapper mapper,IUserContext userContext,IGroupsRepository groupsRepository, ITestsRepository testsRepository, IAnswersRepository answersRepository, IExercisesRepository exercisesRepository, ITestTypesRepository testTypesRepository)
         {
             _testInstancesRepository = testInstancesRepository;
             _mapper = mapper;
             _groupsRepository = groupsRepository;
             _testsRepository = testsRepository;
+            _answersRepository = answersRepository;
+            _exercisesRepository = exercisesRepository;
+            _testTypesRepository = testTypesRepository;
 
             var userId = userContext.GetLogedInUserId();
             if (userId == null)
@@ -54,25 +61,57 @@ namespace OTM.Controllers
             return View(indexScheduledTestsViewModel);
         }
 
-        // GET: ScheduledTests/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public List<User> DetailsGetAllUsersOfGroupByGroupId(Guid id)
+        {
+            var group =  _groupsRepository.GetByIdAsync(id).Result;
+            var userGroupsEnumerator = new List<UserGroup>(group.UserGroups);
+            var userList = new List<User>();
+            foreach (var item in userGroupsEnumerator)
+            {
+                userList.Add(item.User);
+            }
+            return userList;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var testInstance = await _testInstancesRepository.GetByIdAsync(id);
+            var test = await _testsRepository.GetByIdAsync(testInstance.TestId);
+            var testType = _testTypesRepository.GetByIdAsync(test.TestTypeId).Result.Type;
 
-        //    var testInstance = await _context.TestInstances
-        //        .Include(t => t.Group)
-        //        .Include(t => t.Test)
-        //        .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (testInstance == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var group = await _groupsRepository.GetByIdAsync(testInstance.GroupId);
+            var userList = DetailsGetAllUsersOfGroupByGroupId(group.Id);
 
-        //    return View(testInstance);
-        //}
+            var exercises = await _exercisesRepository.GetAllExercisesOfTestAsync(test.Id);
+            var exerciseList = new List<ScheduledTestDetailsExercise>();
+            foreach (var item in exercises)
+            {
+                exerciseList.Add(new ScheduledTestDetailsExercise()
+                {
+                    Description = item.Description,
+                    Answers = await _answersRepository.GetAllAnswersOfExerciseAsync(item.Id)
+                });
+            }
+            var detailsScheduledTestViewModel = new DetailsScheduledTestViewModel();
+            var testDetails = new ScheduledTestDetailsTest();
+            testDetails.TestType = testType;
+            testDetails.Description = test.Description;
+            testDetails.Name = test.Name;
+            testDetails.Exercises = exerciseList;
+            
+            var groupDetails = new ScheduledTestDetailsGroup();
+            groupDetails.Description = group.Description;
+            groupDetails.Name = group.Name;
+            groupDetails.Users = userList;
+            detailsScheduledTestViewModel.TestDetails = testDetails;
+            detailsScheduledTestViewModel.GroupDetails = groupDetails;
+            detailsScheduledTestViewModel.Id = id;
+
+
+
+
+            return View(detailsScheduledTestViewModel);
+        }
 
         private List<SelectListItem> GetAllGroupsByTeacherId(Guid teacherId)
         {
