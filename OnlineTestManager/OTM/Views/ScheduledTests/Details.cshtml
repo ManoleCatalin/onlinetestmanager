@@ -1,23 +1,45 @@
 ﻿@model OTM.ViewModels.ScheduledTest.DetailsScheduledTestViewModel
 
 
-<h2>Scheduled Test</h2>
+<h2>Scheduled test details</h2>
+
 
 <div>
-    <div style="width:50%;display: inline-block; vertical-align: top;">
-        
-   
-        <h3>@Html.DisplayFor(model => model.TestDetails.Name)</h3>
-        <h4>@Html.DisplayFor(model => model.TestDetails.Description)</h4>
+    <h2 style="width: 40%; float: left; text-align:center">Test:</h2> 
+    <h2 style="width: 50%; float: right; text-align:center">Group:</h2>
+
+    <div style="width: 50%; display: inline-block; vertical-align: top; border-right: black outset 0.5px">
+
+
+        <h3>Title: @Html.DisplayFor(model => model.TestDetails.Name)</h3>
+        <h4>Description: @Html.DisplayFor(model => model.TestDetails.Description)</h4>
+        @functions 
+        {
+
+            public int GetIndexOfExercise(int value)
+            {
+                return value + 1;
+            }
+
+            public string GetIndexOfAnswer(int value)
+            {
+                var sum = 97 + value;
+                char c = (char) sum;
+                
+                return c.ToString();
+            }
+
+
+        }
 
         @foreach (var exercise in Model.TestDetails.Exercises)
         {
-           
+
             <table class="table">
-                <tr>
+                <tr> 
                     <td>
                         <b>
-                            @Html.DisplayFor(modelItem => exercise.Description)
+                            @GetIndexOfExercise(@Model.TestDetails.Exercises.IndexOf(exercise)). @Html.DisplayFor(modelItem => exercise.Description)
                         </b>
                     </td>
                     <td>
@@ -29,7 +51,7 @@
                 {
                     <tr>
                         <td width="70%">
-                            @Html.DisplayFor(modelItem => answer.Description)
+                            @GetIndexOfAnswer(exercise.Answers.IndexOf(answer))) @Html.DisplayFor(modelItem => answer.Description)
                         </td>
                         <td width="30%">
                             @Html.DisplayFor(modelItem => answer.Correct)
@@ -41,23 +63,23 @@
         }
 
     </div>
-    <div style="width:49%; display: inline-block; vertical-align: top;">
-        
+    <div style="width: 49%; display: inline-block; vertical-align: top;">
+
         <h3>
-            @Html.DisplayFor(model => model.GroupDetails.Name)
+            Title: @Html.DisplayFor(model => model.GroupDetails.Name)
         </h3>
         <h4>
-            @Html.DisplayFor(model => model.GroupDetails.Description)
+            Description: @Html.DisplayFor(model => model.GroupDetails.Description)
         </h4>
-        <table class="table" >
-           
+        <table class="table">
+
             <tbody>
 
             @foreach (var user in Model.GroupDetails.Users)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => user.UserName)
+                        @GetIndexOfExercise(@Model.GroupDetails.Users.IndexOf(user)). @Html.DisplayFor(modelItem => user.UserName)
                     </td>
                 </tr>
             }
@@ -66,6 +88,7 @@
     </div>
 
 </div>
+<hr/>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

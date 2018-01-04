@@ -61,7 +61,7 @@ namespace OTM.Controllers
             return View(indexScheduledTestsViewModel);
         }
 
-        public List<User> DetailsGetAllUsersOfGroupByGroupId(Guid id)
+        private List<User> DetailsGetAllUsersOfGroupByGroupId(Guid id)
         {
             var group =  _groupsRepository.GetByIdAsync(id).Result;
             var userGroupsEnumerator = new List<UserGroup>(group.UserGroups);
