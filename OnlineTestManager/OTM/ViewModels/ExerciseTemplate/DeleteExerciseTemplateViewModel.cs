@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace OTM.ViewModels.ExerciseTemplate
 {
@@ -9,6 +7,7 @@ namespace OTM.ViewModels.ExerciseTemplate
     {
         public Guid Id { get; set; }
         public Guid TestTemplateId { get; set; }
+        [Display(Name = "Exercise")]
         public string Description { get; set; }
     }
 }

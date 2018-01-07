@@ -2,7 +2,7 @@
 using OTM.ViewModels.Group;
 using Consts = Constants.CoreConfigurationConstants;
 
-namespace OTM.Validators
+namespace OTM.Validators.GroupValidators
 {
     public class EditGroupValidator : AbstractValidator<EditGroupViewModel>
     {

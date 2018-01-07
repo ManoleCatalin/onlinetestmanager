@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Data.Core.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace OTM.ViewModels.AnswerTemplate
 {
     public class IndexAnswer
     {
         public Guid Id { get; set; }
+        [Display(Name = "Answer")]
         public string Description { get; set; }
         public bool Correct { get; set; }
     }

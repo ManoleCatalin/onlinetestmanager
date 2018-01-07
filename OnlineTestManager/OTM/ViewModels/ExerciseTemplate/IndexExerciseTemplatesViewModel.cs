@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OTM.ViewModels.ExerciseTemplate
 {
@@ -8,6 +9,7 @@ namespace OTM.ViewModels.ExerciseTemplate
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Exercise")]
         public string Description { get; set; }
     }
 
