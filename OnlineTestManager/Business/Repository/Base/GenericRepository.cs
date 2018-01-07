@@ -24,11 +24,11 @@ namespace Business.Repository.Base
 
         public virtual async Task<T> GetByIdAsync(Guid id) => await _entities.FirstOrDefaultAsync(x => x.Id == id);
 
-        public virtual async Task<T> InsertAsync(T entity)
+        public virtual async Task<T> InsertAsync(T testInstance)
         {
-            _entities.Add(entity);
+            _entities.Add(testInstance);
             await _context.SaveChangesAsync();
-            return entity;
+            return testInstance;
         }
 
         public virtual async Task<bool> UpdateAsync(T entity)

@@ -40,9 +40,20 @@ namespace TestManagementIntegrationTests
                 context.SaveChanges();
                 var test = context.Tests.ToList().FirstOrDefault();
 
-                if (@group != null)
+                if (group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id, DateTime.Now));
+                context.TestInstances.Add(TestInstance.Create(
+                    100,
+                    group.Id,
+                    test.Id,
+                    DateTime.Now,
+                    Guid.Empty,
+                    "groupName",
+                    "groupDescription",
+                    "testName",
+                    "testDescription"
+                ));
+
             }
             context.SaveChanges();
             var testInstance = context.TestInstances.ToList().FirstOrDefault();

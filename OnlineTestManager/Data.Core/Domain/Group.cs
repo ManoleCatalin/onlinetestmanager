@@ -12,6 +12,7 @@ namespace Data.Core.Domain
         public ICollection<UserGroup> UserGroups { get; set; }
         public Guid UserId { get; private set; }
         public virtual User User { get; set; }
+        public ICollection<TestInstance> TestInstances { get; set; }
 
         public static Group Create(string name, string description, Guid userId)
         {

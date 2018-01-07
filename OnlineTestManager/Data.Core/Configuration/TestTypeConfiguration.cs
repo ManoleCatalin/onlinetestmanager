@@ -9,6 +9,7 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<TestType> builder)
         {
+            builder.ToTable("TestType");
             builder.HasKey(testType => testType.Id);
             builder.Property(testType => testType.Type).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
         }

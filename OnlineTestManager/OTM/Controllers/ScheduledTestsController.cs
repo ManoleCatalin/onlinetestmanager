@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using AutoMapper;
 using Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Data.Core.Domain;
 using Data.Core.Interfaces;
-using Data.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using OTM.UserContext;
 using OTM.ViewModels.ScheduledTest;
@@ -165,9 +162,15 @@ namespace OTM.Controllers
             var groupId = Guid.Parse(createScheduledTestViewModel.Group);
             var testId = Guid.Parse(createScheduledTestViewModel.Test);
             var startDate = createScheduledTestViewModel.StartDateTime;
-
+            
             var scheduledTest =
-                await _testInstancesRepository.InsertAsync(TestInstance.Create("", duration, groupId, testId, startDate));
+                await _testInstancesRepository.InsertAsync(TestInstance.Create(duration, groupId, testId, startDate, 
+                    _userId,
+                    "groupName",
+                    "groupDescription",
+                    "testName",
+                    "testDescription" // TO DO: Obtain description and name for test
+                ));
 
             return RedirectToAction(nameof(Index));
         }
@@ -205,7 +208,8 @@ namespace OTM.Controllers
             var groupId = Guid.Parse(editScheduledTestViewModel.Group);
             var testId = Guid.Parse(editScheduledTestViewModel.Test);
 
-            scheduledTest.Update("",duration,groupId,testId,startTime);
+            scheduledTest.Update(duration,groupId,testId,startTime, "testName", "testDescription", Guid.Empty); // TO DO: fill data 
+ 
             await _testInstancesRepository.UpdateAsync(scheduledTest);
 
             return RedirectToAction(nameof(Index));

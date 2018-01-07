@@ -5,20 +5,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Core.Configuration
 {
-    public class AnswerConfiguration : IEntityTypeConfiguration<Answer>
+    public class AnswerCopyConfiguration : IEntityTypeConfiguration<AnswerCopy>
     {
-        public void Configure(EntityTypeBuilder<Answer> builder)
+        public void Configure(EntityTypeBuilder<AnswerCopy> builder)
         {
-            builder.ToTable("Answer");
+            builder.ToTable("AnswerCopy");
 
             builder.HasKey(answer => answer.Id);
             builder.Property(answer => answer.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(answer => answer.Correct).IsRequired();
 
             builder
-                .HasOne(e => e.Exercise)
-                .WithMany(c => c.Answers)
-                .HasForeignKey(x => x.ExerciseId);
+                .HasOne(e => e.ExerciseCopy)
+                .WithMany(c => c.AnswersCopies)
+                .HasForeignKey(x => x.ExerciseCopyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

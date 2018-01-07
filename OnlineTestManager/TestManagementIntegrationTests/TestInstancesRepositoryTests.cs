@@ -84,11 +84,15 @@ namespace TestManagementIntegrationTests
                     if (testId != null)
                     {
                         var testInstance = TestInstance.Create(
-                            "abc123",
                             100,
                             groupId.Id,
                             testId.Id, 
-                            DateTime.Now
+                            DateTime.Now,
+                            Guid.Empty,
+                            "groupName",
+                            "groupDescription",
+                            "testName",
+                            "testDescription"
                         );
 
                         var testInstanceInserted = testInstancesRepository.InsertAsync(testInstance).Result;
@@ -158,17 +162,23 @@ namespace TestManagementIntegrationTests
                 if (groupId == null) return;
                 if (testId == null) return;
                 var testInstance = TestInstance.Create(
-                    "abc123",
                     100,
                     groupId.Id,
-                    testId.Id, 
-                    DateTime.Now
+                    testId.Id,
+                    DateTime.Now,
+                    Guid.Empty,
+                    "groupName",
+                    "groupDescription",
+                    "testName",
+                    "testDescription"
                 );
+
+                
 
                 context.Add(testInstance);
                 context.SaveChanges();
 
-                testInstance.Update("def456", 200, groupId.Id, testId.Id, DateTime.Now);
+                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now, "testName", "testDescription", Guid.Empty);
 
 
                 // ACT
@@ -236,11 +246,15 @@ namespace TestManagementIntegrationTests
                     if (testId != null)
                     {
                         var testInstance = TestInstance.Create(
-                            "abc123",
                             100,
                             groupId.Id,
-                            testId.Id, 
-                            DateTime.Now
+                            testId.Id,
+                            DateTime.Now,
+                            Guid.Empty,
+                            "groupName",
+                            "groupDescription",
+                            "testName",
+                            "testDescription"
                         );
 
                         context.Add(testInstance);

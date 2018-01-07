@@ -18,6 +18,12 @@ namespace Data.Core.Configuration
                 .HasForeignKey<UserRole>(b => b.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder
+                .HasMany(x => x.UserGroupCopies)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);  
+
             builder.Property(user => user.FirstName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(user => user.LastName).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
             builder.Property(user => user.Email).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();

@@ -9,6 +9,8 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<File> builder)
         {
+            builder.ToTable("File");
+
             builder.HasKey(file => file.Id);
             builder.Property(file => file.CreatedAt).IsRequired();
             builder.Property(file => file.Path).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();

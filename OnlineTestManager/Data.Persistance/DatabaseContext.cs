@@ -18,6 +18,12 @@ namespace Data.Persistence
         public DbSet<Data.Core.Domain.Grade> Grades { get; set; }
         public DbSet<Data.Core.Domain.Exercise> Exercises { get; set; }
         public DbSet<Data.Core.Domain.Answer> Answers { get; set; }
+        public DbSet<Data.Core.Domain.AnswerCopy> AnswerCopies { get; set; }
+        public DbSet<Data.Core.Domain.ExerciseCopy> ExerciseCopies { get; set; }
+        public DbSet<Data.Core.Domain.GroupCopy> GroupCopies { get; set; }
+        public DbSet<Data.Core.Domain.UserGroupCopy> UserGroupCopies { get; set; }
+        public DbSet<Data.Core.Domain.ExerciseResponse> ExerciseResponses { get; set; }
+        public DbSet<Data.Core.Domain.MarkedAsCorrect> MarkedAsCorrects { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -45,6 +51,12 @@ namespace Data.Persistence
             builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new ExerciseResponseConfiguration());
+            builder.ApplyConfiguration(new UserGroupCopyConfiguration());
+            builder.ApplyConfiguration(new MarkedAsCorrectConfiguration());
+            builder.ApplyConfiguration(new GroupCopyConfiguration());
+            builder.ApplyConfiguration(new ExerciseCopyConfiguration());
+            builder.ApplyConfiguration(new AnswerCopyConfiguration());
         }
     }
 }

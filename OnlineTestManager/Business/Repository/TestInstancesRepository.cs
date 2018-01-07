@@ -22,6 +22,17 @@ namespace Business.Repository
                 .Include(s => s.Test)
                 .Where(s => s.Test.UserId == teacherId).ToListAsync();
         }
+
+        public override async Task<TestInstance> InsertAsync(TestInstance testInstance)
+        {
+            _context.GroupCopies.Add(testInstance.GroupCopy);
+            await _context.SaveChangesAsync();
+
+            _entities.Add(testInstance);
+            await _context.SaveChangesAsync();
+
+            return testInstance;
+        }
     }
 
 }
