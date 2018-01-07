@@ -23,6 +23,7 @@
         <input type="hidden" asp-for="Id" />
         <input asp-for="TestTemplateId" type="hidden" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Edit" asp-controller ="TestTemplates"
+           asp-route-id="@Model.TestTemplateId">Back to List</a>
     </form>
 </div>
