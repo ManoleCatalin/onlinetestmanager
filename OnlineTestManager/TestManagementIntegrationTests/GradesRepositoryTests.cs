@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Business.Repository;
 using Data.Core.Domain;
 using FluentAssertions;
@@ -55,7 +56,7 @@ namespace TestManagementIntegrationTests
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
+                        context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -102,7 +103,7 @@ namespace TestManagementIntegrationTests
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
+                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -154,7 +155,7 @@ namespace TestManagementIntegrationTests
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id));
+                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();

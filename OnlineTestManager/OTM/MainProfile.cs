@@ -3,6 +3,7 @@ using Data.Core.Domain;
 using OTM.ViewModels.AnswerTemplate;
 using OTM.ViewModels.ExerciseTemplate;
 using OTM.ViewModels.Group;
+using OTM.ViewModels.ScheduledTest;
 using OTM.ViewModels.TestTemplates;
 using Exercise = Data.Core.Domain.Exercise;
 
@@ -44,6 +45,19 @@ namespace OTM
             CreateMap<Answer, EditAnswer>();
             CreateMap<Answer, EditAnswerTemplatesViewModel>();
             CreateMap<Answer, DeleteAnswerTemplatesViewModel>();
+
+            #endregion
+
+            #region ScheduleTests
+
+            CreateMap<TestInstance, IndexScheduledTestViewModel>()
+                .ForMember(dest => dest.StartDateTime, opts => opts.MapFrom(source => source.StartedAt));
+            CreateMap<TestInstance, CreateScheduledTestViewModel>()
+                .ForMember(dest => dest.StartDateTime, opts => opts.MapFrom(source => source.StartedAt));
+            CreateMap<TestInstance, EditScheduledTestViewModel>()
+                .ForMember(dest => dest.StartDateTime, opts => opts.MapFrom(source => source.StartedAt));
+            CreateMap<TestInstance, DeleteScheduleTestViewModel>()
+                .ForMember(dest => dest.StartDateTime, opts => opts.MapFrom(source => source.StartedAt));
 
             #endregion
         }

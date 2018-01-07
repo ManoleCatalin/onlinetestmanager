@@ -46,7 +46,7 @@ namespace OTM.Controllers
         public IActionResult Index()
         {
             var testTemplates = _testsRepository.GetAllTestsOfTeacherAsync(_userId).Result;
-            var indexTestTemplatesViewModel = _mapper.Map<List<IndexTestTemplatesViewModel>>(testTemplates);
+            var indexTestTemplatesViewModel = _mapper.Map<IEnumerable<IndexTestTemplatesViewModel>>(testTemplates);
             return View(indexTestTemplatesViewModel);
         }
 

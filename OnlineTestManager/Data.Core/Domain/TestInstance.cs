@@ -15,19 +15,21 @@ namespace Data.Core.Domain
         public virtual Test Test { get; set; }
         public ICollection<Grade> Grades { get; set; }
 
-        public static TestInstance Create(string connectionToken,int duration, Guid groupId, Guid testId)
+        public static TestInstance Create(string connectionToken, int duration, Guid groupId, Guid testId, DateTime startedAt)
         {
-            var instance = new TestInstance { Id = Guid.NewGuid(), StartedAt = DateTime.Now };
-            instance.Update(connectionToken,duration, groupId, testId);
+            var instance = new TestInstance { Id = Guid.NewGuid() };
+            instance.Update(connectionToken,duration, groupId, testId,startedAt);
             return instance;
         }
 
-        public void Update(string connectionToken,int duration, Guid groupId, Guid testId)
+        public void Update(string connectionToken,int duration, Guid groupId, Guid testId, DateTime startedAt)
         {
             ConnectionToken = connectionToken;
             Duration = duration;
             GroupId = groupId;
             TestId = testId;
+            StartedAt = startedAt;
+
         }
     }
 }
