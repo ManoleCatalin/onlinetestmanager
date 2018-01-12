@@ -10,7 +10,6 @@ namespace Data.Core.Domain
         public string LastName { get; private set; }
         public UserRole UserRole { get; set; }
         public ICollection<UserGroup> UserGroups { get; set; }
-        public ICollection<UserGroupCopy> UserGroupCopies { get; set; }
         public ICollection<Grade> Grades { get; set; }
         public ICollection<ExerciseResponse> ExerciseResponses { get; set; }
 

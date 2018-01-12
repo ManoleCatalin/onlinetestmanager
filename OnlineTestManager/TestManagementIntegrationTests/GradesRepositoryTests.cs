@@ -54,21 +54,9 @@ namespace TestManagementIntegrationTests
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-                if (group != null)
+                if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create(
-                            100,
-                            group.Id,
-                            test.Id,
-                            DateTime.Now,
-                            Guid.Empty,
-                            "groupName",
-                            "groupDescription",
-                            "testName",
-                            "testDescription"
-                        ));
-
-                
+                        context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -114,19 +102,8 @@ namespace TestManagementIntegrationTests
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-                if (group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create(
-                        100,
-                        group.Id,
-                        test.Id,
-                        DateTime.Now,
-                        Guid.Empty,
-                        "groupName",
-                        "groupDescription",
-                        "testName",
-                        "testDescription"
-                    ));
-
+                if (@group != null)
+                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -177,21 +154,8 @@ namespace TestManagementIntegrationTests
 
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
-
-                if (test != null)
-                if (group != null)
-                    context.TestInstances.Add(TestInstance.Create(
-                        100,
-                        @group.Id,
-                        test.Id,
-                        DateTime.Now,
-                        Guid.Empty,
-                        "groupName",
-                        "groupDescription",
-                        "testName",
-                        "testDescription"
-                    ));
-
+                if (@group != null)
+                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();

@@ -45,7 +45,6 @@ namespace OTM.Controllers
             _userId = (Guid)userId;
         }
 
-        // GET: ScheduledTests
         public async Task<IActionResult> Index()
         {
             var scheduledTests = await _testInstancesRepository.GetAllTestInstancesOfTeacherAsync(_userId);
@@ -132,7 +131,6 @@ namespace OTM.Controllers
                 .ToList();
         }
 
-        // GET: ScheduledTests/Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -147,9 +145,6 @@ namespace OTM.Controllers
             return View(createScheduledTestViewModel);
         }
 
-        // POST: ScheduledTests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateScheduledTestViewModel createScheduledTestViewModel)
@@ -164,13 +159,7 @@ namespace OTM.Controllers
             var startDate = createScheduledTestViewModel.StartDateTime;
             
             var scheduledTest =
-                await _testInstancesRepository.InsertAsync(TestInstance.Create(duration, groupId, testId, startDate, 
-                    _userId,
-                    "groupName",
-                    "groupDescription",
-                    "testName",
-                    "testDescription" // TO DO: Obtain description and name for test
-                ));
+                await _testInstancesRepository.InsertAsync(TestInstance.Create(duration, groupId, testId, startDate));
 
             return RedirectToAction(nameof(Index));
         }
@@ -190,9 +179,6 @@ namespace OTM.Controllers
             return View(editScheduledTestViewModel);
         }
 
-        // POST: ScheduledTests/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditScheduledTestViewModel editScheduledTestViewModel)
@@ -208,14 +194,13 @@ namespace OTM.Controllers
             var groupId = Guid.Parse(editScheduledTestViewModel.Group);
             var testId = Guid.Parse(editScheduledTestViewModel.Test);
 
-            scheduledTest.Update(duration,groupId,testId,startTime, "testName", "testDescription", Guid.Empty); // TO DO: fill data 
+            scheduledTest.Update(duration,groupId,testId,startTime);
  
             await _testInstancesRepository.UpdateAsync(scheduledTest);
 
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: ScheduledTests/Delete/5
         public IActionResult Delete(Guid id)
         {
 
@@ -232,7 +217,6 @@ namespace OTM.Controllers
             return View(deleteScheduledTestViewModel);
         }
 
-        // POST: ScheduledTests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DeleteScheduleTestViewModel deleteScheduledTestViewModel)

@@ -87,12 +87,7 @@ namespace TestManagementIntegrationTests
                             100,
                             groupId.Id,
                             testId.Id, 
-                            DateTime.Now,
-                            Guid.Empty,
-                            "groupName",
-                            "groupDescription",
-                            "testName",
-                            "testDescription"
+                            DateTime.Now
                         );
 
                         var testInstanceInserted = testInstancesRepository.InsertAsync(testInstance).Result;
@@ -164,21 +159,14 @@ namespace TestManagementIntegrationTests
                 var testInstance = TestInstance.Create(
                     100,
                     groupId.Id,
-                    testId.Id,
-                    DateTime.Now,
-                    Guid.Empty,
-                    "groupName",
-                    "groupDescription",
-                    "testName",
-                    "testDescription"
+                    testId.Id, 
+                    DateTime.Now
                 );
-
-                
 
                 context.Add(testInstance);
                 context.SaveChanges();
 
-                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now, "testName", "testDescription", Guid.Empty);
+                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now);
 
 
                 // ACT
@@ -248,13 +236,8 @@ namespace TestManagementIntegrationTests
                         var testInstance = TestInstance.Create(
                             100,
                             groupId.Id,
-                            testId.Id,
-                            DateTime.Now,
-                            Guid.Empty,
-                            "groupName",
-                            "groupDescription",
-                            "testName",
-                            "testDescription"
+                            testId.Id, 
+                            DateTime.Now
                         );
 
                         context.Add(testInstance);

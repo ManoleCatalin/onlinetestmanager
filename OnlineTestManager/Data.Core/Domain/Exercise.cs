@@ -10,6 +10,7 @@ namespace Data.Core.Domain
         public Guid TestId { get; private set; }
         public virtual Test Test { get; set; }
         public ICollection<Answer> Answers { get; set; }
+        public ICollection<ExerciseResponse> ExerciseResponses { get; set; }
 
         public static Exercise Create(string description, Guid testId)
         {

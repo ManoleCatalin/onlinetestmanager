@@ -5,11 +5,11 @@ namespace Data.Core.Domain
 {
     public class MarkedAsCorrect
     {
-        public Guid AnswerCopyId { get; set; }
-        public virtual AnswerCopy AnswerCopy { get; set; }
+        public Guid AnswerId { get; set; }
+        public virtual Answer Answer { get; set; }
         public Guid ExerciseResponseId { get; set; }
 
-        public Guid ExerciseCopyId { get; set; }
+        public Guid ExerciseId { get; set; }
         public Guid TestInstanceId { get; set; }
         public Guid UserId { get; set; }
 

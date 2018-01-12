@@ -10,19 +10,19 @@ namespace Data.Core.Configuration
         {
             builder.ToTable("ExerciseResponse");
 
-            builder.HasKey(x => new {x.UserId, x.ExerciseCopyId, x.TestInstanceId});
+            builder.HasKey(x => new {x.UserId, ExerciseCopyId = x.ExerciseId, x.TestInstanceId});
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.ExerciseResponses)
                 .HasForeignKey(x => x.UserId);
 
-            builder.HasOne(x => x.ExerciseCopy)
+            builder.HasOne(x => x.Exercise)
                 .WithMany(x => x.ExerciseResponses)
-                .HasForeignKey(x => x.ExerciseCopyId);
+                .HasForeignKey(x => x.ExerciseId);
 
-            builder.HasOne(x => x.TestInstance)
-                .WithMany(x => x.ExerciseResponses)
-                .HasForeignKey(x => x.TestInstanceId);
+            //builder.HasOne(x => x.TestInstance)
+            //    .WithMany(x => x.ExerciseResponses)
+            //    .HasForeignKey(x => x.TestInstanceId);
         }
     }
 }
