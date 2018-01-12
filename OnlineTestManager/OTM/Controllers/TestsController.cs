@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Constants;
+using Data.Core.Domain;
+using Microsoft.AspNetCore.Mvc;
+using Data.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using OTM.UserContext;
+using OTM.ViewModels.Tests;
+
+namespace OTM.Controllers
+{
+    [Authorize(Roles = RoleConstants.StudentRoleName)]
+    [Route("[Controller]/[Action]")]
+    public class TestsController : Controller
+    {
+        private readonly ITestInstancesRepository _testInstancesRepository;
+        private readonly Guid _userId;
+        private readonly ITestsRepository _testsRepository;
+        private readonly IExercisesRepository _exercisesRepository;
+
+        public TestsController(ITestInstancesRepository testInstancesRepository, IUserContext userContext, ITestsRepository testsRepository, IExercisesRepository exercisesRepository)
+        {
+            _testInstancesRepository = testInstancesRepository;
+            _testsRepository = testsRepository;
+            _exercisesRepository = exercisesRepository;
+
+            var userId = userContext.GetLogedInUserId();
+            if (userId == null)
+            {
+                throw new ApplicationException("userId is null");
+            }
+            _userId = (Guid)userId;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var tests = await _testInstancesRepository.GetAllTestInstancesOfStudentAsync(_userId);
+            var listIndexTestsViewModel = new List<IndexTestsViewModel>();
+            foreach (var item in tests)
+            {
+                var test = await _testsRepository.GetByIdAsync(item.TestId);
+                listIndexTestsViewModel.Add(new IndexTestsViewModel()
+                {
+                    Id = item.Id,
+                    Description = test.Description,
+                    Duration = item.Duration,
+                    Name = test.Name,
+                    Ongoing = (DateTime.Now > item.StartedAt && DateTime.Now < item.StartedAt.AddMinutes(item.Duration)),
+                    StartDate = item.StartedAt
+
+                });
+            }
+
+            return View(listIndexTestsViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Display(Guid id)
+        {
+            var displayTestsViewModel = new DisplayTestsViewModel();
+
+             var exercise = await _testInstancesRepository.GetNextExerciseAsync(_userId,id);
+            displayTestsViewModel.TestInstanceId = id;
+             displayTestsViewModel.Description = exercise.Description;
+             displayTestsViewModel.ExerciseId = exercise.Id;
+             var answers = new List<AnswerDisplayTestsViewModel>();
+             foreach(var item in exercise.Answers)
+             {
+                 answers.Add(new AnswerDisplayTestsViewModel()
+                 {
+                     Id = item.Id,
+                     Description = item.Description
+                 });
+             }
+            displayTestsViewModel.Answers = answers;
+            return View(displayTestsViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Display(DisplayTestsViewModel displayTestViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View(displayTestViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Finished(Guid id)
+        {
+            var testInstance = await _testInstancesRepository.GetByIdAsync(id);
+            var test = await _testsRepository.GetByIdAsync(testInstance.TestId);
+            var finishedTestsViewModel = new FinishedTestsViewModel();
+            finishedTestsViewModel.Description = test.Description;
+            finishedTestsViewModel.Name = test.Name;
+            return View(finishedTestsViewModel);
+        }
+
+    }
+}

@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Repository
 {
-    public class TestInstancesRepository :GenericRepository<TestInstance>, ITestInstancesRepository
+    public class TestInstancesRepository : GenericRepository<TestInstance>, ITestInstancesRepository
     {
         public TestInstancesRepository(DatabaseContext context) : base(context)
         {
-        }   
+        }
 
         public async Task<List<TestInstance>> GetAllTestInstancesOfTeacherAsync(Guid teacherId)
         {
@@ -58,5 +58,4 @@ namespace Business.Repository
             return testInstance;
         }
     }
-
 }
