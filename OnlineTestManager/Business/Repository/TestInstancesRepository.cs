@@ -43,7 +43,8 @@ namespace Business.Repository
             }
 
             var exercises = _context.Exercises.Include(x => x.ExerciseResponses)
-                .ThenInclude(x => x.MarkedAsCorrects)
+                    .ThenInclude(x => x.MarkedAsCorrects)
+                .Include(x => x.Answers)
                 .Where(e => 0 == e.ExerciseResponses.Count(x => x.MarkedAsCorrects.Count == 0));
 
             return exercises.Any() ? exercises.First() : null;
