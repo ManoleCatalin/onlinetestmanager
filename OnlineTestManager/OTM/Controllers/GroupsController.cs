@@ -205,9 +205,13 @@ namespace OTM.Controllers
         {
             var students =await _usersRepository.GetStudentsByNamePrefixAsync(addStudentToGroupViewModel.StudentName);
 
-            if (students.Count != 1 || !students[0].UserName.Equals(addStudentToGroupViewModel.StudentName))
+           /* if (students.Count != 1 || !students[0].UserName.Equals(addStudentToGroupViewModel.StudentName))
             {
                 ModelState.AddModelError("StudentName", "Student name is not valid");
+                return View(addStudentToGroupViewModel);
+            }*/
+            if (!ModelState.IsValid)
+            {
                 return View(addStudentToGroupViewModel);
             }
 
