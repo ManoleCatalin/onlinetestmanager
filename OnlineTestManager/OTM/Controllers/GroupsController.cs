@@ -205,21 +205,13 @@ namespace OTM.Controllers
         {
             var students =await _usersRepository.GetStudentsByNamePrefixAsync(addStudentToGroupViewModel.StudentName);
 
-            if (students.Count != 1 || !students[0].UserName.Equals(addStudentToGroupViewModel.StudentName))
+        
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("StudentName", "Student name is not valid");
                 return View(addStudentToGroupViewModel);
             }
 
-            var group = _groupsRepository.GetByIdAsync(addStudentToGroupViewModel.GroupId).Result;
-            foreach (var userGroup in group.UserGroups)
-            {
-                if (userGroup.User.UserName.Equals(addStudentToGroupViewModel.StudentName))
-                {
-                    ModelState.AddModelError("StudentName", "This user is already in this group");
-                    return View(addStudentToGroupViewModel);
-                }
-            }
+         
 
             var inserted = await _groupsRepository
                 .InsertStudentAsync(addStudentToGroupViewModel.GroupId, students[0].Id);

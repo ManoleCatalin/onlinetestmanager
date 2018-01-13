@@ -10,6 +10,7 @@ namespace OTM.ViewModels.ScheduledTest
         public Guid Id { get; set; }
         public List<SelectListItem> Groups { get; set; }
         public List<SelectListItem> Tests { get; set; }
+        [Display(Name = "Duration in mins")]
         public int Duration { get; set; }
         [Display(Name = "Start time")]
         [DataType(DataType.DateTime)]
