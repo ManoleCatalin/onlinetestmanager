@@ -49,20 +49,12 @@ namespace Business.Repository
                 .ToListAsync();
         }
 
-        //public async Task<User> InsertAsync(User user, string roleName)
-        //{
-        //    _entities.Add(user);
-        //    await _context.SaveChangesAsync();
-
-        //    var insertedUser = GetByUserNameAsync(user.UserName).Result;
-        //    var roleId = _context.Roles.FirstOrDefaultAsync(x=> x.Name.Equals(roleName)).Result.Id;
-
-        //    var userRole = new UserRole{UserId = user.Id, RoleId = roleId};
-        //    _context.UserRoles.Add(userRole);
-
-        //    await _context.SaveChangesAsync();
-
-        //    return user;
-        //}
+        public async Task<List<User>> GetAllByRoleName(string roleName)
+        {
+            return await _entities
+                .Include(user => user.UserRole)
+                    .ThenInclude(userRole => userRole.Role)
+                .Where(x => x.UserRole.Role.Name == roleName).ToListAsync();
+        }
     }
 }

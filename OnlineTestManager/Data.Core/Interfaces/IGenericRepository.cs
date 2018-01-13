@@ -10,7 +10,7 @@ namespace Data.Core.Interfaces
         Task<bool> DeleteAsync(Guid id);
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);
-        Task<T> InsertAsync(T testInstance);
+        Task<T> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
     }
 }
