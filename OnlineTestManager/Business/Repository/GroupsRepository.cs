@@ -15,14 +15,14 @@ namespace Business.Repository
     {
         public GroupsRepository(DatabaseContext context) : base(context)
         {
-        }
 
+        }
         public override async Task<Group> GetByIdAsync(Guid id)
         {
             return await _entities
                 .Include(s => s.UserGroups)
-                    .ThenInclude(x => x.User)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .ThenInclude(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == id );
         }
 
         public async Task<bool> InsertStudentAsync(Guid groupId, Guid studentId)
@@ -48,8 +48,11 @@ namespace Business.Repository
 
         public async Task<bool> DeleteStudentAsync(Guid groupId, Guid studentId)
         {
-            _context.UserGroups.Remove(_context.UserGroups
-                .FirstOrDefault(ug => ug.UserId == studentId && ug.GroupId == groupId));
+            var entity=_context.UserGroups
+                .FirstOrDefault(ug => ug.UserId == studentId && ug.GroupId == groupId);
+            if (entity == null) return await _context.SaveChangesAsync() > 0;
+            entity.IsDeleted = true;
+            _context.UserGroups.Update(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -57,8 +60,9 @@ namespace Business.Repository
         {
             return await _entities
                 .Include(s => s.UserGroups)
-                    .ThenInclude(x => x.User)
-                .Where(x => x.UserId == teacherId).ToListAsync();
+                .ThenInclude(x => x.User)
+                .Where(x => x.UserId == teacherId && !x.IsDeleted).ToListAsync();
         }
+        
     }
 }

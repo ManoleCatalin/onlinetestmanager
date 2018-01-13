@@ -91,7 +91,7 @@ namespace OTM.Controllers
                     return NotFound();
                 }
                 exercise.Update(editExerciseTemplatesViewModel.Description,
-                    editExerciseTemplatesViewModel.TestTemplateId);
+                    editExerciseTemplatesViewModel.TestTemplateId,false);
             
                 await _exercisesRepository.UpdateAsync(exercise);
 

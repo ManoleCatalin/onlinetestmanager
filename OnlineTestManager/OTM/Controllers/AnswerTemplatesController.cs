@@ -107,7 +107,7 @@ namespace OTM.Controllers
             if (ModelState.IsValid)
             {
                 var answer = await _answersRepository.GetByIdAsync(editAnswerTemplatesViewModel.AnswerTemplateId);
-                answer.Update(editAnswerTemplatesViewModel.Description, editAnswerTemplatesViewModel.Correct, editAnswerTemplatesViewModel.ExerciseTemplateId);    
+                answer.Update(editAnswerTemplatesViewModel.Description, editAnswerTemplatesViewModel.Correct, editAnswerTemplatesViewModel.ExerciseTemplateId,false);
                 var updatedAnswer = await _answersRepository.UpdateAsync(answer);
 
                 return RedirectToAction(nameof(Edit), "ExerciseTemplates", new

@@ -17,7 +17,7 @@ namespace Business.Repository
 
         public async Task<List<Exercise>> GetAllExercisesOfTestAsync(Guid testId)
         {
-            return await _entities.Where(x => x.TestId == testId).ToListAsync();
+            return await _entities.Where(x => x.TestId == testId && !x.IsDeleted).ToListAsync();
         }
     }
 }
