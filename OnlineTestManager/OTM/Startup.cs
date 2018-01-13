@@ -92,15 +92,10 @@ namespace OTM
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetService<DatabaseContext>();
-                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
-                var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
 
                 dbContext.Database.Migrate();
 
-                dbSeeder.SeedAsync(app.ApplicationServices, 
-                    roleManager, 
-                    userManager,
-                    testTypesRepository).Wait();
+                dbSeeder.SeedAsync().Wait();
             }
 
            

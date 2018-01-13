@@ -8,6 +8,8 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<UserGroup> builder)
         {
+            builder.ToTable("UserGroup");
+
             builder.HasKey(ug => new { ug.UserId, ug.GroupId });
 
             builder

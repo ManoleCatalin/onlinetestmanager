@@ -8,6 +8,8 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<Grade> builder)
         {
+            builder.ToTable("Grade");
+
             builder.HasKey(grade => new { grade.UserId, grade.TestInstanceId });
             builder.Property(grade => grade.MarkedAt).IsRequired();
             builder.Property(grade => grade.Value).IsRequired();

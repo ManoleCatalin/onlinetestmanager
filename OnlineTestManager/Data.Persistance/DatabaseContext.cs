@@ -18,6 +18,8 @@ namespace Data.Persistence
         public DbSet<Data.Core.Domain.Grade> Grades { get; set; }
         public DbSet<Data.Core.Domain.Exercise> Exercises { get; set; }
         public DbSet<Data.Core.Domain.Answer> Answers { get; set; }
+        public DbSet<Data.Core.Domain.ExerciseResponse> ExerciseResponses { get; set; }
+        public DbSet<Data.Core.Domain.MarkedAsCorrect> MarkedAsCorrects { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -45,6 +47,8 @@ namespace Data.Persistence
             builder.ApplyConfiguration(new UserGroupConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new ExerciseResponseConfiguration());
+            builder.ApplyConfiguration(new MarkedAsCorrectConfiguration());
         }
     }
 }

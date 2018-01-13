@@ -24,11 +24,11 @@ namespace Business.Repository.Base
 
         public virtual async Task<T> GetByIdAsync(Guid id) => await _entities.FirstOrDefaultAsync(x => x.Id == id);
 
-        public virtual async Task<T> InsertAsync(T entity)
+        public virtual async Task<T> InsertAsync(T testInstance)
         {
-            _entities.Add(entity);
+            _entities.Add(testInstance);
             await _context.SaveChangesAsync();
-            return entity;
+            return testInstance;
         }
 
         public virtual async Task<bool> UpdateAsync(T entity)
@@ -39,7 +39,8 @@ namespace Business.Repository.Base
 
         public virtual async Task<bool> DeleteAsync(Guid id)
         {
-            _entities.Remove(_entities.FirstOrDefault(u => u.Id == id));
+
+            _entities.Update(_entities.FirstOrDefault(u => u.Id == id));
             return await _context.SaveChangesAsync() > 0;
         }
 

@@ -9,6 +9,8 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<Test> builder)
         {
+            builder.ToTable("Test");
+
             builder.HasKey(test => test.Id);
             builder.Property(test => test.CreatedAt).IsRequired();
             builder.Property(test => test.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
@@ -18,6 +20,12 @@ namespace Data.Core.Configuration
                 .HasMany(e => e.Exercises)
                 .WithOne(e => e.Test)
                 .HasForeignKey(p => p.TestId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasMany(x => x.TestInstances)
+                .WithOne(x => x.Test)
+                .HasForeignKey(x => x.TestId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

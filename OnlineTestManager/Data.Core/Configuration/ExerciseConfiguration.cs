@@ -9,6 +9,8 @@ namespace Data.Core.Configuration
     {
         public void Configure(EntityTypeBuilder<Exercise> builder)
         {
+            builder.ToTable("Exercise");
+
             builder.HasKey(exercise => exercise.Id);
             builder.Property(exercise => exercise.Description).HasMaxLength(CoreConfigurationConstants.MaxLength).IsRequired();
 

@@ -11,6 +11,7 @@ namespace Data.Core.Domain
         public UserRole UserRole { get; set; }
         public ICollection<UserGroup> UserGroups { get; set; }
         public ICollection<Grade> Grades { get; set; }
+        public ICollection<ExerciseResponse> ExerciseResponses { get; set; }
 
         public static User Create(string firstName, string lastName, string username, string email, string password)
         {
