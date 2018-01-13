@@ -19,10 +19,17 @@ namespace Business.Repository
         }
         public override async Task<Group> GetByIdAsync(Guid id)
         {
-            return await _entities
+             var groups = await _entities
+                .Where(b => b.IsDeleted == false)
                 .Include(s => s.UserGroups)
                 .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id );
+
+            var listGroup = groups.UserGroups.ToList();
+            listGroup.RemoveAll(x => x.IsDeleted);
+            groups.UserGroups = listGroup;
+
+            return groups;
         }
 
         public async Task<bool> InsertStudentAsync(Guid groupId, Guid studentId)
@@ -51,6 +58,7 @@ namespace Business.Repository
             var entity=_context.UserGroups
                 .FirstOrDefault(ug => ug.UserId == studentId && ug.GroupId == groupId);
             if (entity == null) return await _context.SaveChangesAsync() > 0;
+
             entity.IsDeleted = true;
             _context.UserGroups.Update(entity);
             return await _context.SaveChangesAsync() > 0;

@@ -24,6 +24,5 @@ namespace Data.Core.Domain
             ExerciseId = exerciseId;
             IsDeleted = isDeleted;
         }
-
     }
 }

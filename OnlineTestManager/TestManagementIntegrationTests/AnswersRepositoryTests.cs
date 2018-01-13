@@ -110,7 +110,7 @@ namespace TestManagementIntegrationTests
                     var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
                     databaseContext.Add(answer);
                     databaseContext.SaveChanges();
-                    answer.Update("Raspuns Problema 2", false, exercise.Id);
+                    answer.Update("Raspuns Problema 2", false, exercise.Id, false);
 
 
                     // ACT

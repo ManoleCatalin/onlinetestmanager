@@ -56,7 +56,7 @@ namespace TestManagementIntegrationTests
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
+                        context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -103,7 +103,7 @@ namespace TestManagementIntegrationTests
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
+                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -114,7 +114,7 @@ namespace TestManagementIntegrationTests
                 context.Add(grade);
                 context.SaveChanges();
 
-                grade.Update(10);
+                grade.Update(10, false);
 
 
                 // ACT
@@ -155,7 +155,7 @@ namespace TestManagementIntegrationTests
                 var test = context.Tests.ToList().FirstOrDefault();
                 var group = context.Groups.ToList().FirstOrDefault();
                 if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create("Tokenel", 50, @group.Id, test.Id, DateTime.Now));
+                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
                 var testInstance = context.TestInstances.ToList().FirstOrDefault();

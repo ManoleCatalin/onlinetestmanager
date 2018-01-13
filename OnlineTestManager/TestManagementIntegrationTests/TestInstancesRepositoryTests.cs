@@ -84,7 +84,6 @@ namespace TestManagementIntegrationTests
                     if (testId != null)
                     {
                         var testInstance = TestInstance.Create(
-                            "abc123",
                             100,
                             groupId.Id,
                             testId.Id, 
@@ -158,7 +157,6 @@ namespace TestManagementIntegrationTests
                 if (groupId == null) return;
                 if (testId == null) return;
                 var testInstance = TestInstance.Create(
-                    "abc123",
                     100,
                     groupId.Id,
                     testId.Id, 
@@ -168,7 +166,7 @@ namespace TestManagementIntegrationTests
                 context.Add(testInstance);
                 context.SaveChanges();
 
-                testInstance.Update("def456", 200, groupId.Id, testId.Id, DateTime.Now);
+                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now, false);
 
 
                 // ACT
@@ -236,7 +234,6 @@ namespace TestManagementIntegrationTests
                     if (testId != null)
                     {
                         var testInstance = TestInstance.Create(
-                            "abc123",
                             100,
                             groupId.Id,
                             testId.Id, 

@@ -8,10 +8,16 @@ namespace Data.Core.Domain
         public Guid UserId { get; set; }
         public Group Group { get; set; }
         public Guid GroupId { get; set; }
-       public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
+
         public static UserGroup Create(Guid userId, Guid groupId)
         {
-            return new UserGroup { UserId = userId, GroupId = groupId };
+            return new UserGroup { UserId = userId, GroupId = groupId, IsDeleted = false};
+        }
+
+        public void Update(bool isDeleted)
+        {
+            IsDeleted = isDeleted;
         }
     }
 }

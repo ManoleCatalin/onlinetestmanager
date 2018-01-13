@@ -105,7 +105,7 @@ namespace TestManagementIntegrationTests
                     var exercise = Exercise.Create("Problema1", test.Id);
                     databaseContext.Add(exercise);
                     databaseContext.SaveChanges();
-                    exercise.Update("Problema2",test.Id);
+                    exercise.Update("Problema2",test.Id, false);
                 
                     // ACT
                     var result = exercisesRepository.UpdateAsync(exercise);

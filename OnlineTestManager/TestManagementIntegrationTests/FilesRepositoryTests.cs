@@ -42,7 +42,7 @@ namespace TestManagementIntegrationTests
 
                 if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id, DateTime.Now));
+                        context.TestInstances.Add(TestInstance.Create(300, @group.Id, test.Id, DateTime.Now));
             }
             context.SaveChanges();
             var testInstance = context.TestInstances.ToList().FirstOrDefault();
@@ -94,7 +94,7 @@ namespace TestManagementIntegrationTests
                 context.Files.Add(file);
                 context.SaveChanges();
                 // ACT
-                file.Update(file.Path, "/download/xabcxsd", file.TestInstanceId);
+                file.Update(file.Path, "/download/xabcxsd", file.TestInstanceId, false);
                 var result = filesRepository.UpdateAsync(file);
                 // ASSERT
 

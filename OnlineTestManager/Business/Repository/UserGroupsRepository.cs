@@ -40,7 +40,6 @@ namespace Business.Repository
         {
            var entity=(_context.UserGroups.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId));
             if (entity == null) return await _context.SaveChangesAsync() > 0;
-            entity.IsDeleted = true;
             _context.UserGroups.Update(entity);
             return await _context.SaveChangesAsync() > 0;
         }

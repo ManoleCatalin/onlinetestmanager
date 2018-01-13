@@ -107,7 +107,7 @@ namespace TestManagementIntegrationTests
                 context.Add(@group);
                 context.SaveChanges();
 
-                @group.Update("A3", "grupa din anul I", userId.Id);
+                @group.Update("A3", "grupa din anul I", userId.Id, false);
 
 
                 // ACT
