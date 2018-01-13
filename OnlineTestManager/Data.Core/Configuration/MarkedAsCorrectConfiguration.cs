@@ -18,7 +18,7 @@ namespace Data.Core.Configuration
 
             builder.HasOne(x => x.ExerciseResponse)
                 .WithMany(x => x.MarkedAsCorrects)
-                .HasForeignKey(x => new { ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId, UserId = x.UserId});
+                .HasForeignKey(x => new { UserId = x.UserId, ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId });
         }
     }
 }

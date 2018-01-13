@@ -63,7 +63,7 @@ namespace OTM.Controllers
             var exercise = await _testInstancesRepository.GetNextExerciseAsync(_userId,id);
             if (exercise == null)
             {
-                RedirectToAction(nameof(Finished),  new { id = id });
+                return RedirectToAction(nameof(Finished),  new { id = id });
             }
             var displayTestsViewModel = new DisplayTestsViewModel();
             displayTestsViewModel.TestInstanceId = id;
@@ -108,7 +108,7 @@ namespace OTM.Controllers
                 }
                 exerciseResponse.MarkedAsCorrects = answers;
                 var exercise = await _testInstancesRepository.InsertExerciseResponseAsync(exerciseResponse);
-                RedirectToAction(nameof(Display), new { id = displayTestViewModel.TestInstanceId });
+                return RedirectToAction(nameof(Display), new { id = displayTestViewModel.TestInstanceId });
             }
 
             return View(displayTestViewModel);

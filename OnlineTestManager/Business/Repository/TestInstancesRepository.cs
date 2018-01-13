@@ -43,11 +43,15 @@ namespace Business.Repository
             }
 
             var exercises = _context.Exercises.Include(x => x.ExerciseResponses)
-                    .ThenInclude(x => x.MarkedAsCorrects)
+                .ThenInclude(x => x.MarkedAsCorrects)
                 .Include(x => x.Answers)
-                .Where(e => 0 == e.ExerciseResponses.Count(x => x.MarkedAsCorrects.Count == 0));
+                .Include(t => t.Test)
+                .ThenInclude(ti => ti.TestInstances)
+                .Where(t => 0 != t.Test.TestInstances.Count(k => k.Id == testInstanceId));
+            var exercisesNotAnsweredByThisUser = exercises
+                .Where(e => 0 == e.ExerciseResponses.Count(x => e.Id == x.ExerciseId && x.UserId == studentId));
 
-            return exercises.Any() ? exercises.First() : null;
+            return exercisesNotAnsweredByThisUser.Any() ? exercisesNotAnsweredByThisUser.First() : null;
         }
 
         public override async Task<TestInstance> InsertAsync(TestInstance testInstance)
