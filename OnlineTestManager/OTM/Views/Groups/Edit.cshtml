@@ -1,16 +1,6 @@
 ﻿@model OTM.ViewModels.Group.EditGroupViewModel
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
-<h4>Edit Groups</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -62,10 +52,6 @@
         
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-    
 <p>
     <a asp-action="AddStudentToGroup" asp-route-id="@Model.Id">Add students to this group</a>
 </p>
@@ -73,6 +59,3 @@
 <div>
         <a asp-action="Index">Back to List</a>
     </div>
-
-</body>
-</html>
