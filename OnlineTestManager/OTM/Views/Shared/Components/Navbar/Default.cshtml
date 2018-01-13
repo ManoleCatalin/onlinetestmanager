@@ -83,16 +83,31 @@
                 {
                     if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                                    <li><a asp-area="" asp-controller="TestTemplates" asp-action="Index">Test Templates</a></li>
-                                    <li><a asp-area="" asp-controller="Groups" asp-action="Index">Groups</a></li>
-                                    <li><a asp-area="" asp-controller="ScheduledTests" asp-action="Index">Scheduled tests</a></li>
-                                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Grading</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa fa-sign-out"></i>
+                                <span>Home</span>
+                                <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="TestTemplates" asp-action="Index">
+                            <i class="fa fa-sign-out"></i>
+                            <span>Test Templates</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="Groups" asp-action="Index">
+                             <i class="fa fa-sign-out"></i>
+                            <span>Groups</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="ScheduledTests" asp-action="Index">
+                             <i class="fa fa-sign-out"></i>
+                            <span>Scheduled Tests</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
                     }
                     else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Tests</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="Index"></a></li>
                                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Grades</a></li>
                     }
                 }
