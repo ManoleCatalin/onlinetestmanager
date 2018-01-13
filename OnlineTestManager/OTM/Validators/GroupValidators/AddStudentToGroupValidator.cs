@@ -10,21 +10,33 @@ namespace OTM.Validators.GroupValidators
     public class AddStudentToGroupValidator : AbstractValidator<AddStudentToGroupViewModel>
     {
         private readonly IUsersRepository _usersRepository;
+        
         public AddStudentToGroupValidator(IUsersRepository users, IUserContext user, IGroupsRepository groups)
         {
             _usersRepository = users;
             RuleFor(x => x.StudentName)
                 .NotEmpty().WithMessage(string.Format(Consts.FieldEmptyMessage, "Student Name"))
                 .MaximumLength(Consts.MaxLength)
-                .WithMessage(string.Format(Consts.FieldMaximumLengthMessage, "Student Name", Consts.MaxLength))
-                .Custom((x, context) =>
+                .WithMessage(string.Format(Consts.FieldMaximumLengthMessage, "Student Name", Consts.MaxLength));
+               
+            RuleFor(x=>x).Custom((x, context) =>
+            {
+                var student = _usersRepository.GetStudentsByNamePrefixAsync(x.StudentName).Result;
+                if (student.Count == 0)
                 {
-                    var student = _usersRepository.GetStudentsByNamePrefixAsync(x).Result;
-                    if (student.Count == 0)
+                    context.AddFailure("StudentName", "Student name is not valid");
+                }
+                var group = groups.GetByIdAsync(x.GroupId).Result;
+                foreach (var userGroup in group.UserGroups)
+                {
+                    if (userGroup.User.UserName.Equals(x.StudentName))
                     {
-                        context.AddFailure("StudentName", "Student name is not valid");
+                        context.AddFailure("StudentName", "This user is already in this group");
+
                     }
-                });
+                }
+
+            });
             RuleFor(x => x.GroupId)
                 .NotEmpty().WithMessage(string.Format(Consts.FieldEmptyMessage, "Group Id"))
                 .Custom((x, context) =>
@@ -44,6 +56,7 @@ namespace OTM.Validators.GroupValidators
                         }
                     }
                 });
+           
         }
     }
 }
