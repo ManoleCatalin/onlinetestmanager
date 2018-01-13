@@ -10,7 +10,7 @@ namespace Data.Core.Configuration
         {
             builder.ToTable("ExerciseResponse");
 
-            builder.HasKey(x => new {x.UserId, ExerciseCopyId = x.ExerciseId, x.TestInstanceId});
+            builder.HasKey(x => new {UserId = x.UserId, ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId});
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.ExerciseResponses)

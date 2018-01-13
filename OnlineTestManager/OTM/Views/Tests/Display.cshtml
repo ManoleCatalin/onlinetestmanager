@@ -8,17 +8,16 @@
             <div class="form-group">
                 <input asp-for="ExerciseId" type="hidden"/>
             </div>
-            @foreach (var item in Model.Answers)
-            {
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="@item.Correct" />
-                            <div style="display: inline-block">@Html.DisplayFor(model => item.Description)</div>
-                        </label>
-                    </div>
-                </div>
-            }
+            <div class="form-group">
+                <input asp-for="UserId" type="hidden" />
+            </div>
+            <div class="form-group">
+                <input asp-for="TestInstanceId" type="hidden" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Description" type="hidden" />
+            </div>
+            @Html.EditorFor(x => x.Answers)
             <div class="form-group">
                 <input type="submit" value="Display" class="btn btn-default" />
             </div>

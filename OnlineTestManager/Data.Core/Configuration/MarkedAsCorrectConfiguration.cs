@@ -10,15 +10,15 @@ namespace Data.Core.Configuration
         {
             builder.ToTable("MarkedAsCorrect");
 
-            builder.HasKey(x => new {AnswerCopyId = x.AnswerId,
-                ExerciseCopyId = x.ExerciseId,
-                x.TestInstanceId,
-                x.UserId
+            builder.HasKey(x => new {AnswerId = x.AnswerId,
+                ExerciseId = x.ExerciseId,
+                TestInstanceId = x.TestInstanceId,
+                UserId = x.UserId
             });
 
             builder.HasOne(x => x.ExerciseResponse)
                 .WithMany(x => x.MarkedAsCorrects)
-                .HasForeignKey(x => new {x.ExerciseResponseId, AnswerCopyId = x.AnswerId, x.UserId});
+                .HasForeignKey(x => new { ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId, UserId = x.UserId});
         }
     }
 }

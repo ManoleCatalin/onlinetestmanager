@@ -10,5 +10,6 @@ namespace Data.Core.Interfaces
         Task<List<TestInstance>> GetAllTestInstancesOfTeacherAsync(Guid teacherId);
         Task<List<TestInstance>> GetAllTestInstancesOfStudentAsync(Guid studentId);
         Task<Exercise> GetNextExerciseAsync(Guid studentId, Guid testInstanceId);
+        Task<ExerciseResponse> InsertExerciseResponseAsync(ExerciseResponse exerciseResponse);
     }
 }

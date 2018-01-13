@@ -57,5 +57,20 @@ namespace Business.Repository
 
             return testInstance;
         }
+
+        public async Task<ExerciseResponse> InsertExerciseResponseAsync(ExerciseResponse exerciseResponse)
+        {
+            var markedAsCorrects = exerciseResponse.MarkedAsCorrects;
+            exerciseResponse.MarkedAsCorrects = null;
+            _context.ExerciseResponses.Add(exerciseResponse);
+            await _context.SaveChangesAsync();
+            foreach (var item in markedAsCorrects)
+            {
+                _context.MarkedAsCorrects.Add(item);
+            }
+            await _context.SaveChangesAsync();
+            return exerciseResponse;
+        }
+
     }
 }

@@ -60,21 +60,25 @@ namespace OTM.Controllers
         [HttpGet]
         public async Task<IActionResult> Display(Guid id)
         {
+            var exercise = await _testInstancesRepository.GetNextExerciseAsync(_userId,id);
+            if (exercise == null)
+            {
+                RedirectToAction(nameof(Finished),  new { id = id });
+            }
             var displayTestsViewModel = new DisplayTestsViewModel();
-
-             var exercise = await _testInstancesRepository.GetNextExerciseAsync(_userId,id);
             displayTestsViewModel.TestInstanceId = id;
-             displayTestsViewModel.Description = exercise.Description;
-             displayTestsViewModel.ExerciseId = exercise.Id;
-             var answers = new List<AnswerDisplayTestsViewModel>();
-             foreach(var item in exercise.Answers)
-             {
-                 answers.Add(new AnswerDisplayTestsViewModel()
-                 {
-                     Id = item.Id,
-                     Description = item.Description
-                 });
-             }
+            displayTestsViewModel.Description = exercise.Description;
+            displayTestsViewModel.ExerciseId = exercise.Id;
+            displayTestsViewModel.UserId = _userId;
+            var answers = new List<MarkedCorrectAnswerDisplayTestsViewModel>();
+            foreach(var item in exercise.Answers)
+            {
+                answers.Add(new MarkedCorrectAnswerDisplayTestsViewModel()
+                {
+                    Id = item.Id,
+                    Description = item.Description
+                });
+            }
             displayTestsViewModel.Answers = answers;
             return View(displayTestsViewModel);
         }
@@ -84,7 +88,27 @@ namespace OTM.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                var exerciseResponse = new ExerciseResponse();
+                exerciseResponse.UserId = displayTestViewModel.UserId;
+                exerciseResponse.ExerciseId = displayTestViewModel.ExerciseId;
+                exerciseResponse.TestInstanceId = displayTestViewModel.TestInstanceId;
+                var answers = new List<MarkedAsCorrect>();
+                foreach (var item in displayTestViewModel.Answers)
+                {
+                    if (item.Correct == true)
+                    {
+                        answers.Add(new MarkedAsCorrect()
+                        {
+                            AnswerId = item.Id,
+                            ExerciseId = displayTestViewModel.ExerciseId,
+                            TestInstanceId = displayTestViewModel.TestInstanceId,
+                            UserId = displayTestViewModel.UserId
+                        });
+                    }   
+                }
+                exerciseResponse.MarkedAsCorrects = answers;
+                var exercise = await _testInstancesRepository.InsertExerciseResponseAsync(exerciseResponse);
+                RedirectToAction(nameof(Display), new { id = displayTestViewModel.TestInstanceId });
             }
 
             return View(displayTestViewModel);
