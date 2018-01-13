@@ -27,7 +27,7 @@ namespace Business.Repository
             return await _entities
                 .Include(user => user.UserRole)
                     .ThenInclude(userRole => userRole.Role)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
         }
 
         public async Task<User> GetByUserNameAsync(string userName)
@@ -35,12 +35,12 @@ namespace Business.Repository
             return await _entities
                 .Include(user => user.UserRole)
                     .ThenInclude(userRole => userRole.Role)
-                .FirstOrDefaultAsync(x => x.UserName == userName);
+                .FirstOrDefaultAsync(x => x.UserName == userName && !x.IsDeleted);
         }
 
         public async Task<List<User>> GetStudentsByNamePrefixAsync(string userNamePrefix)
         {
-            var studentRoleId = _context.Roles.FirstOrDefaultAsync(x => x.Name.Equals(RoleConstants.StudentRoleName)).Result.Id;
+            var studentRoleId = _context.Roles.FirstOrDefaultAsync(x => x.Name.Equals(RoleConstants.StudentRoleName) && !x.IsDeleted).Result.Id;
 
             return await _entities
                 .Include(user => user.UserRole)

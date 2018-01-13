@@ -205,7 +205,7 @@ namespace OTM.Controllers
             var groupId = Guid.Parse(editScheduledTestViewModel.Group);
             var testId = Guid.Parse(editScheduledTestViewModel.Test);
 
-            scheduledTest.Update("",duration,groupId,testId,startTime);
+            scheduledTest.Update("",duration,groupId,testId,startTime,false);
             await _testInstancesRepository.UpdateAsync(scheduledTest);
 
             return RedirectToAction(nameof(Index));

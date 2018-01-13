@@ -126,7 +126,7 @@ namespace OTM.Controllers
                 return View(editTestTemplatesViewModel);
 
             var test = await _testsRepository.GetByIdAsync(editTestTemplatesViewModel.Id);
-            test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId);
+            test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId,false);
             await _testsRepository.UpdateAsync(test);                
 
             return RedirectToAction(nameof(Index));
@@ -147,6 +147,7 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DeleteTestTemplateViewModel deteDeleteTestTemplateViewModel)
         {
+          
             await _testsRepository.DeleteAsync(deteDeleteTestTemplateViewModel.Id);
             return RedirectToAction(nameof(Index));
         }

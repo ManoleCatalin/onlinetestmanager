@@ -20,9 +20,9 @@ namespace Business.Repository.Base
             _entities = context.Set<T>();
         }
 
-        public virtual async Task<List<T>> GetAllAsync() => await _entities.ToListAsync();
+        public virtual async Task<List<T>> GetAllAsync() => await _entities.Where(x => !x.IsDeleted).ToListAsync();
 
-        public virtual async Task<T> GetByIdAsync(Guid id) => await _entities.FirstOrDefaultAsync(x => x.Id == id);
+        public virtual async Task<T> GetByIdAsync(Guid id) => await _entities.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
 
         public virtual async Task<T> InsertAsync(T entity)
         {
@@ -39,7 +39,10 @@ namespace Business.Repository.Base
 
         public virtual async Task<bool> DeleteAsync(Guid id)
         {
-            _entities.Remove(_entities.FirstOrDefault(u => u.Id == id));
+           var entity=_entities.FirstOrDefault(u => u.Id == id);
+            if (entity == null) return await _context.SaveChangesAsync() > 0;
+            entity.IsDeleted = true;
+            _entities.Update(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 

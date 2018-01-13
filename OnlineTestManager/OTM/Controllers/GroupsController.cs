@@ -117,8 +117,8 @@ namespace OTM.Controllers
         public async Task<IActionResult> Edit(EditGroupViewModel editGroupViewModel)
         {
             var updatedGroup = _groupsRepository.GetByIdAsync(editGroupViewModel.Id).Result;
-
-            updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
+            
+            updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId,false);
 
             if (ModelState.IsValid)
             {

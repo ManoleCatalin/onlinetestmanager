@@ -116,7 +116,7 @@ namespace OTM.Controllers
                 var exercise = await _exercisesRepository.GetByIdAsync(editExerciseTemplatesViewModel.Id);
 
                 exercise.Update(editExerciseTemplatesViewModel.Description,
-                    editExerciseTemplatesViewModel.TestTemplateId);
+                    editExerciseTemplatesViewModel.TestTemplateId,false);
             
                 await _exercisesRepository.UpdateAsync(exercise);
 

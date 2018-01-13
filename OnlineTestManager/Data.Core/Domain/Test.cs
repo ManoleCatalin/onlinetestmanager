@@ -14,20 +14,21 @@ namespace Data.Core.Domain
         public Guid TestTypeId { get; private set; }
         public virtual TestType TestType { get; set; }
         public ICollection<Exercise> Exercises { get; set; }
-
+        public bool IsDeleted { get; set; }
         public static Test Create(string name, string description, Guid userId, Guid testTypeId)
         {
             var instance = new Test { Id = Guid.NewGuid(), CreatedAt = DateTime.Now };
-            instance.Update(name, description, userId, testTypeId);
+            instance.Update(name, description, userId, testTypeId,false);
             return instance;
         }
 
-        public void Update(string name, string description, Guid userId, Guid testTypeId)
+        public void Update(string name, string description, Guid userId, Guid testTypeId,bool isDeleted)
         {
             Name = name;
             Description = description;
             UserId = userId;
             TestTypeId = testTypeId;
+            IsDeleted = isDeleted;
         }
 
 
