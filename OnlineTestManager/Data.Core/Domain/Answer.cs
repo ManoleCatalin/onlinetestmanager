@@ -23,6 +23,5 @@ namespace Data.Core.Domain
             Correct = correct;
             ExerciseId = exerciseId;
         }
-
     }
 }

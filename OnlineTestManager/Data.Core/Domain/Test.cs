@@ -14,6 +14,7 @@ namespace Data.Core.Domain
         public Guid TestTypeId { get; private set; }
         public virtual TestType TestType { get; set; }
         public ICollection<Exercise> Exercises { get; set; }
+        public ICollection<TestInstance> TestInstances { get; set; }
 
         public static Test Create(string name, string description, Guid userId, Guid testTypeId)
         {

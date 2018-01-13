@@ -42,7 +42,7 @@ namespace TestManagementIntegrationTests
 
                 if (@group != null)
                     if (test != null)
-                        context.TestInstances.Add(TestInstance.Create("4f4fwefsd", 300, @group.Id, test.Id, DateTime.Now));
+                        context.TestInstances.Add(TestInstance.Create(300, @group.Id, test.Id, DateTime.Now));
             }
             context.SaveChanges();
             var testInstance = context.TestInstances.ToList().FirstOrDefault();
