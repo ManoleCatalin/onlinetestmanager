@@ -81,7 +81,7 @@ namespace OTM
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

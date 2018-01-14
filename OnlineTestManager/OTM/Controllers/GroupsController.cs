@@ -116,14 +116,14 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditGroupViewModel editGroupViewModel)
         {
+            if (!ModelState.IsValid)
+                return View(editGroupViewModel);
+
             var updatedGroup = _groupsRepository.GetByIdAsync(editGroupViewModel.Id).Result;
 
             updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
 
-            if (ModelState.IsValid)
-            {
-                await _groupsRepository.UpdateAsync(updatedGroup);
-            }
+            await _groupsRepository.UpdateAsync(updatedGroup);
             return RedirectToAction(nameof(Index));
         }
 
@@ -160,12 +160,16 @@ namespace OTM.Controllers
         public IActionResult RemoveStudentFromGroup(Guid groupId, Guid studentId)
         {
             var user = _usersRepository.GetByIdAsync(studentId).Result;
-            if (user.Id != studentId)
+            if (user == null || user.Id != studentId)
             {
                 return NotFound();
             }
 
             var group = _groupsRepository.GetByIdAsync(groupId).Result;
+            if (group == null)
+            {
+                return NotFound();
+            }
 
             var removeStudentFromGroupViewModel = new RemoveStudentFromGroupViewModel{GroupId = groupId,
                 StudentId = studentId,

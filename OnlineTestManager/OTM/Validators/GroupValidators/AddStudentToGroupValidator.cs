@@ -25,17 +25,22 @@ namespace OTM.Validators.GroupValidators
                 if (student.Count == 0)
                 {
                     context.AddFailure("StudentName", "Student name is not valid");
+                    return;
                 }
                 var group = groups.GetByIdAsync(x.GroupId).Result;
+                if (null == group)
+                {
+                    context.AddFailure("", "Invalid group id");
+                    return;
+                }
                 foreach (var userGroup in group.UserGroups)
                 {
                     if (userGroup.User.UserName.Equals(x.StudentName))
                     {
                         context.AddFailure("StudentName", "This user is already in this group");
-
+                        return;
                     }
                 }
-
             });
             RuleFor(x => x.GroupId)
                 .NotEmpty().WithMessage(string.Format(Consts.FieldEmptyMessage, "Group Id"))
