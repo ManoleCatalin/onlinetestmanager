@@ -18,7 +18,8 @@ namespace Data.Core.Configuration
 
             builder.HasOne(x => x.ExerciseResponse)
                 .WithMany(x => x.MarkedAsCorrects)
-                .HasForeignKey(x => new { UserId = x.UserId, ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId });
+                .HasForeignKey(x => new { UserId = x.UserId, ExerciseId = x.ExerciseId, TestInstanceId = x.TestInstanceId })
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
