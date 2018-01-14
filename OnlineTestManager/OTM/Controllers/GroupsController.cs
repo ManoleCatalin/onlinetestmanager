@@ -84,7 +84,7 @@ namespace OTM.Controllers
 
             await _groupsRepository.InsertAsync(groupToCreate);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit),new{Id = groupToCreate.Id});
         }
 
         public IActionResult Edit(Guid id)
