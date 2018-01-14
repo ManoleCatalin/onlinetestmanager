@@ -84,7 +84,7 @@ namespace OTM.Controllers
 
             await _groupsRepository.InsertAsync(groupToCreate);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit),new{Id = groupToCreate.Id});
         }
 
         public IActionResult Edit(Guid id)
@@ -149,10 +149,10 @@ namespace OTM.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(DeleteGroupViewModel deleteGroupViewModel)
         {
 
-            await _groupsRepository.DeleteAsync(id);
+            await _groupsRepository.DeleteAsync(deleteGroupViewModel.Id);
             return RedirectToAction(nameof(Index));
         }
 

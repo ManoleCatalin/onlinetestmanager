@@ -10,7 +10,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" asp-action="Edit">
+                <form class="form-horizontal" asp-action="Delete">
                     <div class="box-body">
                         <div class="col-md-9">
                             <dl class="dl-horizontal">
@@ -39,14 +39,15 @@
                     <div class="box-footer" style="text-align: center">
                         <form asp-action="Delete">
                             <input type="hidden" asp-for="Id" />
-                            <input type="submit" value="Delete" class="btn btn-default" /> |
-                            <a asp-action="Index">Back to List</a>
+                            <a class="btn btn-default" asp-action="Index">Cancel</a>
+                            <input type="submit" value="Delete" class="btn btn-info" />
                         </form>
 
                     </div>
                     <!-- /.box-footer -->
                 </form>
             </div>
+            
         </div>
     </div>    
 </div>

@@ -1,6 +1,6 @@
 ﻿@model OTM.ViewModels.Tests.MarkedCorrectAnswerDisplayTestsViewModel
-
-@Html.HiddenFor(model => model.Id)
-@Html.CheckBoxFor(model => model.Correct)
-@Html.LabelFor(model => model.Correct, Model.Description)
-<br/>
+<tr>
+    <td> @Html.HiddenFor(model => model.Id)</td>
+    <td> @Html.CheckBoxFor(model => model.Correct)</td>
+    <td> @Html.LabelFor(model => model.Correct, Model.Description)</td>
+ </tr>   

@@ -6,27 +6,29 @@
         <div class="col-md-6">
             <div class="box box-solid" style="margin: 25px 0 0 0;text-align: center">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Edit current group</h3>
+                    <h3 class="box-title">Edit current test template</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form class="form-horizontal" asp-action="Edit">
                     <div class="box-body">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <span style="display:block" asp-validation-for="Description" class="text-danger"></span>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Id"/>
                         <div class="form-group">
                             <label asp-for="Name" class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
-                                <input asp-for="Name" class="form-control" />
+                                <input asp-for="Name" class="form-control"/>
                             </div>
-                            <span asp-validation-for="Name" class="text-danger"></span>
+
                         </div>
                         <div class="form-group">
                             <label asp-for="Description" class="col-sm-2 control-label"></label>
                             <div class="col-sm-10">
-                                <input asp-for="Description" class="form-control" />
+                                <input asp-for="Description" class="form-control"/>
                             </div>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            
                         </div>
                     </div>
                     <div class="box-footer" style="text-align: center">
@@ -69,8 +71,21 @@
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
-                                <a class="btn btn-info pull-left" asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a>
-                                <a class="btn btn-info pull-right" asp-controller="ExerciseTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Delete</a>
+                                
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">Actions</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a></li>
+                                            <li><a asp-controller="ExerciseTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                
+                                
+                                
                             </td>
                         </tr>
                     }

@@ -1,27 +1,77 @@
 ﻿@model OTM.ViewModels.Tests.DisplayTestsViewModel
-    
-<h1>@Html.DisplayFor(model => model.Description)</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Display">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="ExerciseId" type="hidden"/>
+@*
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <h1>@Html.DisplayFor(model => model.Description)</h1>
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Display">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input asp-for="ExerciseId" type="hidden"/>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UserId" type="hidden" />
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="TestInstanceId" type="hidden" />
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Description" type="hidden" />
+                            </div>
+                            @Html.EditorFor(x => x.Answers)
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input asp-for="UserId" type="hidden" />
-            </div>
-            <div class="form-group">
-                <input asp-for="TestInstanceId" type="hidden" />
-            </div>
-            <div class="form-group">
-                <input asp-for="Description" type="hidden" />
-            </div>
-            @Html.EditorFor(x => x.Answers)
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+*@
 
+
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="text-align: center">
+            <div class="box-header with-border" style="text-align: center">
+                <i class="fa fa-clock-o"></i>
+                <h3 class="box-title" style="font-size: 25px;">Exercise: </h3>
+
+            </div>
+           
+            <div class="box box-solid">
+                <!-- /.box-header -->
+                <h1>@Html.DisplayFor(model => model.Description)</h1>
+                    <div class="box-body">
+                        <div class="col-md-9 dl-horizontal">
+                            <form asp-action="Display">
+                                <div class="form-group">
+                                    <input asp-for="ExerciseId" type="hidden" />
+                                    <input asp-for="UserId" type="hidden" />
+                                    <input asp-for="TestInstanceId" type="hidden" />
+                                    <input asp-for="Description" type="hidden" />
+                                    <table >
+                                    @Html.EditorFor(x => x.Answers)
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-default" />
+                                </div>
+                             </form>
+
+</div>
+                      
+         </div>
+             <!-- /.box-body -->
+          </div>
+            <!-- /.box -->
+        </div>
+   </div>
+</div>
