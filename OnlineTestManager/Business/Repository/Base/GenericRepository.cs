@@ -40,7 +40,7 @@ namespace Business.Repository.Base
         public virtual async Task<bool> DeleteAsync(Guid id)
         {
 
-            _entities.Update(_entities.FirstOrDefault(u => u.Id == id));
+            _entities.Remove(_entities.FirstOrDefault(u => u.Id == id));
             return await _context.SaveChangesAsync() > 0;
         }
 

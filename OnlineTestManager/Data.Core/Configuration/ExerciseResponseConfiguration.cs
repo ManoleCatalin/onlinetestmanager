@@ -14,11 +14,13 @@ namespace Data.Core.Configuration
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.ExerciseResponses)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Exercise)
                 .WithMany(x => x.ExerciseResponses)
-                .HasForeignKey(x => x.ExerciseId);
+                .HasForeignKey(x => x.ExerciseId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //builder.HasOne(x => x.TestInstance)
             //    .WithMany(x => x.ExerciseResponses)
