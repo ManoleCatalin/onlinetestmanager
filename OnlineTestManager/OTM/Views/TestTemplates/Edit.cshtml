@@ -69,8 +69,21 @@
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
-                                <a class="btn btn-info pull-left" asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a>
-                                <a class="btn btn-info pull-right" asp-controller="ExerciseTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Delete</a>
+                                
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default">Actions</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a asp-controller="ExerciseTemplates" asp-action="Edit" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Edit</a></li>
+                                            <li><a asp-controller="ExerciseTemplates" asp-action="Delete" asp-route-testTemplateId="@Model.Id" asp-route-exerciseTemplateId="@item.Id">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                
+                                
+                                
                             </td>
                         </tr>
                     }
