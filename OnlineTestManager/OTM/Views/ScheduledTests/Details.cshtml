@@ -1,95 +1,175 @@
 ﻿@model OTM.ViewModels.ScheduledTest.DetailsScheduledTestViewModel
 
+@functions 
+{
 
-<h2>Scheduled test details</h2>
+    public int GetIndexOfExercise(int value)
+    {
+        return value + 1;
+    }
 
-
-<div>
-    <h2 style="width: 40%; float: left; text-align:center">Test:</h2> 
-    <h2 style="width: 50%; float: right; text-align:center">Group:</h2>
-
-    <div style="width: 50%; display: inline-block; vertical-align: top; border-right: black outset 0.5px">
-
-
-        <h3>Title: @Html.DisplayFor(model => model.TestDetails.Name)</h3>
-        <h4>Description: @Html.DisplayFor(model => model.TestDetails.Description)</h4>
-        @functions 
-        {
-
-            public int GetIndexOfExercise(int value)
-            {
-                return value + 1;
-            }
-
-            public string GetIndexOfAnswer(int value)
-            {
-                var sum = 97 + value;
-                char c = (char) sum;
+    public string GetIndexOfAnswer(int value)
+    {
+        var sum = 97 + value;
+        char c = (char) sum;
                 
-                return c.ToString();
-            }
+        return c.ToString();
+    }
 
 
-        }
+}
 
-        @foreach (var exercise in Model.TestDetails.Exercises)
-        {
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="text-align: center">
+            <!-- Default box -->
+            <div class="box collapsed-box" style="margin-top:25px">
+                <div class="box-header with-border">
+                    <i class="fa fa-file-text-o"></i>
+                    <h3 class="box-title">Test details</h3>
 
-            <table class="table">
-                <tr> 
-                    <td>
-                        <b>
-                            @GetIndexOfExercise(@Model.TestDetails.Exercises.IndexOf(exercise)). @Html.DisplayFor(modelItem => exercise.Description)
-                        </b>
-                    </td>
-                    <td>
-                        Correctness
-                    </td>
-                </tr>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                            <i class="fa fa-minus"></i></button>
+                        @* <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                            <i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+                <div class="box-body">
 
-                @foreach (var answer in exercise.Answers)
-                {
-                    <tr>
-                        <td width="70%">
-                            @GetIndexOfAnswer(exercise.Answers.IndexOf(answer))) @Html.DisplayFor(modelItem => answer.Description)
-                        </td>
-                        <td width="30%">
-                            @Html.DisplayFor(modelItem => answer.Correct)
-                        </td>
-                    </tr>
+                    <div class="row">
+                        <h3>Title: @Html.DisplayFor(model => model.TestDetails.Name)</h3>
+                        <h4>Description: @Html.DisplayFor(model => model.TestDetails.Description)</h4>
+                    
+                    </div>
+                    <div class="row" style="padding: 5px;">
+                        @foreach (var exercise in Model.TestDetails.Exercises)
+                        {
+                            <table class="table">
+                                <tr style="background-color: lightblue; "> 
+                                    <td >
+                                        <b> 
+                                            @GetIndexOfExercise(Model.TestDetails.Exercises.IndexOf(exercise)). @Html.DisplayFor(modelItem => exercise.Description)
+                                        </b>
+                                    </td>
+                                    <td>
+                                        Correctness
+                                    </td>
+                                </tr>
 
-                }
-            </table>
-        }
+                                @foreach (var answer in exercise.Answers)
+                                {
+                                    <tr>
+                                        <td width="70%">
+                                            @GetIndexOfAnswer(exercise.Answers.IndexOf(answer))) @Html.DisplayFor(modelItem => answer.Description)
+                                        </td>
+                                        <td width="30%">
+                                            @Html.DisplayFor(modelItem => answer.Correct)
+                                        </td>
+                                    </tr>
+
+                                }
+                            </table>
+                        }
+                    </div>
+                  
+                   
+                </div>
+                <!-- /.box-body -->
+       
+            </div>
+            
+
+            <div class="box collapsed-box" style="margin-top:25px">
+                <div class="box-header with-border">
+                    <i class="fa  fa-users"></i>
+                    <h3 class="box-title">Group details</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @* <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                    <i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+                <div class="box-body" style="">
+
+                    <div class="row">
+                        <h3> Title: @Html.DisplayFor(model => model.GroupDetails.Name)</h3>
+                        <h4> Description: @Html.DisplayFor(model => model.GroupDetails.Description)</h4>
+
+                    </div>
+                    <div class="row" style="padding: 5px;">
+                        <table class="table">
+
+                            <tbody>
+
+                            @foreach (var user in Model.GroupDetails.Users)
+                            {
+                                <tr style="background-color: lightblue">
+                                    <td>
+                                        @GetIndexOfExercise(@Model.GroupDetails.Users.IndexOf(user)). @Html.DisplayFor(modelItem => user.UserName)
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
+            
+            
+        <div class="box collapsed-box" style="margin-top:25px">
+            <div class="box-header with-border">
+                <i class="fa  fa-clock-o"></i>
+                <h3 class="box-title">Start time & Duration</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    @* <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                    <i class="fa fa-times"></i></button>*@
+                </div>
+            </div>
+            <div class="box-body" style="">
+               
+                <div class="row" style="padding: 5px; text-align:center:">
+                    
+                    <table class="table" style="text-align: center">
+                        <tbody>
+                        <tr>
+                            <td >
+                                <h4>Duration: @Model.Duration min</h4>
+                            </td>       
+                        </tr>
+                        <tr>
+                            <td >
+                                <h4>Start time: @Model.StartDateTime </h4>
+                            </td>       
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+
+        </div>
+            <!-- /.box -->
+            <div>
+                <a class="btn btn-default" style="margin-right: 2px;"asp-action="Index">Back to List</a> |
+                <a class="btn btn-info "asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            </div>
+            </div>
+       
 
     </div>
-    <div style="width: 49%; display: inline-block; vertical-align: top;">
-
-        <h3>
-            Title: @Html.DisplayFor(model => model.GroupDetails.Name)
-        </h3>
-        <h4>
-            Description: @Html.DisplayFor(model => model.GroupDetails.Description)
-        </h4>
-        <table class="table">
-
-            <tbody>
-
-            @foreach (var user in Model.GroupDetails.Users)
-            {
-                <tr>
-                    <td>
-                        @GetIndexOfExercise(@Model.GroupDetails.Users.IndexOf(user)). @Html.DisplayFor(modelItem => user.UserName)
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
     </div>
-
-</div>
-<hr/>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>

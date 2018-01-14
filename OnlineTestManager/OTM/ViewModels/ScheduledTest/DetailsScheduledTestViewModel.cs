@@ -31,5 +31,11 @@ namespace OTM.ViewModels.ScheduledTest
         public ScheduledTestDetailsTest TestDetails { get; set; }
         [Display(Name = "Students")]
         public ScheduledTestDetailsGroup GroupDetails { get; set; }
+   
+        [Display(Name = "Duration in mins")]
+        public int Duration { get; set; }
+        [Display(Name = "Start time")]
+        [DataType(DataType.DateTime)]
+        public DateTime StartDateTime { get; set; }
     }
 }

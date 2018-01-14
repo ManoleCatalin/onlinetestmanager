@@ -68,6 +68,7 @@ namespace OTM.Controllers
             }
             return userList;
         }
+
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -102,7 +103,8 @@ namespace OTM.Controllers
             detailsScheduledTestViewModel.TestDetails = testDetails;
             detailsScheduledTestViewModel.GroupDetails = groupDetails;
             detailsScheduledTestViewModel.Id = id;
-
+            detailsScheduledTestViewModel.Duration = testInstance.Duration;
+            detailsScheduledTestViewModel.StartDateTime = testInstance.StartedAt;
 
 
 

@@ -22,21 +22,24 @@
                         <!-- The user image in the navbar-->
                         @if (Model.Role == null)
                         {   
-                            <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                         @*   <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">*@
                         }
                         else
                         {
                             if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                             {
                                 <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                <span class="hidden-xs">ToDO NumeStudent</span>
                             }
                             else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                             {
                                 <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                <span class="hidden-xs">ToDO NumeStudent</span>
                             }
                         }
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">ToDO NumeStudent</span>
+
+                      
                     </a>
                 @if (SignInManager.IsSignedIn(User))
                 {
