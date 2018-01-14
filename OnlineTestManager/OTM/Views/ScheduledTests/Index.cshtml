@@ -53,20 +53,26 @@
         <div class="col-md-3"></div>
         <div class="col-md-6" style="text-align: center">
             <a class="btn btn-info" asp-action="Create" style="margin: 10px 0 10px 0">Create New</a>
+            <div class="box-header with-border" style="text-align: center">
+                <i class="fa fa-clock-o"></i>
+                <h3 class="box-title" style="font-size: 25px;">Scheduled tests: </h3>
 
+            </div>
             @foreach (var item in Model)
             {
                 <div class="box box-solid">
-                    <div class="box-header with-border" style="text-align: center">
-                        <i class="fa fa-group"></i>
-                        <h3 class="box-title">@Html.DisplayFor(model => item.TestName)</h3>
+                 @*   <div class="box-header with-border" style="text-align: center">
+                        <i class="fa fa-clock-o"></i>
+                        <h3 class="box-title">Schedule</h3>
 
-                    </div>
+                    </div>*@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="col-md-9">
                             <dl class="dl-horizontal">
-                                <dt>Group @Html.DisplayNameFor(model => model.GroupName):</dt>
+                                <dt>@Html.DisplayNameFor(model => model.TestName):</dt>
+                                <dd>@Html.DisplayFor(modelItem => item.TestName)</dd>
+                                <dt>@Html.DisplayNameFor(model => model.GroupName):</dt>
                                 <dd>@Html.DisplayFor(modelItem => item.GroupName)</dd>
                                 <dt>@Html.DisplayNameFor(model => model.Duration):</dt>
                                 <dd>@Html.DisplayFor(modelItem => item.Duration)</dd>
