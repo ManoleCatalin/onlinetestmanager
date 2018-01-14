@@ -29,12 +29,12 @@
                             if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                             {
                                 <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
-                                <span class="hidden-xs">ToDO NumeStudent</span>
+                                <span class="hidden-xs">@UserManager.GetUserName(User)</span>
                             }
                             else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                             {
                                 <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
-                                <span class="hidden-xs">ToDO NumeStudent</span>
+                                <span class="hidden-xs">@UserManager.GetUserName(User)</span>
                             }
                         }
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
@@ -48,23 +48,22 @@
                         <li class="user-header">
                             @if (Model.Role == null)
                             {
-                                <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
                             }
                             else
                             {
                                 if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                                 {
-                                    <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                    <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
                                 }
                                 else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                                 {
-                                    <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                    <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
                                 }
                             }
 
                             <p>
-                                //ToDO nume student
-                                <small>//To do ceva</small>
+                                @UserManager.GetUserName(User)                                      
                             </p>
                         </li>
                         <!-- Menu Body -->
