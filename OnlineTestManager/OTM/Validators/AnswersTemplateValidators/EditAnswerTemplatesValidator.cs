@@ -48,7 +48,7 @@ namespace OTM.Validators.AnswersValidators
 
                     if (exercisesList.Count == 0)
                     {
-                        context.AddFailure("Exercise Template Id", "Exercise Template Idis not valid");
+                        context.AddFailure("Exercise Template Id", "Exercise Template Id is not valid");
                     }
                     else
                     {
