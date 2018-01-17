@@ -13,6 +13,7 @@ namespace OTM.Validators.ScheduledTestsValidator
         {
             RuleFor(x => x.Duration).GreaterThanOrEqualTo(1)
                .WithMessage("Duration must be greater or equal to 1");
+            RuleFor(x => x.StartDateTime).GreaterThan(DateTime.Now).WithMessage("Test must start with at least one second later.");
         }
     }
 }

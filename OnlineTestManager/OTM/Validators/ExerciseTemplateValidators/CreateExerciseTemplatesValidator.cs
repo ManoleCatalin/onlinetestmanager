@@ -5,7 +5,7 @@ using FluentValidation;
 using OTM.UserContext;
 using OTM.ViewModels.ExerciseTemplate;
 
-namespace OTM.Validators.ExerciseValidators
+namespace OTM.Validators.ExerciseTemplateValidators
 {
     public class CreateExerciseTemplatesValidator : AbstractValidator<CreateExerciseTemplatesViewModel>
     {
