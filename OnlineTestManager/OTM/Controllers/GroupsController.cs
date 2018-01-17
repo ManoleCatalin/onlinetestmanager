@@ -84,7 +84,7 @@ namespace OTM.Controllers
 
             await _groupsRepository.InsertAsync(groupToCreate);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit),new{Id = groupToCreate.Id});
         }
 
         public IActionResult Edit(Guid id)
@@ -116,14 +116,18 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditGroupViewModel editGroupViewModel)
         {
+            if (!ModelState.IsValid)
+                return View(editGroupViewModel);
+
             var updatedGroup = _groupsRepository.GetByIdAsync(editGroupViewModel.Id).Result;
+            if (updatedGroup == null)
+            {
+                return NotFound();
+            }
 
             updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
 
-            if (ModelState.IsValid)
-            {
-                await _groupsRepository.UpdateAsync(updatedGroup);
-            }
+            await _groupsRepository.UpdateAsync(updatedGroup);
             return RedirectToAction(nameof(Index));
         }
 
@@ -149,10 +153,10 @@ namespace OTM.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(DeleteGroupViewModel deleteGroupViewModel)
         {
 
-            await _groupsRepository.DeleteAsync(id);
+            await _groupsRepository.DeleteAsync(deleteGroupViewModel.Id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -160,12 +164,16 @@ namespace OTM.Controllers
         public IActionResult RemoveStudentFromGroup(Guid groupId, Guid studentId)
         {
             var user = _usersRepository.GetByIdAsync(studentId).Result;
-            if (user.Id != studentId)
+            if (user == null || user.Id != studentId)
             {
                 return NotFound();
             }
 
             var group = _groupsRepository.GetByIdAsync(groupId).Result;
+            if (group == null)
+            {
+                return NotFound();
+            }
 
             var removeStudentFromGroupViewModel = new RemoveStudentFromGroupViewModel{GroupId = groupId,
                 StudentId = studentId,

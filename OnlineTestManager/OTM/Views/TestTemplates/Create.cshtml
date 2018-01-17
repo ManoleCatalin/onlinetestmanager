@@ -1,47 +1,53 @@
 ﻿@model OTM.ViewModels.TestTemplates.CreateTestTemplatesViewModel
 
-<!DOCTYPE html>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-default" style="margin: 25px 0 0 0; text-align: center">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
 
-<h4>Test</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create a test template</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" asp-action="Create">
+                    <div class="box-body">
+                        
+                        
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <input asp-for="Name" class="form-control"/>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <input asp-for="Description" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TestTypeId" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" asp-for="TestTypeId" asp-items="@Model.TestTypes">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-default" asp-action="Index" style="margin: 10px 0 10px 0">Cancel</a>
+                            <button type="submit" class="btn btn-info">Create</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TestTypeId" class="control-label"></label>
-                <select asp-for="TestTypeId" class ="form-control" asp-items="@Model.TestTypes"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>

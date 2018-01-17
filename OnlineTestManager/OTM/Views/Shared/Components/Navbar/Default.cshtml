@@ -1,44 +1,236 @@
-@using Constants
+﻿@using Constants
+@using OTM.ViewModels
 @model OTM.ViewModels.NavbarViewModel
+@using Data.Core.Domain
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">OTM</a>
-        </div>
-        <div class="navbar-collapse collapse">
+<header class="main-header">
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <!-- User Account Menu -->
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        @if (Model.Role == null)
+                        {   
+                         @*   <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">*@
+                        }
+                        else
+                        {
+                            if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
+                            {
+                                <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                <span class="hidden-xs">@UserManager.GetUserName(User)</span>
+                            }
+                            else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
+                            {
+                                <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 25px; height: 25px;">
+                                <span class="hidden-xs">@UserManager.GetUserName(User)</span>
+                            }
+                        }
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+
+                      
+                    </a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+                            @if (Model.Role == null)
+                            {
+                                <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
+                            }
+                            else
+                            {
+                                if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
+                                {
+                                    <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
+                                }
+                                else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
+                                {
+                                    <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image" style="width: 90px; height: 90px;">
+                                }
+                            }
+
+                            <p>
+                                @UserManager.GetUserName(User)                                      
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        @*     <li class="user-body">
+                            <div class="row">
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Followers</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Sales</a>
+                                </div>
+                                <div class="col-xs-4 text-center">
+                                    <a href="#">Friends</a>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </li>*@
+                        <!-- Menu Footer-->
+
+                        <li class="user-footer">
+                            <div class="pull-left">
+
+                                <a asp-area="" asp-controller="Manage" asp-action="Index" class="btn btn-default btn-flat">Profile</a>
+
+                            </div>
+                            <div class="pull-right">
+
+                                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+
+                                    <button type="submit" class="btn btn-default btn-flat">Log out</button>
+
+                                </form>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                }
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</header>
+<aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+            <div class="pull-left image">
+            @if (Model.Role == null)
+            {   
+                <img src="~/dist/img/basic-user-icon.png" class="img-circle" alt="User Image">
+            }
+            else
+            {
+                if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
+                {
+                    <img src="~/dist/img/teacher-user-icon.png" class="img-circle" alt="User Image">
+                }
+                else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
+                {
+                    <img src="~/dist/img/student-user-icon.png" class="img-circle" alt="User Image">
+                }
+            }
+         </div>
+            <div class="pull-left info">
+                
                 @if (Model.Role == null)
                 {
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <p>Hello, Guest</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 }
                 else
                 {
                     if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="TestTemplates" asp-action="Index">Test Templates</a></li>
-                        <li><a asp-area="" asp-controller="Groups" asp-action="Index">Groups</a></li>
-                        <li><a asp-area="" asp-controller="ScheduledTests" asp-action="Index">Scheduled tests</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Grading</a></li>
+                        <p>Hello, Teacher</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     }
                     else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Tests" asp-action="Index">Tests</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Grades</a></li>
+                        <p>Hello, Student</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     }
                 }
-            </ul>
-            @await Html.PartialAsync("_LoginPartial")
+            </div>
         </div>
-    </div>
-</nav>
+
+        <ul class="sidebar-menu" data-widget="tree">
+                @if (Model.Role == null)
+                {
+
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fa fa-home"></i>
+                            <span>Home</span>
+                            <span class="pull-right-container"></span>
+                        </a>
+                    </li>
+                                
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Login">
+                                        <i class="fa fa-sign-in"></i>
+                                        <span>Login</span>
+                                        <span class="pull-right-container"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Account" asp-action="Register">
+                                        <i class="fa fa-sign-out"></i>
+                                        <span>Register</span>
+                                        <span class="pull-right-container"></span>
+                                    </a>
+                                </li>
+
+                }
+                else
+                {
+                    if (Model.Role.Name.Equals(RoleConstants.TeacherRoleName))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa fa-home"></i>
+                                <span>Home</span>
+                                <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="TestTemplates" asp-action="Index">
+                            <i class="fa fa-file-text-o"></i>
+                            <span>Test Templates</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="Groups" asp-action="Index">
+                             <i class="fa fa-users"></i>
+                            <span>Groups</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="ScheduledTests" asp-action="Index">
+                            <i class="fa fa-clock-o"></i>
+                            <span>Scheduled Tests</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                    }
+                    else if (Model.Role.Name.Equals(RoleConstants.StudentRoleName))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fa fa-home"></i>
+                            <span>Home</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="Tests" asp-action="Index">
+                            <i class="fa fa-pencil-square-o"></i>
+                            <span>Tests</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fa fa-home"></i>
+                            <span>Grades</span>
+                            <span class="pull-right-container"></span>
+                        </a></li>
+                    }
+                }
+        </ul>
+
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

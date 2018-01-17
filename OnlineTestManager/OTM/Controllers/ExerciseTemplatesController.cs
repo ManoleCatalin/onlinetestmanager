@@ -27,42 +27,6 @@ namespace OTM.Controllers
             _answersRepository = answersRepository;
         }
 
-        [HttpGet]
-        public IActionResult Index(Guid testTemplateId)
-        {
-            var exercises = _exercisesRepository.GetAllExercisesOfTestAsync(testTemplateId).Result;
-
-            var indexExercises = _mapper.Map<List<IndexExercise>>(exercises);
-
-            var exerciseTemplatesViewModels = new IndexExerciseTemplatesViewModel
-            {
-                TestTemplateId = testTemplateId,
-                IndexExercises = indexExercises
-            };
-
-            return View(exerciseTemplatesViewModels);
-        }
-
-        //// GET: ExerciseTemplates/Details/5
-        //public async Task<IActionResult> Details(Guid exerciseTemplateId, Guid testTemplateId)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var exercise = await _context.Exercises
-        //        .Include(e => e.Test)
-        //        .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (exercise == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(exercise);
-        //}
-
-        // GET: ExerciseTemplates/Create
         public IActionResult Create(Guid testTemplateId)
         {
             var createExeciseTemplatesViewModel = new CreateExerciseTemplatesViewModel {TestTemplateId = testTemplateId};
@@ -78,7 +42,6 @@ namespace OTM.Controllers
             {
                 var exercise = Exercise.Create(createExerciseTemplatesViewModel.Description,
                     createExerciseTemplatesViewModel.TestTemplateId);
-
                 var insertedExercise = await _exercisesRepository.InsertAsync(exercise);
 
                 return RedirectToAction(nameof(Create), "AnswerTemplates",
@@ -97,8 +60,16 @@ namespace OTM.Controllers
             };
 
             var exercise = await _exercisesRepository.GetByIdAsync(exerciseTemplateId);
-            var answers = await  _answersRepository.GetAllAnswersOfExerciseAsync(exerciseTemplateId);
+            if (exercise == null)
+            {
+                return NotFound();
+            }
 
+            var answers = await  _answersRepository.GetAllAnswersOfExerciseAsync(exerciseTemplateId);
+            if (answers == null)
+            {
+                return NotFound();
+            }
             var editAnswer = _mapper.Map<List<EditAnswer>>(answers);
 
             editExerciseTemplatesViewModel.Answers = editAnswer;
@@ -115,6 +86,10 @@ namespace OTM.Controllers
             {
                 var exercise = await _exercisesRepository.GetByIdAsync(editExerciseTemplatesViewModel.Id);
 
+                if (exercise == null)
+                {
+                    return NotFound();
+                }
                 exercise.Update(editExerciseTemplatesViewModel.Description,
                     editExerciseTemplatesViewModel.TestTemplateId);
             
@@ -131,6 +106,10 @@ namespace OTM.Controllers
         {
 
             var exercise = _exercisesRepository.GetByIdAsync(exerciseTemplateId).Result;
+            if (exercise == null)
+            {
+                return NotFound();
+            }
 
             var deleteExerciseTemplatesViewModel = _mapper.Map<DeleteExerciseTemplateViewModel>(exercise);
             deleteExerciseTemplatesViewModel.TestTemplateId = testTemplateId;
@@ -142,7 +121,11 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DeleteExerciseTemplateViewModel deleteExerciseTemplatesViewModel)
         {
-            await _exercisesRepository.DeleteAsync(deleteExerciseTemplatesViewModel.Id);
+            var deletedExercice = await _exercisesRepository.DeleteAsync(deleteExerciseTemplatesViewModel.Id);
+            if (deletedExercice == false)
+            {
+                return NotFound();
+            }
             return RedirectToAction(nameof(Edit),"TestTemplates", new {Id = deleteExerciseTemplatesViewModel.TestTemplateId});
         }
     }

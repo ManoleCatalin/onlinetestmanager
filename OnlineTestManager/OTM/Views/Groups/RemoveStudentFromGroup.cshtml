@@ -1,38 +1,51 @@
 ﻿@model OTM.ViewModels.Group.RemoveStudentFromGroupViewModel
 
-<!DOCTYPE html>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-solid" style="margin: 25px 0 0 0;text-align: center">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Group details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" asp-action="Edit">
+                    <div class="box-body">
+                        <div class="col-md-9">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.StudentName)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.StudentName)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.GroupName)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.GroupName)
+                                </dd>
+                                <dt>
+                            </dl>
+                        </div>
+                    </div>
+                </form>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete student</title>
-</head>
-<body>
+                    <!-- /.box-body -->
+                    <div class="box-footer" style="text-align: center">
+                        <form asp-action="RemoveStudentFromGroup">
+                            <input type="hidden" asp-for="StudentId" />
+                            <input type="hidden" asp-for="GroupId" />
+                            <a class="btn btn-default"asp-action="Edit" asp-route-id="@Model.GroupId">Cancel</a>
+                            <input type="submit" value="Delete" class="btn btn-info" /> 
+                            
+                        </form>
 
-    <h3>Are you sure you want to remove the user from the group?</h3>
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.StudentName)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.StudentName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.GroupName)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.GroupName)
-            </dd>
-            <dt>
-        </dl>
-
-        <form asp-action="RemoveStudentFromGroup">
-            <input type="hidden" asp-for="StudentId" />
-            <input type="hidden" asp-for="GroupId" />
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Edit" asp-route-id="@Model.GroupId">Back to List</a>
-        </form>
+                    </div>
+                    <!-- /.box-footer -->
+               
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>

@@ -1,22 +1,39 @@
 ﻿@model OTM.ViewModels.Tests.FinishedTestsViewModel
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-solid" style="margin: 25px 0 0 0;text-align: center">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Test Finished</h2>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                
+                    <div class="box-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+                        </dl>
+                       
+                    </div>
+                    <div class="box-footer" style="text-align: center">
+                    
+                        <a class="btn btn-default"asp-action="Index">Back to my Tests</a>
+                    </div>
 
-<h2>Test Finished</h2>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-        <a asp-action="Index">Back to my Tests</a>
+               
+            </div>
+        </div>
+    </div>
 </div>
-
