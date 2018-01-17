@@ -12,7 +12,9 @@ namespace Data.Core.Domain
         public ICollection<UserGroup> UserGroups { get; set; }
         public Guid UserId { get; private set; }
         public virtual User User { get; set; }
-		public ICollection<TestInstance> TestInstances { get; set; }		public bool IsDeleted { get; set; }        public static Group Create(string name, string description, Guid userId)
+		public ICollection<TestInstance> TestInstances { get; set; }
+        public bool IsDeleted { get; set; }
+        public static Group Create(string name, string description, Guid userId)
         {
             var instance = new Group { Id = Guid.NewGuid(), CreatedAt = DateTime.Now};
             instance.Update(name, description, userId,false);

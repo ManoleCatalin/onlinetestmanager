@@ -4,6 +4,7 @@ using Data.Core.Configuration;
 using Data.Core.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Data.Persistence
 {

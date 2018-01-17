@@ -17,10 +17,12 @@ namespace Data.Core.Domain
         public static TestInstance Create(int duration, Guid groupId, Guid testId, DateTime startedAt)
         {
             var instance = new TestInstance { Id = Guid.NewGuid() };
-			instance.Update(duration, groupId, testId, startedAt, false);            return instance;
+            instance.Update(duration, groupId, testId,startedAt,false);
+            return instance;
         }
 
-		public void Update(int duration, Guid groupId, Guid testId, DateTime startedAt, bool isDeleted)        {
+        public void Update(int duration, Guid groupId, Guid testId, DateTime startedAt,bool isDeleted)
+        {
             Duration = duration;
             GroupId = groupId;
             TestId = testId;

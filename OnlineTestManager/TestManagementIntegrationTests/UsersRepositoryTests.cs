@@ -74,7 +74,7 @@ namespace TestManagementIntegrationTests
                 );
                 context.Add(user);
                 context.SaveChanges();
-                user.Update("Ion", "Popescu", "IPopescu", "test@test.ro", "parola");
+                user.Update("Ion", "Popescu", "IPopescu", "test@test.ro", "parola", false);
              
                 // ACT
                 var result = userRepository.UpdateAsync(user); 
