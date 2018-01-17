@@ -20,7 +20,10 @@ namespace OTM.Controllers
         private readonly ITestsRepository _testsRepository;
         private readonly IExercisesRepository _exercisesRepository;
 
-        public TestsController(ITestInstancesRepository testInstancesRepository, IUserContext userContext, ITestsRepository testsRepository, IExercisesRepository exercisesRepository)
+        public TestsController(ITestInstancesRepository testInstancesRepository, 
+            IUserContext userContext, 
+            ITestsRepository testsRepository, 
+            IExercisesRepository exercisesRepository)
         {
             _testInstancesRepository = testInstancesRepository;
             _testsRepository = testsRepository;
@@ -38,6 +41,10 @@ namespace OTM.Controllers
         public async Task<IActionResult> Index()
         {
             var tests = await _testInstancesRepository.GetAllTestInstancesOfStudentAsync(_userId);
+            if (tests == null)
+            {
+                return NotFound();
+            }
             var listIndexTestsViewModel = new List<IndexTestsViewModel>();
             foreach (var item in tests)
             {
@@ -118,7 +125,15 @@ namespace OTM.Controllers
         public async Task<IActionResult> Finished(Guid id)
         {
             var testInstance = await _testInstancesRepository.GetByIdAsync(id);
+            if (testInstance == null)
+            {
+                return NotFound();
+            }
             var test = await _testsRepository.GetByIdAsync(testInstance.TestId);
+            if (test == null)
+            {
+                return NotFound();
+            }
             var finishedTestsViewModel = new FinishedTestsViewModel();
             finishedTestsViewModel.Description = test.Description;
             finishedTestsViewModel.Name = test.Name;

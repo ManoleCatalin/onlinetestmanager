@@ -46,29 +46,13 @@ namespace OTM.Controllers
         public IActionResult Index()
         {
             var testTemplates = _testsRepository.GetAllTestsOfTeacherAsync(_userId).Result;
-            var indexTestTemplatesViewModel = _mapper.Map<IEnumerable<IndexTestTemplatesViewModel>>(testTemplates);
+            if (testTemplates == null)
+            {
+                return NotFound();
+            }
+                var indexTestTemplatesViewModel = _mapper.Map<IEnumerable<IndexTestTemplatesViewModel>>(testTemplates);
             return View(indexTestTemplatesViewModel);
         }
-
-        //// GET: TestTemplates/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var test = await _context.Tests
-        //        .Include(t => t.TestType)
-        //        .Include(t => t.User)
-        //        .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (test == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(test);
-        //}
 
         [HttpGet]
         public IActionResult Create()
@@ -108,9 +92,17 @@ namespace OTM.Controllers
         public IActionResult Edit(Guid id)
         {
             var test = _testsRepository.GetByIdAsync(id).Result;
+            if (test == null)
+            {
+                return NotFound();
+            }
             var editTestTemplatesViewModel = _mapper.Map<EditTestTemplatesViewModel>(test);
 
             var exercises = _exercisesRepository.GetAllExercisesOfTestAsync(id).Result;
+            if (exercises == null)
+            {
+                return NotFound();
+            }
             var editExercises = _mapper.Map<List<EditExercise>>(exercises);
             editTestTemplatesViewModel.Exercises = editExercises;
 
@@ -126,6 +118,10 @@ namespace OTM.Controllers
                 return View(editTestTemplatesViewModel);
 
             var test = await _testsRepository.GetByIdAsync(editTestTemplatesViewModel.Id);
+            if (test == null)
+            {
+                return NotFound();
+            }
             test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId);
             await _testsRepository.UpdateAsync(test);                
 
@@ -137,7 +133,10 @@ namespace OTM.Controllers
         public IActionResult Delete(Guid id)
         {
             var test = _testsRepository.GetByIdAsync(id).Result;
-
+            if (test == null)
+            {
+                return NotFound();
+            }
             var deleteTestTemplateViewModel = _mapper.Map<DeleteTestTemplateViewModel>(test);
 
             return View(deleteTestTemplateViewModel);
@@ -147,7 +146,11 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DeleteTestTemplateViewModel deteDeleteTestTemplateViewModel)
         {
-            await _testsRepository.DeleteAsync(deteDeleteTestTemplateViewModel.Id);
+            var deletedTest = await _testsRepository.DeleteAsync(deteDeleteTestTemplateViewModel.Id);
+            if (deletedTest == false)
+            {
+                return NotFound();
+            }
             return RedirectToAction(nameof(Index));
         }
     }

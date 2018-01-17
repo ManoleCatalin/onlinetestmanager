@@ -120,6 +120,10 @@ namespace OTM.Controllers
                 return View(editGroupViewModel);
 
             var updatedGroup = _groupsRepository.GetByIdAsync(editGroupViewModel.Id).Result;
+            if (updatedGroup == null)
+            {
+                return NotFound();
+            }
 
             updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
 

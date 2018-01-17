@@ -27,7 +27,14 @@ namespace OTM.Controllers
         private readonly IExercisesRepository _exercisesRepository;
         private readonly ITestTypesRepository _testTypesRepository;
 
-        public ScheduledTestsController (ITestInstancesRepository testInstancesRepository, IMapper mapper,IUserContext userContext,IGroupsRepository groupsRepository, ITestsRepository testsRepository, IAnswersRepository answersRepository, IExercisesRepository exercisesRepository, ITestTypesRepository testTypesRepository)
+        public ScheduledTestsController (ITestInstancesRepository testInstancesRepository, 
+            IMapper mapper,
+            IUserContext userContext,
+            IGroupsRepository groupsRepository, 
+            ITestsRepository testsRepository, 
+            IAnswersRepository answersRepository, 
+            IExercisesRepository exercisesRepository, 
+            ITestTypesRepository testTypesRepository)
         {
             _testInstancesRepository = testInstancesRepository;
             _mapper = mapper;
@@ -48,6 +55,10 @@ namespace OTM.Controllers
         public async Task<IActionResult> Index()
         {
             var scheduledTests = await _testInstancesRepository.GetAllTestInstancesOfTeacherAsync(_userId);
+            if (scheduledTests == null)
+            {
+                return NotFound();
+            }
             var indexScheduledTestsViewModel = _mapper.Map<List<IndexScheduledTestViewModel>>(scheduledTests);
 
             foreach (var item in indexScheduledTestsViewModel)
@@ -73,13 +84,37 @@ namespace OTM.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var testInstance = await _testInstancesRepository.GetByIdAsync(id);
+            if (testInstance == null)
+            {
+                return NotFound();
+            }
             var test = await _testsRepository.GetByIdAsync(testInstance.TestId);
+            if (test == null)
+            {
+                return NotFound();
+            }
             var testType = _testTypesRepository.GetByIdAsync(test.TestTypeId).Result.Type;
+            if (testType == null)
+            {
+                return NotFound();
+            }
 
             var group = await _groupsRepository.GetByIdAsync(testInstance.GroupId);
+            if (group == null)
+            {
+                return NotFound();
+            }
             var userList = DetailsGetAllUsersOfGroupByGroupId(group.Id);
+            if (userList == null)
+            {
+                return NotFound();
+            }
 
             var exercises = await _exercisesRepository.GetAllExercisesOfTestAsync(test.Id);
+            if (exercises == null)
+            {
+                return NotFound();
+            }
             var exerciseList = new List<ScheduledTestDetailsExercise>();
             foreach (var item in exercises)
             {
@@ -170,6 +205,10 @@ namespace OTM.Controllers
         public IActionResult Edit(Guid id)
         {
             var scheduledTest = _testInstancesRepository.GetByIdAsync(id).Result;
+            if (scheduledTest == null)
+            {
+                return NotFound();
+            }
             var editScheduledTestViewModel = _mapper.Map<EditScheduledTestViewModel>(scheduledTest);
 
             var groups = GetAllGroupsByTeacherId(_userId);
@@ -190,6 +229,10 @@ namespace OTM.Controllers
                 return View(editScheduledTestViewModel);
 
             var scheduledTest = _testInstancesRepository.GetByIdAsync(editScheduledTestViewModel.Id).Result;
+            if (scheduledTest == null)
+            {
+                return NotFound();
+            }
 
             var duration = editScheduledTestViewModel.Duration;
             var startTime = editScheduledTestViewModel.StartDateTime;
@@ -207,6 +250,10 @@ namespace OTM.Controllers
         {
 
             var scheduledTest = _testInstancesRepository.GetByIdAsync(id).Result;
+            if (scheduledTest == null)
+            {
+                return NotFound();
+            }
 
             var deleteScheduledTestViewModel = _mapper.Map<DeleteScheduleTestViewModel>(scheduledTest);
 
@@ -223,7 +270,11 @@ namespace OTM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DeleteScheduleTestViewModel deleteScheduledTestViewModel)
         {
-            await _testInstancesRepository.DeleteAsync(deleteScheduledTestViewModel.Id);
+            var deletedScheduledTest = await _testInstancesRepository.DeleteAsync(deleteScheduledTestViewModel.Id);
+            if (deletedScheduledTest == false)
+            {
+                return NotFound();
+            }
             return RedirectToAction(nameof(Index));
         }
 

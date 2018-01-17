@@ -22,29 +22,14 @@ namespace OTM.Controllers
         private readonly IAnswersRepository _answersRepository;
         private readonly IMapper _mapper;
 
-        public AnswerTemplatesController(DatabaseContext context, IAnswersRepository answersRepository, IMapper mapper)
+        public AnswerTemplatesController(DatabaseContext context, 
+            IAnswersRepository answersRepository, 
+            IMapper mapper)
         {
             _context = context;
             _answersRepository = answersRepository;
             _mapper = mapper;
         }
-
-        public IActionResult Index(Guid testTemplateId, Guid execiseTemplateId)
-        {
-            var answers = _answersRepository.GetAllAnswersOfExerciseAsync(execiseTemplateId).Result;
-
-            var indexAnswers = AutoMapper.Mapper.Map<List<IndexAnswer>>(answers);
-
-            var indexAnswerTempaltesViewModel = new IndexAnswerTemplatesViewModel
-            {
-                TestTemplateId = testTemplateId,
-                ExerciseTemplateId = execiseTemplateId,
-                Answers = indexAnswers
-            };
-
-            return View(indexAnswerTempaltesViewModel);
-        }
-
 
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -101,6 +86,10 @@ namespace OTM.Controllers
         public IActionResult Edit(Guid testTemplateId, Guid exerciseTemplateId, Guid answerTemplateId)
         {
             var answer = _answersRepository.GetByIdAsync(answerTemplateId).Result;
+            if (answer == null)
+            {
+                return NotFound();
+            }
 
             var editAnswerTemplatesViewModel = _mapper.Map<EditAnswerTemplatesViewModel>(answer);
 
@@ -118,7 +107,7 @@ namespace OTM.Controllers
             if (ModelState.IsValid)
             {
                 var answer = await _answersRepository.GetByIdAsync(editAnswerTemplatesViewModel.AnswerTemplateId);
-                answer.Update(editAnswerTemplatesViewModel.Description, editAnswerTemplatesViewModel.Correct, editAnswerTemplatesViewModel.ExerciseTemplateId);
+                answer.Update(editAnswerTemplatesViewModel.Description, editAnswerTemplatesViewModel.Correct, editAnswerTemplatesViewModel.ExerciseTemplateId);    
                 var updatedAnswer = await _answersRepository.UpdateAsync(answer);
 
                 return RedirectToAction(nameof(Edit), "ExerciseTemplates", new
@@ -134,6 +123,10 @@ namespace OTM.Controllers
         public IActionResult Delete(Guid answerTemplateId,Guid testTemplateId, Guid exerciseTemplateId)
         {
             var answer = _answersRepository.GetByIdAsync(answerTemplateId).Result;
+            if (answer == null)
+            {
+                return NotFound();
+            }
 
             var deleteAnswerTemplatesViewModel = _mapper.Map<DeleteAnswerTemplatesViewModel>(answer);
             deleteAnswerTemplatesViewModel.TestTemplateId = testTemplateId;
@@ -148,7 +141,8 @@ namespace OTM.Controllers
         public async Task<IActionResult> DeleteConfirmed(DeleteAnswerTemplatesViewModel deleteAnswerTemplatesViewModel)
         {
             await _answersRepository.DeleteAsync(deleteAnswerTemplatesViewModel.Id);
-            return RedirectToAction(nameof(Edit),"ExerciseTemplates",new {TestTemplateId = deleteAnswerTemplatesViewModel.TestTemplateId, ExerciseTemplateId = deleteAnswerTemplatesViewModel.ExerciseTemplateId } );
+            return RedirectToAction(nameof(Edit),"ExerciseTemplates",
+                new {TestTemplateId = deleteAnswerTemplatesViewModel.TestTemplateId, ExerciseTemplateId = deleteAnswerTemplatesViewModel.ExerciseTemplateId } );
         }
 
         private bool AnswerExists(Guid id)
