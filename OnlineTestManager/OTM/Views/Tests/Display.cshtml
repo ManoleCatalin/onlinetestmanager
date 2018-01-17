@@ -49,29 +49,33 @@
             <div class="box box-solid">
                 <!-- /.box-header -->
                 <h1>@Html.DisplayFor(model => model.Description)</h1>
-                    <div class="box-body">
-                        <div class="col-md-9 dl-horizontal">
-                            <form asp-action="Display">
-                                <div class="form-group">
-                                    <input asp-for="ExerciseId" type="hidden" />
-                                    <input asp-for="UserId" type="hidden" />
-                                    <input asp-for="TestInstanceId" type="hidden" />
-                                    <input asp-for="Description" type="hidden" />
-                                    <table >
+                <div class="box-body">
+                    <div class="col-md-9 dl-horizontal">
+                        <form asp-action="Display">
+                            <div class="form-group">
+                                <input asp-for="ExerciseId" type="hidden" />
+                                <input asp-for="UserId" type="hidden" />
+                                <input asp-for="TestInstanceId" type="hidden" />
+                                <input asp-for="Description" type="hidden" />
+                                <table >
                                     @Html.EditorFor(x => x.Answers)
-                                    </table>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Submit" class="btn btn-default" />
-                                </div>
-                             </form>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </form>
 
-</div>
+                    </div>
                       
-         </div>
-             <!-- /.box-body -->
-          </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
             <!-- /.box -->
         </div>
-   </div>
+    </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
