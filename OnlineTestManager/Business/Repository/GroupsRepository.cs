@@ -26,6 +26,8 @@ namespace Business.Repository
                 .ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id );
 
+            if (groups == null)
+                return null;
             List<UserGroup> listGroup = groups.UserGroups.ToList();
             listGroup.RemoveAll(x => x.IsDeleted);
             groups.UserGroups = listGroup;
