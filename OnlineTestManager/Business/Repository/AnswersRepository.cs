@@ -21,5 +21,10 @@ namespace Business.Repository
             return await _entities.Where(x => x.ExerciseId == exerciseId && !x.IsDeleted).ToListAsync();
         }
 
+        public async Task<Answer> GetCorrectAnswerOfExerciseAsync(Guid exerciseId)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.ExerciseId == exerciseId && !x.IsDeleted && x.Correct);
+        }
+
     }
 }

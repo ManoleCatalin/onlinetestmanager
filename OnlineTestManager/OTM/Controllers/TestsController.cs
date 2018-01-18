@@ -18,14 +18,15 @@ namespace OTM.Controllers
         private readonly ITestInstancesRepository _testInstancesRepository;
         private readonly Guid _userId;
         private readonly ITestsRepository _testsRepository;
-        
+        private readonly IAnswersRepository _answersRepository;
 
         public TestsController(ITestInstancesRepository testInstancesRepository, 
             IUserContext userContext, 
-            ITestsRepository testsRepository)
+            ITestsRepository testsRepository,IAnswersRepository answersRepository)
         {
             _testInstancesRepository = testInstancesRepository;
             _testsRepository = testsRepository;
+            _answersRepository = answersRepository;
 
             var userId = userContext.GetLogedInUserId();
             if (userId == null)
@@ -69,15 +70,22 @@ namespace OTM.Controllers
         public async Task<IActionResult> Display(Guid id)
         {
             var exercise = await _testInstancesRepository.GetNextExerciseAsync(_userId,id);
+            var test = _testInstancesRepository.GetByIdAsync(id).Result;
             if (exercise == null)
             {
                 return RedirectToAction(nameof(Finished),  new { id = id });
+            }
+            if (test.StartedAt.AddMinutes(test.Duration) < DateTime.Now)
+            {
+                return RedirectToAction(nameof(Finished), new { id = id });
             }
             var displayTestsViewModel = new DisplayTestsViewModel();
             displayTestsViewModel.TestInstanceId = id;
             displayTestsViewModel.Description = exercise.Description;
             displayTestsViewModel.ExerciseId = exercise.Id;
             displayTestsViewModel.UserId = _userId;
+            displayTestsViewModel.Duration = test.Duration;
+            displayTestsViewModel.StaDateTime = test.StartedAt;
             var answers = new List<MarkedCorrectAnswerDisplayTestsViewModel>();
             foreach(var item in exercise.Answers)
             {
@@ -88,18 +96,23 @@ namespace OTM.Controllers
                 });
             }
             displayTestsViewModel.Answers = answers;
+          
             return View(displayTestsViewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Display(DisplayTestsViewModel displayTestViewModel)
         {
+            
             if (ModelState.IsValid)
             {
                 var exerciseResponse = new ExerciseResponse();
                 exerciseResponse.UserId = displayTestViewModel.UserId;
                 exerciseResponse.ExerciseId = displayTestViewModel.ExerciseId;
                 exerciseResponse.TestInstanceId = displayTestViewModel.TestInstanceId;
+
+                
+                var corectAnswer = _answersRepository.GetCorrectAnswerOfExerciseAsync(displayTestViewModel.ExerciseId).Result;
                 var answers = new List<MarkedAsCorrect>();
                 foreach (var item in displayTestViewModel.Answers)
                 {
@@ -112,19 +125,26 @@ namespace OTM.Controllers
                             TestInstanceId = displayTestViewModel.TestInstanceId,
                             UserId = displayTestViewModel.UserId
                         });
+                        if (_answersRepository.GetByIdAsync(item.Id).Result.Description.Equals(corectAnswer.Description))
+                        {
+                            displayTestViewModel.CorrectAnswers++;
+                        }
+                        
                     }   
                 }
                 exerciseResponse.MarkedAsCorrects = answers;
                 await _testInstancesRepository.InsertExerciseResponseAsync(exerciseResponse);
                 return RedirectToAction(nameof(Display), new { id = displayTestViewModel.TestInstanceId });
             }
+            
 
             return View(displayTestViewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Finished(Guid id)
+        public async Task<IActionResult> Finished(DisplayTestsViewModel displayTestViewModel,Guid id)
         {
+
             var testInstance = await _testInstancesRepository.GetByIdAsync(id);
             if (testInstance == null)
             {
@@ -138,6 +158,7 @@ namespace OTM.Controllers
             var finishedTestsViewModel = new FinishedTestsViewModel();
             finishedTestsViewModel.Description = test.Description;
             finishedTestsViewModel.Name = test.Name;
+            finishedTestsViewModel.CorrectAnswers = displayTestViewModel.CorrectAnswers;
             return View(finishedTestsViewModel);
         }
 
