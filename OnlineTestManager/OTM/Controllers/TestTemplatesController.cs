@@ -147,7 +147,7 @@ namespace OTM.Controllers
         public async Task<IActionResult> DeleteConfirmed(DeleteTestTemplateViewModel deteDeleteTestTemplateViewModel)
         {
             var deletedTest = await _testsRepository.DeleteAsync(deteDeleteTestTemplateViewModel.Id);
-            if (deletedTest == false)
+            if (!deletedTest)
             {
                 return NotFound();
             }

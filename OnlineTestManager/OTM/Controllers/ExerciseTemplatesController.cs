@@ -122,7 +122,7 @@ namespace OTM.Controllers
         public async Task<IActionResult> DeleteConfirmed(DeleteExerciseTemplateViewModel deleteExerciseTemplatesViewModel)
         {
             var deletedExercice = await _exercisesRepository.DeleteAsync(deleteExerciseTemplatesViewModel.Id);
-            if (deletedExercice == false)
+            if (!deletedExercice)
             {
                 return NotFound();
             }

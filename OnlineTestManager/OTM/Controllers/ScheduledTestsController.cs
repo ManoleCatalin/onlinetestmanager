@@ -194,8 +194,6 @@ namespace OTM.Controllers
             var groupId = Guid.Parse(createScheduledTestViewModel.Group);
             var testId = Guid.Parse(createScheduledTestViewModel.Test);
             var startDate = createScheduledTestViewModel.StartDateTime;
-            
-            var scheduledTest =
                 await _testInstancesRepository.InsertAsync(TestInstance.Create(duration, groupId, testId, startDate));
 
             return RedirectToAction(nameof(Index));
@@ -270,7 +268,7 @@ namespace OTM.Controllers
         public async Task<IActionResult> DeleteConfirmed(DeleteScheduleTestViewModel deleteScheduledTestViewModel)
         {
             var deletedScheduledTest = await _testInstancesRepository.DeleteAsync(deleteScheduledTestViewModel.Id);
-            if (deletedScheduledTest == false)
+            if (!deletedScheduledTest )
             {
                 return NotFound();
             }

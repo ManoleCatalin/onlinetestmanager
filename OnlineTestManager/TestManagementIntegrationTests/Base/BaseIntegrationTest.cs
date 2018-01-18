@@ -10,7 +10,7 @@ namespace TestManagementIntegrationTests.Base
     {
         public virtual bool UseSqlServer => false;
 
-        public BaseIntegrationTest()
+        protected BaseIntegrationTest()
         {
             DestroyDatabase();
             CreateDatabase();

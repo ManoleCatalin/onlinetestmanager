@@ -34,7 +34,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -48,7 +48,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
                 if (userId == null) return;
@@ -78,7 +78,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -92,7 +92,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
                 if (userId == null) return;
@@ -129,7 +129,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -143,7 +143,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 var groupRepository = new GroupsRepository(context);
                 if (userId == null) return;

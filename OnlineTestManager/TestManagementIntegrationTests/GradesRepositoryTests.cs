@@ -35,12 +35,12 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                     context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola"));
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
                 if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
@@ -48,18 +48,17 @@ namespace TestManagementIntegrationTests
                 context.TestTypes.Add(TestType.Create("Grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
                 if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
-                var test = context.Tests.ToList().FirstOrDefault();
-                var group = context.Groups.ToList().FirstOrDefault();
-                if (@group != null)
-                    if (test != null)
-                        context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
+                var test = context.Tests.FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
+                if (group != null && test != null)
+                   context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
-                var testInstance = context.TestInstances.ToList().FirstOrDefault();
+                var testInstance = context.TestInstances.FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
                 if (testInstance == null) return;
                 var grade = Grade.Create(7, user.Id, testInstance.Id);
@@ -83,12 +82,12 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                     context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola"));
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
                 if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
@@ -96,17 +95,17 @@ namespace TestManagementIntegrationTests
                 context.TestTypes.Add(TestType.Create("Grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
                 if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
-                var test = context.Tests.ToList().FirstOrDefault();
-                var group = context.Groups.ToList().FirstOrDefault();
-                if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
+                var test = context.Tests.FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
+                if (@group != null && test != null)
+                    context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
-                var testInstance = context.TestInstances.ToList().FirstOrDefault();
+                var testInstance = context.TestInstances.FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
                 if (testInstance == null) return;
                 var grade = Grade.Create(7, user.Id, testInstance.Id);
@@ -135,12 +134,12 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                     context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola"));
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
                 if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
@@ -148,17 +147,17 @@ namespace TestManagementIntegrationTests
                 context.TestTypes.Add(TestType.Create("Grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
                 if (testType != null) context.Tests.Add(Test.Create("Test", "Test surpriza", user.Id, testType.Id));
                 context.SaveChanges();
 
-                var test = context.Tests.ToList().FirstOrDefault();
-                var group = context.Groups.ToList().FirstOrDefault();
-                if (@group != null)
-                    if (test != null) context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
+                var test = context.Tests.FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
+                if (group != null && test != null)
+                    context.TestInstances.Add(TestInstance.Create(50, @group.Id, test.Id, DateTime.Now));
                 context.SaveChanges();
 
-                var testInstance = context.TestInstances.ToList().FirstOrDefault();
+                var testInstance = context.TestInstances.FirstOrDefault();
                 var gradesRepository = new GradesRepository(context);
                 if (testInstance != null)
                 {

@@ -17,35 +17,34 @@ namespace TestManagementIntegrationTests
         {
             context.Roles.Add(Role.Create("teacher"));
             context.SaveChanges();
-            var userType = context.Roles.ToList().FirstOrDefault();
+            var userType = context.Roles.FirstOrDefault();
 
             if (userType != null)
                 context.Users.Add(User.Create("Johnny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "2G3GSDGDFG"));
             context.SaveChanges();
-            var user = context.Users.ToList().FirstOrDefault();
+            var user = context.Users.FirstOrDefault();
 
             if (user != null)
             {
                 context.Groups.Add(Group.Create("some group", "description", user.Id));
                 context.SaveChanges();
-                var group = context.Groups.ToList().FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("grila"));
                 context.SaveChanges();
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
 
                 if (testType != null)
                     context.Tests.Add(Test.Create("Partial Exam Python", "No description needed", user.Id,
                         testType.Id));
                 context.SaveChanges();
-                var test = context.Tests.ToList().FirstOrDefault();
+                var test = context.Tests.FirstOrDefault();
 
-                if (@group != null)
-                    if (test != null)
+                if (group != null && test != null)
                         context.TestInstances.Add(TestInstance.Create(300, @group.Id, test.Id, DateTime.Now));
             }
             context.SaveChanges();
-            var testInstance = context.TestInstances.ToList().FirstOrDefault();
+            var testInstance = context.TestInstances.FirstOrDefault();
 
             return testInstance != null ? File.Create(path, url, testInstance.Id) : null;
         }

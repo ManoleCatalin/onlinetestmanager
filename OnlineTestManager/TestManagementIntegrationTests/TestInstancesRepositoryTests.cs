@@ -35,7 +35,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -50,7 +50,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 if (userId != null)
                 {
@@ -65,24 +65,22 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var groupId = context.Groups.ToList().FirstOrDefault();
+                var groupId = context.Groups.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("Test_1"));
                 context.SaveChanges();
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
 
-                if (userId != null)
-                    if (testType != null)
-                        context.Tests.Add(Test.Create("Testul nr 1", "Matematica", userId.Id, testType.Id));
+                if (userId != null && testType != null)
+               context.Tests.Add(Test.Create("Testul nr 1", "Matematica", userId.Id, testType.Id));
 
                 context.SaveChanges();
-                var testId = context.Tests.ToList().FirstOrDefault();
+                var testId = context.Tests.FirstOrDefault();
 
                 var testInstancesRepository = new TestInstancesRepository(context);
-                if (groupId != null)
+                if (groupId != null && testId != null)
                 {
-                    if (testId != null)
-                    {
+                   
                         var testInstance = TestInstance.Create(
                             100,
                             groupId.Id,
@@ -95,7 +93,7 @@ namespace TestManagementIntegrationTests
                         var result = testInstancesRepository.GetByIdAsync(testInstanceInserted.Id);
                         // ASSERT
                         result.Should().NotBe(null);
-                    }
+                    
                 }
             });
 
@@ -111,7 +109,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -126,7 +124,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 if (userId != null)
                 {
@@ -141,17 +139,16 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var groupId = context.Groups.ToList().FirstOrDefault();
+                var groupId = context.Groups.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("Test_1"));
                 context.SaveChanges();
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
 
-                if (userId != null)
-                    if (testType != null)
+                if (userId != null && testType != null)
                         context.Tests.Add(Test.Create("Testul nr 1", "Matematica", userId.Id, testType.Id));
                 context.SaveChanges();
-                var testId = context.Tests.ToList().FirstOrDefault();
+                var testId = context.Tests.FirstOrDefault();
 
                 var testInstancesRepository = new TestInstancesRepository(context);
                 if (groupId == null) return;
@@ -187,7 +184,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                 {
                     var user = User.Create(
@@ -201,7 +198,7 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var userId = context.Users.ToList().FirstOrDefault();
+                var userId = context.Users.FirstOrDefault();
 
                 if (userId != null)
                 {
@@ -216,24 +213,21 @@ namespace TestManagementIntegrationTests
                 }
                 context.SaveChanges();
 
-                var groupId = context.Groups.ToList().FirstOrDefault();
+                var groupId = context.Groups.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("Test_1"));
                 context.SaveChanges();
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
 
-                if (userId != null)
-                    if (testType != null)
+                if (userId != null && testType != null)
                         context.Tests.Add(Test.Create("Testul nr 1", "Matematica", userId.Id, testType.Id));
                 context.SaveChanges();
-                var testId = context.Tests.ToList().FirstOrDefault();
+                var testId = context.Tests.FirstOrDefault();
 
                 var testInstancesRepository = new TestInstancesRepository(context);
-                if (groupId != null)
+                if (groupId != null && testId != null)
                 {
-                    if (testId != null)
-                    {
-                        var testInstance = TestInstance.Create(
+                   var testInstance = TestInstance.Create(
                             100,
                             groupId.Id,
                             testId.Id, 
@@ -247,7 +241,7 @@ namespace TestManagementIntegrationTests
                         var result = testInstancesRepository.DeleteAsync(testInstance.Id);
                         // ASSERT
                         result.Result.Should().Be(true);
-                    }
+                    
                 }
             });
 

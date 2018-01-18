@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OTM.ViewModels.Tests
+﻿namespace OTM.ViewModels.Tests
 {
     public class FinishedTestsViewModel
     {

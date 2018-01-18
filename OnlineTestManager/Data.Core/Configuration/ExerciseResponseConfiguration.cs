@@ -22,9 +22,6 @@ namespace Data.Core.Configuration
                 .HasForeignKey(x => x.ExerciseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.HasOne(x => x.TestInstance)
-            //    .WithMany(x => x.ExerciseResponses)
-            //    .HasForeignKey(x => x.TestInstanceId);
         }
     }
 }

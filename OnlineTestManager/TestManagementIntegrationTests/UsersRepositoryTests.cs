@@ -34,7 +34,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(
@@ -62,7 +62,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(
@@ -93,7 +93,7 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 var userRepository = new UsersRepository(context);
                 if (userType == null) return;
                 var user = User.Create(

@@ -12,7 +12,6 @@ namespace Data.Core.Domain
         public ICollection<Answer> Answers { get; set; }
 		public ICollection<ExerciseResponse> ExerciseResponses { get; set; }
 		public bool IsDeleted { get; set; }
-		public ICollection<ExerciseResponse> ExerciseResponses { get; set; }		public bool IsDeleted { get; set; }
         public static Exercise Create(string description, Guid testId)
         {
             var instance = new Exercise { Id = Guid.NewGuid()};

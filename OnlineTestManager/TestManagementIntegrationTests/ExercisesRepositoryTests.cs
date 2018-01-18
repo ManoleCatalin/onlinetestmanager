@@ -38,23 +38,22 @@ namespace TestManagementIntegrationTests
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
+                var user = databaseContext.Users.FirstOrDefault();
 
-                if (user != null)
-                    if (testType != null)
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
+                var test = databaseContext.Tests.FirstOrDefault();
 
 
                 if (test != null)
@@ -81,23 +80,22 @@ namespace TestManagementIntegrationTests
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
+                var user = databaseContext.Users.FirstOrDefault();
 
-                if (user != null)
-                    if (testType != null)
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
+                var test = databaseContext.Tests.FirstOrDefault();
 
 
                 if (test != null)
@@ -126,24 +124,21 @@ namespace TestManagementIntegrationTests
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("Johny", "Bravo", "johnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
-
-                if (user != null)
-                    if (testType != null)
+                var user = databaseContext.Users.FirstOrDefault();
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
-
+                var test = databaseContext.Tests.FirstOrDefault();
 
                 if (test != null)
                 {

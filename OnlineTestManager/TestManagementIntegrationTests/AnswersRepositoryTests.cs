@@ -36,39 +36,36 @@ namespace TestManagementIntegrationTests
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("Johny", "Bravo", "ohnnybravo", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
+                var user = databaseContext.Users.FirstOrDefault();
 
-                if (user != null)
-                    if (testType != null)
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
+                var test = databaseContext.Tests.FirstOrDefault();
 
                 if (test != null) databaseContext.Exercises.Add(Exercise.Create("Problema1", test.Id));
                 databaseContext.SaveChanges();
-                var exercise = databaseContext.Exercises.ToList().FirstOrDefault();
+                var exercise = databaseContext.Exercises.FirstOrDefault();
 
 
-                if (exercise != null)
-                {
-                    var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
+                if (exercise == null) return;
+                var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
 
-                    var answerInserted = answersRepository.InsertAsync(answer).Result;
-                    // ACT
-                    var result = answersRepository.GetByIdAsync(answerInserted.Id);
-                    // ASSERT
-                    result.Should().NotBe(null);
-                }
+                var answerInserted = answersRepository.InsertAsync(answer).Result;
+                // ACT
+                var result = answersRepository.GetByIdAsync(answerInserted.Id);
+                // ASSERT
+                result.Should().NotBe(null);
             });
 
         }
@@ -78,46 +75,42 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context => {
                 // ARRANGE 
 
-                DatabaseContext databaseContext = context;
+                var databaseContext = context;
                 var answersRepository = new AnswersRepository(context);
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("User first name", "User last name", "User1", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
-
-                if (user != null)
-                    if (testType != null)
+                var user = databaseContext.Users.FirstOrDefault();
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
+                var test = databaseContext.Tests.FirstOrDefault();
 
                 if (test != null) databaseContext.Exercises.Add(Exercise.Create("Problema1", test.Id));
                 databaseContext.SaveChanges();
-                var exercise = databaseContext.Exercises.ToList().FirstOrDefault();
+                var exercise = databaseContext.Exercises.FirstOrDefault();
 
-                if (exercise != null)
-                {
-                    var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
-                    databaseContext.Add(answer);
-                    databaseContext.SaveChanges();
-                    answer.Update("Raspuns Problema 2", false, exercise.Id, false);
+                if (exercise == null) return;
+                var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
+                databaseContext.Add(answer);
+                databaseContext.SaveChanges();
+                answer.Update("Raspuns Problema 2", false, exercise.Id, false);
 
 
-                    // ACT
-                    var result = answersRepository.UpdateAsync(answer);
-                    // ASSERT
-                    result.Result.Should().Be(true);
-                }
+                // ACT
+                var result = answersRepository.UpdateAsync(answer);
+                // ASSERT
+                result.Result.Should().Be(true);
             });
 
         }
@@ -128,44 +121,40 @@ namespace TestManagementIntegrationTests
             RunOnDatabase(context => {
                 // ARRANGE 
 
-                DatabaseContext databaseContext = context;
+                var databaseContext = context;
                 var answersRepository = new AnswersRepository(context);
 
                 databaseContext.Roles.Add(Role.Create("student"));
                 databaseContext.SaveChanges();
-                var userType = databaseContext.Roles.ToList().FirstOrDefault();
+                var userType = databaseContext.Roles.FirstOrDefault();
 
                 databaseContext.TestTypes.Add(TestType.Create("Grila"));
                 databaseContext.SaveChanges();
-                var testType = databaseContext.TestTypes.ToList().FirstOrDefault();
+                var testType = databaseContext.TestTypes.FirstOrDefault();
 
                 if (userType != null)
                     databaseContext.Users.Add(User.Create("User first name", "User last name", "User1", "johnnybravo@gmail.com", "#$$RR#$TED"));
                 databaseContext.SaveChanges();
-                var user = databaseContext.Users.ToList().FirstOrDefault();
-
-                if (user != null)
-                    if (testType != null)
+                var user = databaseContext.Users.FirstOrDefault();
+                if (user != null && testType != null)
                         databaseContext.Tests.Add(Test.Create("NumeleTestului", "DescriereaTextului", user.Id,
                             testType.Id));
                 databaseContext.SaveChanges();
-                var test = databaseContext.Tests.ToList().FirstOrDefault();
+                var test = databaseContext.Tests.FirstOrDefault();
 
                 if (test != null) databaseContext.Exercises.Add(Exercise.Create("Problema1", test.Id));
                 databaseContext.SaveChanges();
-                var exercise = databaseContext.Exercises.ToList().FirstOrDefault();
+                var exercise = databaseContext.Exercises.FirstOrDefault();
 
-                if (exercise != null)
-                {
-                    var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
-                    databaseContext.Add(answer);
-                    databaseContext.SaveChanges();
+                if (exercise == null) return;
+                var answer = Answer.Create("RaspunsProblema1", true, exercise.Id);
+                databaseContext.Add(answer);
+                databaseContext.SaveChanges();
 
-                    // ACT
-                    var result = answersRepository.DeleteAsync(answer.Id);
-                    // ASSERT
-                    result.Result.Should().Be(true);
-                }
+                // ACT
+                var result = answersRepository.DeleteAsync(answer.Id);
+                // ASSERT
+                result.Result.Should().Be(true);
             });
 
         }

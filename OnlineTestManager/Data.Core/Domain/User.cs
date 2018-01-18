@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Core.Domain

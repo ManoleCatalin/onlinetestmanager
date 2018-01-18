@@ -31,7 +31,7 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
 
                 if (userType != null)
                     context.Users.Add(User.Create(
@@ -44,12 +44,12 @@ namespace TestManagementIntegrationTests
                     );
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
 
                 var testsRepository = new TestsRepository(context);
                 if (user == null) return;
@@ -76,7 +76,7 @@ namespace TestManagementIntegrationTests
 
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
 
                 if (userType != null)
                     context.Users.Add(User.Create(
@@ -89,12 +89,12 @@ namespace TestManagementIntegrationTests
                     );
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
                 var testsRepository = new TestsRepository(context);
 
                 if (user == null) return;
@@ -126,7 +126,7 @@ namespace TestManagementIntegrationTests
                 // ARRANGE 
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
 
                 if (userType != null)
                     context.Users.Add(User.Create(
@@ -139,12 +139,12 @@ namespace TestManagementIntegrationTests
                     );
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
 
                 context.TestTypes.Add(TestType.Create("grila"));
                 context.SaveChanges();
 
-                var testType = context.TestTypes.ToList().FirstOrDefault();
+                var testType = context.TestTypes.FirstOrDefault();
                 var testsRepository = new TestsRepository(context);
 
                 if (testType == null) return;

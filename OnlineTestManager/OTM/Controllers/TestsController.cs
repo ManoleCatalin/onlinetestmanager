@@ -18,16 +18,14 @@ namespace OTM.Controllers
         private readonly ITestInstancesRepository _testInstancesRepository;
         private readonly Guid _userId;
         private readonly ITestsRepository _testsRepository;
-        private readonly IExercisesRepository _exercisesRepository;
+        
 
         public TestsController(ITestInstancesRepository testInstancesRepository, 
             IUserContext userContext, 
-            ITestsRepository testsRepository, 
-            IExercisesRepository exercisesRepository)
+            ITestsRepository testsRepository)
         {
             _testInstancesRepository = testInstancesRepository;
             _testsRepository = testsRepository;
-            _exercisesRepository = exercisesRepository;
 
             var userId = userContext.GetLogedInUserId();
             if (userId == null)
@@ -41,24 +39,27 @@ namespace OTM.Controllers
         public async Task<IActionResult> Index()
         {
             var tests = await _testInstancesRepository.GetAllTestInstancesOfStudentAsync(_userId);
-            if (tests == null)
-            {
-                return NotFound();
-            }
+           
             var listIndexTestsViewModel = new List<IndexTestsViewModel>();
             foreach (var item in tests)
             {
                 var test = await _testsRepository.GetByIdAsync(item.TestId);
-                listIndexTestsViewModel.Add(new IndexTestsViewModel()
+                if (test != null)
                 {
-                    Id = item.Id,
-                    Description = test.Description,
-                    Duration = item.Duration,
-                    Name = test.Name,
-                    Ongoing = (DateTime.Now > item.StartedAt && DateTime.Now < item.StartedAt.AddMinutes(item.Duration)),
-                    StartDate = item.StartedAt
 
-                });
+
+                    listIndexTestsViewModel.Add(new IndexTestsViewModel()
+                    {
+                        Id = item.Id,
+                        Description = test.Description,
+                        Duration = item.Duration,
+                        Name = test.Name,
+                        Ongoing = (DateTime.Now > item.StartedAt &&
+                                   DateTime.Now < item.StartedAt.AddMinutes(item.Duration)),
+                        StartDate = item.StartedAt
+
+                    });
+                }
             }
 
             return View(listIndexTestsViewModel);
@@ -102,7 +103,7 @@ namespace OTM.Controllers
                 var answers = new List<MarkedAsCorrect>();
                 foreach (var item in displayTestViewModel.Answers)
                 {
-                    if (item.Correct == true)
+                    if (item.Correct)
                     {
                         answers.Add(new MarkedAsCorrect()
                         {
@@ -114,7 +115,7 @@ namespace OTM.Controllers
                     }   
                 }
                 exerciseResponse.MarkedAsCorrects = answers;
-                var exercise = await _testInstancesRepository.InsertExerciseResponseAsync(exerciseResponse);
+                await _testInstancesRepository.InsertExerciseResponseAsync(exerciseResponse);
                 return RedirectToAction(nameof(Display), new { id = displayTestViewModel.TestInstanceId });
             }
 

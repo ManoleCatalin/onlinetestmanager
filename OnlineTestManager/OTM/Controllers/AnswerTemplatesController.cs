@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -72,7 +71,7 @@ namespace OTM.Controllers
                 var answer = Answer.Create(createAnswerTemplatesViewModel.Description,
                     createAnswerTemplatesViewModel.Correct, createAnswerTemplatesViewModel.ExerciseTemplateId);
 
-                var insertedAnswer = await _answersRepository.InsertAsync(answer);
+                await _answersRepository.InsertAsync(answer);
 
                 return RedirectToAction(nameof(Create), 
                     new {testTemplateId = createAnswerTemplatesViewModel.TestTemplateId,
@@ -144,9 +143,5 @@ namespace OTM.Controllers
                 new {TestTemplateId = deleteAnswerTemplatesViewModel.TestTemplateId, ExerciseTemplateId = deleteAnswerTemplatesViewModel.ExerciseTemplateId } );
         }
 
-        private bool AnswerExists(Guid id)
-        {
-            return _context.Answers.Any(e => e.Id == id);
-        }
     }
 }

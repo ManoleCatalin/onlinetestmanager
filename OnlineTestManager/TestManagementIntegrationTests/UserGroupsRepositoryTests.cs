@@ -35,16 +35,16 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                     context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola"));
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
                 if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
-                var group = context.Groups.ToList().FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
 
                 var userGroupRepository = new UserGroupsRepository(context);
                 if (@group == null) return;
@@ -68,16 +68,16 @@ namespace TestManagementIntegrationTests
                 context.Roles.Add(Role.Create("student"));
                 context.SaveChanges();
 
-                var userType = context.Roles.ToList().FirstOrDefault();
+                var userType = context.Roles.FirstOrDefault();
                 if (userType != null)
                     context.Users.Add(User.Create("User first name", "User last name", "User1", "test@test.ro", "parola"));
                 context.SaveChanges();
 
-                var user = context.Users.ToList().FirstOrDefault();
+                var user = context.Users.FirstOrDefault();
                 if (user == null) return;
                 context.Groups.Add(Group.Create("Grup", "Grup mare", user.Id));
                 context.SaveChanges();
-                var group = context.Groups.ToList().FirstOrDefault();
+                var group = context.Groups.FirstOrDefault();
 
                 var userGroupRepository = new UserGroupsRepository(context);
                 if (@group != null)
