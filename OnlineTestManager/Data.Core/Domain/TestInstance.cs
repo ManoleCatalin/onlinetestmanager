@@ -13,20 +13,21 @@ namespace Data.Core.Domain
         public Guid TestId { get; private set; }
         public virtual Test Test { get; set; }
         public ICollection<Grade> Grades { get; set; }
-
+        public bool IsDeleted { get; set; }
         public static TestInstance Create(int duration, Guid groupId, Guid testId, DateTime startedAt)
         {
             var instance = new TestInstance { Id = Guid.NewGuid() };
-            instance.Update(duration, groupId, testId, startedAt);
+            instance.Update(duration, groupId, testId,startedAt,false);
             return instance;
         }
 
-        public void Update(int duration, Guid groupId, Guid testId, DateTime startedAt)
+        public void Update(int duration, Guid groupId, Guid testId, DateTime startedAt,bool isDeleted)
         {
             Duration = duration;
             GroupId = groupId;
             TestId = testId;
             StartedAt = startedAt;
+            IsDeleted = isDeleted;
         }
     }
 }

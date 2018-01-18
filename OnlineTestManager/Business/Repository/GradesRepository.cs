@@ -20,12 +20,12 @@ namespace Business.Repository
 
         public async Task<List<Grade>> GetGradesAsync()
         {
-            return await _context.Grades.ToListAsync();
+            return await _context.Grades.Where(x=>!x.IsDeleted).ToListAsync();
         }
 
         public async Task<Grade> GetGradeAsync(Guid userId, Guid testInstanceId)
         {
-            return await _context.Grades.FirstOrDefaultAsync(x => x.UserId == userId && x.TestInstanceId == testInstanceId);
+            return await _context.Grades.FirstOrDefaultAsync(x => x.UserId == userId && x.TestInstanceId == testInstanceId && !x.IsDeleted);
         }
 
         public async Task<Grade> InsertGradeAsync(Grade grade)
@@ -43,7 +43,9 @@ namespace Business.Repository
 
         public async Task<bool> DeleteGradeAsync(Guid userId, Guid testInstanceId)
         {
-            _context.Grades.Remove(_context.Grades.FirstOrDefault(x => x.UserId == userId && x.TestInstanceId == testInstanceId));
+            var grade =_context.Grades.FirstOrDefault(x => x.UserId == userId && x.TestInstanceId == testInstanceId);
+            grade.IsDeleted = true;
+            _context.Grades.Update(grade);
             return await _context.SaveChangesAsync() > 0;
         }
     }

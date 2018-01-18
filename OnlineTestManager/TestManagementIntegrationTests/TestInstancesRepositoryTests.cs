@@ -166,7 +166,7 @@ namespace TestManagementIntegrationTests
                 context.Add(testInstance);
                 context.SaveChanges();
 
-                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now);
+                testInstance.Update(200, groupId.Id, testId.Id, DateTime.Now, false);
 
 
                 // ACT

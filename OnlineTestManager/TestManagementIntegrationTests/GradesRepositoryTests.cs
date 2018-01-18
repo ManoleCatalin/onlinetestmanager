@@ -114,7 +114,7 @@ namespace TestManagementIntegrationTests
                 context.Add(grade);
                 context.SaveChanges();
 
-                grade.Update(10);
+                grade.Update(10, false);
 
 
                 // ACT

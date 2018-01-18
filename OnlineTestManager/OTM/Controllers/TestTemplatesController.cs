@@ -122,7 +122,7 @@ namespace OTM.Controllers
             {
                 return NotFound();
             }
-            test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId);
+            test.Update(editTestTemplatesViewModel.Name, editTestTemplatesViewModel.Description, test.UserId, test.TestTypeId, false);
             await _testsRepository.UpdateAsync(test);                
 
             return RedirectToAction(nameof(Index));

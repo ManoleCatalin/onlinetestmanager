@@ -124,9 +124,7 @@ namespace OTM.Controllers
             {
                 return NotFound();
             }
-
-            updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId);
-
+			updatedGroup.Update(editGroupViewModel.Name, editGroupViewModel.Description, _userId,false);
             await _groupsRepository.UpdateAsync(updatedGroup);
             return RedirectToAction(nameof(Index));
         }

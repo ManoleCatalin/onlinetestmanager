@@ -94,7 +94,7 @@ namespace TestManagementIntegrationTests
                 context.Files.Add(file);
                 context.SaveChanges();
                 // ACT
-                file.Update(file.Path, "/download/xabcxsd", file.TestInstanceId);
+                file.Update(file.Path, "/download/xabcxsd", file.TestInstanceId, false);
                 var result = filesRepository.UpdateAsync(file);
                 // ASSERT
 

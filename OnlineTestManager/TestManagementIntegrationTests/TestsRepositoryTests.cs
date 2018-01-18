@@ -108,7 +108,7 @@ namespace TestManagementIntegrationTests
 
                 context.Add(test);
                 context.SaveChanges();
-                test.Update("test2", "descrierile", user.Id, testType.Id);
+                test.Update("test2", "descrierile", user.Id, testType.Id, false);
 
 
                 // ACT

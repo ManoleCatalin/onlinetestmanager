@@ -50,7 +50,7 @@ namespace TestManagementIntegrationTests
                 context.TestTypes.Add(testType);
                 context.SaveChanges();
                 // ACT
-                testType.Update("normal");
+                testType.Update("normal", false);
                 var result = testTypeRepository.UpdateAsync(testType);
                 // ASSERT
                 

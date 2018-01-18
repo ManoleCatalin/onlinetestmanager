@@ -20,12 +20,12 @@ namespace Business.Repository
 
         public async Task<List<UserGroup>> GetUserGroupsAsync()
         {
-            return await _context.UserGroups.ToListAsync();
+            return await _context.UserGroups.Where(x=>!x.IsDeleted).ToListAsync();
         }
 
         public async Task<UserGroup> GetUserGroupAsync(Guid userId, Guid groupId)
         {
-            return await _context.UserGroups.FirstOrDefaultAsync(x => x.UserId == userId && x.GroupId == groupId);
+            return await _context.UserGroups.FirstOrDefaultAsync(x => x.UserId == userId && x.GroupId == groupId && !x.IsDeleted);
         }
 
         public async Task<UserGroup> InsertUserGroupAsync(UserGroup group)
@@ -34,10 +34,14 @@ namespace Business.Repository
             await _context.SaveChangesAsync();
             return group;
         }
+      
 
         public async Task<bool> DeleteUserGroupAsync(Guid userId, Guid groupId)
         {
-            _context.UserGroups.Remove(_context.UserGroups.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId));
+           var entity=(_context.UserGroups.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId));
+            if (entity == null) return await _context.SaveChangesAsync() > 0;
+            entity.IsDeleted = true;
+            _context.UserGroups.Update(entity);
             return await _context.SaveChangesAsync() > 0;
         }
     }

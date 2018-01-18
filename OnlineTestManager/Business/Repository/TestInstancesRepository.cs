@@ -20,7 +20,7 @@ namespace Business.Repository
         {
             return await _entities
                 .Include(s => s.Test)
-                .Where(s => s.Test.UserId == teacherId).ToListAsync();
+                .Where(s => s.Test.UserId == teacherId && !s.IsDeleted).ToListAsync();
         }
 
         public async Task<List<TestInstance>> GetAllTestInstancesOfStudentAsync(Guid studentId)

@@ -7,7 +7,7 @@ namespace Data.Core.Domain
     public class Role : IdentityRole<Guid>, IBaseEntity
     {
         public ICollection<UserRole> UserRoles { get; set; }
-
+        public bool IsDeleted { get; set; }
         public Role()
         {
             //Ef core needs this
